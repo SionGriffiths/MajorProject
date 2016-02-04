@@ -15,4 +15,6 @@
 *-blx.bib
 *.brf
 *.synctex.gz
+*.idx
+*.dvi
 
