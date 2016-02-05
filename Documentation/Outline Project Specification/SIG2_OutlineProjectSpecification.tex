@@ -26,8 +26,8 @@
 \projecttitle{Building a Plant Atlas from Real Images}
 \projecttitlememoir{Building a Plant Atlas from Real Images} %same as the project title or abridged version for page header
 \reporttitle{Outline Project Specification}
-\version{0.1}
-\docstatus{Draft}
+\version{1.0}
+\docstatus{Release}
 \modulecode{CS39440}
 \degreeschemecode{G600}
 \degreeschemename{Software Engineering}
@@ -46,55 +46,61 @@
 \section{Project description}
 %==============================================================================
 \subsection{Background}
+The ability to determine the specific growth stage of a plant is of key interest to many plant scientists. The researchers at the National Plant Phenomics Centre (NPPC)\cite{_nppc} are especially interested in the accurate determination of the growth stage of a given plant in order to help inform the phenotyping experiments they carry out at their facility. 
+\\\\
+These plant growth stages are usually defined using some form of numeric scale, such as the 0-100 scale developed by Zadoks et al \cite{zadoks_decimal_1974} to describe the distinct stages of cereal plants. In these scales, typically a seed will be growth stage 0 and a fully matured and dying plant will be growth stage 100. Often, these growth stage scales are presented along with hand drawn illustrations to indicate the distinct characteristics of a given feature or characteristic that defines a growth stage. The growth stage of a plant can be decided through comparison with the illustration and an associated text descriptions. 
+\\\\
+The term atlas was initially used to describe similar illustrated growth stage maps in medical fields, such as those used to describe and predict bone development/growth stages in infants by Tanner et al \cite{tanner_assessment_1975}. 
 
-\subsection{Overview}
+
+
+
+
+\subsection{Project Description}
+This project will deliver a web-based application that presents a visualisation of oat growth stages using image data captured by the NPPC as part of an ongoing phenotyping experiment. Oat plants were chosen as target over other plants currently in experiments at the NPPC since they have fairly visually distinct, well understood growth stages and are interesting since they are a commercially viable crop of some impotence to general food security. 
+\\\\
+One of the goals of this project is to provide a web-based visual reference of growth stages in a way that will assist plant scientists in digesting the vast quantity of image data produced during experiments at the NPPC. This will be achieved by presenting the images in an interactive carousel type interface which will enable side-by-side comparison of time-serried images of a given plant and also allow quick navigation between series of images for other individual plants. Associated metadata (for example age in days, growth stage, height, weight etc) will be presented in an easily digestible format alongside each image. Some sorting of the image series on these metadata attributes will be enabled to aid with comparison of these attributes between individual plants.
+\\\\
+In delivery of this project, the system can be used as a visual reference for growth stages accessible many any web-capable devices. It is hoped that the system will provide a more convenient and accurate method for estimating the growth stages of oat plants by visual inspection when compared to the traditional paper-based atlases with their hand drawn sketches.
+\\\\
+Alongside the core visualisation part of the system, there should be time to implement a machine learning approach to prediction of a growth stage for a plant from the metadata collected by staff at the NPPC. This would likely use an ID3 decision tree based approach as detailed by Quinlan \cite{id3} although exact implementation will be researched during the course of the project. Inferring the growth stage from metadata in an automated way can provide useful information to the plant scientists in the form of corroboration with true observations and potentially providing insight into previously unseen relationships between certain attributes and growth stages in a plant. 
 
 %==============================================================================
 \section{Proposed tasks}
 %==============================================================================
+\begin{enumerate} 
+\item \textbf{Domain Research} - Initial research needs to be undertaken in order to understand the domain. This research will be based around both the plant science and trying to better understand growth stages and the plants in general and also around the way the work conducted at the NPPC 
+
+\item \textbf{Prototyping \& Implementation Technology Evaluation } - The choice of technologies and languages used for the implementation needs to be examined and evaluated. Suitable frameworks and/or webserver technologies will need to be determined and prototyping of certain system aspects conducted.
+\item \textbf{Development Environment \& Build configuration} - To facilitate implementation and deployment a suitable environment configuration will need to be put in place along with certain automated processes such as continuous integration using systems such as TravisCI \cite{_travis}. Github\cite{_git} will be used as remote version control repository. An investigation into suitable hosting environment for the system will be carried out as part of this task.
+\item \textbf{Main Implementation} - Implementation of the core system using the chosen technologies will be carried out according to an agile, SCRUM-like approach with timeboxed iterations which will consist of design, testing and implementation with regular releases. 
+\item \textbf{Test Suite creation} - A thorough, automated testing strategy will be employed throughout the project stages with test driven development being employed during development and a behavioural/user-centred testing framework such as cucumber or selenium used to continuously verify front-end functionality and consistency. 
+\item \textbf{Stretch Goals} Given enough time after core implementation the following stretch goals are considered :
 \begin{enumerate}
-\item \textbf{Research the things} - In order to things then we need to make testings!
-\item \textbf{Make the things} - We can make things such that things are good for humans
-\item \textbf{Test the things} - Test are good. Things need to be test such that is good!
+\item \textbf{Infer Growth Stage from Metadata} - There's a wealth of metadata collected by the plant scientists at the NPPC, it would be useful to apply machine learning techniques to these data in order to attempt to discern the growth stage of a given plant.
+\item \textbf{Infer Growth Stage from Images} - Using computer vision and image processing techniques it is possible to estimate the growth stage of a plant. An example is work conducted by Boyle et al \cite{boyle_image-based_2015} at the NPPC which details an approach that fairly successfully detects flowering growth stages in oat plants.
+\end{enumerate}
+\item \textbf{Final Report and Demonstration} - The final project documentation will be produced along with preparations for demonstrations of the final system at the end of the project.  
 \end{enumerate}
 
 %==============================================================================
 \section{Project deliverables}
 %==============================================================================
 \begin{enumerate}
-\item \textbf{Deliver one thing} - We deliver the one things
-\item \textbf{Deliver the two thing} - We can make things such that things are good for humans
-\item \textbf{Delivery} - Test are good. Things need to be test such that is good!
+\item \textbf{Mid Project Demonstration} - A prototype system showcasing current project progress will be presented along with suitable documentation, likely in the form of notes or slides, during the demonstration.
+\item \textbf{Implemented System} - A final implemented system will be produced as part of the project. This system will include the web server software, including all application code, necessary databases and third party software or frameworks that are required in order for the system to function as specified. Build, installation and deployment scripts will be included.
+\item \textbf{Test Suite} - As part of the technical hand-in alongside the main implementation, a comprehensive test suite will be included in the form of unit test scripts, cucumber or selenium scripts and reports of manual usability testing of the front end.
+\item \textbf{Design Documentation} - Documentation detailing the design choices made during the project should be produced. These will likely take the form of user stories supplemented with UML, UML-like diagrams or CRC cards.
+\item \textbf{Final Report} - A final project report will be produced providing a detailed discussion of the produced application along with justification of techniques and approaches taken during implementation. An overview of research undertaken into the problem domain and discussion of results of any research based stretch goals at detailed in section 2.6
+
 \end{enumerate}
 
-%
-% Start to comment out / remove the following lines. They are only provided for instruction for this example template.  You don't need the following section title, because it will be added as part of the bibliography section. 
-%
-%==============================================================================
-\section*{Your Bibliography - REMOVE this title and text for final version}
-%==============================================================================
-%
-You need to include an annotated bibliography. This should list all relevant web pages, books, journals etc. that you have consulted in researching your project. Each reference should include an annotation. 
+\nocite{*} 
 
-The purpose of the section is to understand what sources you are looking at.  A correctly formatted list of items and annotations is sufficient. You might go further and make use of bibliographic tools, e.g. BibTeX in a LaTeX document, could be used to provide citations, for example \cite{NumericalRecipes} \cite{MarksPaper} \cite[99-101]{FailBlog} \cite{kittenpic_ref}.  The bibliographic tools are not a requirement, but you are welcome to use them.   
-
-You can remove the above {\em Your Bibliography} section heading because it will be added in by the renewcommand which is part of the bibliography. The correct annotated bibliography information is provided below. 
-%
-% End of comment out / remove the lines. They are only provided for instruction for this example template. 
-%
-
-
-\nocite{*} % include everything from the bibliography, irrespective of whether it has been referenced.
-
-% the following line is included so that the bibliography is also shown in the table of contents. There is the possibility that this is added to the previous page for the bibliography. To address this, a newline is added so that it appears on the first page for the bibliography. 
-\newpage
 \addcontentsline{toc}{section}{Initial Annotated Bibliography} 
 
-%
-% example of including an annotated bibliography. The current style is an author date one. If you want to change, comment out the line and uncomment the subsequent line. You should also modify the packages included at the top (see the notes earlier in the file) and then trash your aux files and re-run. 
-%\bibliographystyle{authordate2annot}
 \bibliographystyle{IEEEannot}
-\renewcommand{\refname}{Annotated Bibliography}  % if you put text into the final {} on this line, you will get an extra title, e.g. References. This isn't necessary for the outline project specification. 
-\bibliography{mmp} % References file
+\renewcommand{\refname}{Annotated Bibliography}  
+\bibliography{zotero} 
 
 \end{document}
