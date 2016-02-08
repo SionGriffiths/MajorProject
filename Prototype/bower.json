@@ -1,0 +1,6 @@
+{
+	"name": "plant-atlas-proto",
+	"dependencies": {
+		"bootstrap": "4.0"
+	}
+}

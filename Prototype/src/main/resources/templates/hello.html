@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <meta charset="UTF-8" />
     <title>Hello Plants</title>
 </head>
 <body>
 
 <h1>Hello Plants</h1>
-
+<p th:text="'Target directory contains ' + ${numFiles} + ' files'" />
 </body>
 </html>
