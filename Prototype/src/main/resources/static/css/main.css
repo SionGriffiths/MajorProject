@@ -1,0 +1,47 @@
+body{
+    background-color: whitesmoke;
+}
+.pageContainer {
+    padding: 5px;
+    width : 75%;
+    margin: 0 auto;
+    background-color: #ffffff;
+}
+.carousel-inner .active.left { left: -10%; }
+.carousel-inner .next        { left:  10%; }
+.carousel-control.left,.carousel-control.right {background-image:none;}
+
+.plantsContainer {
+    border-bottom: 5px solid yellowgreen;
+    padding-bottom: 5px;
+}
+
+img{
+    border: 1px solid black;
+    margin: 5px;
+
+}
+.gridImage {   position: relative; }
+
+#gridContainer img {
+    border: 1px solid black;
+    margin: 5px;
+}
+
+.tag{
+    background-color: #f3f3f3;
+    opacity : 0.5;
+    top:  25px;
+    left: 25px;
+    position:absolute;
+}
+
+.disease{
+    color: #8b211e;
+    opacity: 1;
+}
+
+.small-plant{
+    color: #1f7e9a;
+    opacity: 1;
+}

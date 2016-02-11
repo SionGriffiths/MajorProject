@@ -1,13 +1,11 @@
 package com.siongriffiths.plantatlas.helloplants;
 
-import com.siongriffiths.plantatlas.image.ImageLoader;
+import com.siongriffiths.plantatlas.imageutils.ImageLoader;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.awt.*;
-import java.util.Properties;
 
 /**
  * Created on 07/02/2016.
@@ -18,14 +16,22 @@ public class PlantsPageController {
 
     public static final Logger LOGGER = Logger.getLogger(PlantsPageController.class);
 
-    @RequestMapping("/hello")
-    public String hello(Model model){
+    @Autowired ImageLoader loader;
 
-        ImageLoader loader = new ImageLoader();
-        int numFile = loader.countFiles();
-        LOGGER.info("THERE ARE " + numFile + " files in the target dir.");
-        model.addAttribute("numFiles",numFile);
-        return "hello";
+    @RequestMapping("/carousel")
+    public String carousel(Model model){
+        model.addAttribute("list",loader.getFiles());
+        return "carousel";
     }
+
+    @RequestMapping("/grid")
+    public String grid(Model model){
+        model.addAttribute("list",loader.getFiles());
+        return "grid";
+    }
+
+
+
+
 
 }
