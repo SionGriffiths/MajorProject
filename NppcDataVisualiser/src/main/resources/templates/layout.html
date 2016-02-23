@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>Title</title>
+    <link rel="stylesheet"
+          th:href="@{/bower_components/bootstrap/dist/css/bootstrap.min.css}"
+          href="../../bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+</head>
+<body>
+
+<div class="container">
+    <h1 layout:fragment="header">Layout</h1>
+    <div layout:fragment="content">
+        Layout Template
+    </div>
+</div>
+
+</body>
+</html>
