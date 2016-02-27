@@ -4,6 +4,7 @@ import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created on 26/02/2016.
@@ -12,16 +13,16 @@ import java.util.ArrayList;
  */
 
 @Entity
-@Table(name="plants", uniqueConstraints = @UniqueConstraint(columnNames = {"bar_code"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"bar_code"}))
 public class Plant {
 
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="plant_meta_data_id")
     private Metadata plantMetaData;
 
-    @Column(name = "plant_images")
-    private ArrayList<PlantImage> plantImages;
+    @ElementCollection
+    private List<PlantImage> plantImages;
 
     @Id
     @Column(name = "bar_code")
@@ -30,22 +31,28 @@ public class Plant {
 
     public Plant(String barCode){
         this.barCode = barCode;
+        plantMetaData = new Metadata();
+        plantImages = new ArrayList<>();
     }
-//
-//    public Metadata getPlantMetaData() {
-//        return plantMetaData;
-//    }
-//
-//    public void setPlantMetaData(Metadata plantMetaData) {
-//        this.plantMetaData = plantMetaData;
-//    }
 
-    public ArrayList<PlantImage> getPlantImages() {
+    public Metadata getPlantMetaData() {
+        return plantMetaData;
+    }
+
+    public void setPlantMetaData(Metadata plantMetaData) {
+        this.plantMetaData = plantMetaData;
+    }
+
+    public List<PlantImage> getPlantImages() {
         return plantImages;
     }
 
     public void setPlantImages(ArrayList<PlantImage> plantImages) {
         this.plantImages = plantImages;
+    }
+
+    public void addPlantImage(PlantImage plantImage){
+        plantImages.add(plantImage);
     }
 
     public String getBarCode() {

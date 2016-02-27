@@ -23,9 +23,6 @@ public class HomePageController {
      */
     @RequestMapping
     public ModelAndView showHome() {
-        LOGGER.info("TEST INFO");
-        LOGGER.debug("TEST DEBUG");
-        LOGGER.error("TEST ERROR");
         return new ModelAndView("home/default");
     }
 }

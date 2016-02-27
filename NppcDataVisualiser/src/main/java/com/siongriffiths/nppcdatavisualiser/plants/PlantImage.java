@@ -2,20 +2,31 @@ package com.siongriffiths.nppcdatavisualiser.plants;
 
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
 /**
  * Created on 26/02/2016.
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
+@Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"filePath"}))
 public class PlantImage {
 
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="plant_image_meta_data_id")
     private Metadata plantImageMetaData;
+
+    @Id
+    @Column
     private String filePath;
 
-    public PlantImage(){}
+
 
     public PlantImage(String filepath){
         this.filePath = filepath;
+        plantImageMetaData = new Metadata();
     }
 
 

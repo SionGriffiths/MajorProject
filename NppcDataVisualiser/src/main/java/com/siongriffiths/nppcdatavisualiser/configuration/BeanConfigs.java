@@ -1,5 +1,7 @@
 package com.siongriffiths.nppcdatavisualiser.configuration;
 
+import com.siongriffiths.nppcdatavisualiser.imageutils.ImageLoader;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -9,5 +11,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class BeanConfigs {
+
+    @Bean
+    public ImageLoader imageLoader(){
+        return new ImageLoader();
+    }
+
 
 }

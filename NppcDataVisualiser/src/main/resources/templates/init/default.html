@@ -1,0 +1,21 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>DEFAULT INIT PAGE</title>
+</head>
+<body>
+
+<h1 layout:fragment="header">Init Page</h1>
+<div layout:fragment="content">
+
+    <p>Do init things</p>
+
+    <form action="#" th:action="@{/init/createPlants}" >
+        <input type="submit" value="initialise plants" />
+    </form>
+
+
+</div>
+</body>
+</html>
