@@ -1,5 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,9 +15,17 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/")
 public class HomePageController {
 
+    public static final Logger LOGGER = Logger.getLogger(HomePageController.class);
+
+    /**
+     * showHome returns the default home view
+     * @return the default home view
+     */
     @RequestMapping
     public ModelAndView showHome() {
+        LOGGER.info("TEST INFO");
+        LOGGER.debug("TEST DEBUG");
+        LOGGER.error("TEST ERROR");
         return new ModelAndView("home/default");
     }
-
 }
