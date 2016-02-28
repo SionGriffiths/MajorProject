@@ -1,4 +1,4 @@
-package com.siongriffiths.nppcdatavisualiser.plants.daos;
+package com.siongriffiths.nppcdatavisualiser.plants.service;
 
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 
@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
-public interface PlantDao {
+public interface PlantManager {
 
     void savePlant(Plant plant);
     List<Plant> getAllPlants();

@@ -7,8 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
-
 /**
  * Created on 27/02/2016.
  *
@@ -21,7 +19,7 @@ public class InitialisationController {
     public static final Logger LOGGER = Logger.getLogger(InitialisationController.class);
 
     @Autowired
-    ImageLoader imageLoader;
+    private ImageLoader imageLoader;
 
     @RequestMapping
     public ModelAndView showInit(){

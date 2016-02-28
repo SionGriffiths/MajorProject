@@ -2,10 +2,10 @@ package com.siongriffiths.nppcdatavisualiser.imageutils;
 
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
-import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantDao;
-import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantImageDao;
+import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 
@@ -14,13 +14,11 @@ import java.io.File;
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
+@Component //Component scanning will find this and treat class as bean
 public class ImageLoader {
 
     @Autowired
-    PlantDao plantDao;
-    @Autowired
-    PlantImageDao plantImageDao;
-
+    private PlantManager plantManager;
 
     public static final Logger LOGGER = Logger.getLogger(ImageLoader.class);
     private static final String DEFAULT_IMAGE_DIRECTORY = "src/main/resources/static/images";
@@ -46,7 +44,7 @@ public class ImageLoader {
                         plant.addPlantImage(plantImage);
                     }
                 }
-                plantDao.savePlant(plant);
+                plantManager.savePlant(plant);
                 //loop again then :
                 //create new plantImage with path = subDir
             }

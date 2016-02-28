@@ -12,10 +12,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BeanConfigs {
 
-    @Bean
-    public ImageLoader imageLoader(){
-        return new ImageLoader();
-    }
 
 
 }

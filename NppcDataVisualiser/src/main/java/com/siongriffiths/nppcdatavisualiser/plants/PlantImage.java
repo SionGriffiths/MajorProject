@@ -3,7 +3,6 @@ package com.siongriffiths.nppcdatavisualiser.plants;
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * Created on 26/02/2016.
@@ -25,6 +24,8 @@ public class PlantImage {
     @ManyToOne
     @JoinColumn(name = "plant_id", nullable = false)
     private Plant plant;
+
+    public PlantImage(){}
 
     public PlantImage(String filepath){
         this.filePath = filepath;

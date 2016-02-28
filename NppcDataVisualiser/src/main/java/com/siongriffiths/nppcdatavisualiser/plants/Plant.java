@@ -21,13 +21,16 @@ public class Plant {
     @JoinColumn(name="plant_meta_data_id")
     private Metadata plantMetaData;
 
-    @OneToMany(mappedBy = "plant", cascade = {CascadeType.ALL})
+    // TODO: 28/02/2016  - check if eager fetch causes performance issues when many images involved 
+    @OneToMany(mappedBy = "plant", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private List<PlantImage> plantImages;
 
     @Id
     @Column(name = "bar_code")
     private String barCode;
 
+    //Default constructor required for mapping from DB
+    public Plant(){}
 
     public Plant(String barCode){
         this.barCode = barCode;

@@ -1,0 +1,19 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Plant Detail Page</title>
+</head>
+<body>
+
+<h1 layout:fragment="header">PlantDetail</h1>
+<div layout:fragment="content">
+<p th:text="'This is the detail page for ' + ${plant.getBarCode()}" />
+
+    <div th:each="plantImage,status : ${plant.getPlantImages()}">
+        <img th:src="@{/{path}(path=${plantImage.getFilePath()})}"/>
+    </div>
+
+</div>
+</body>
+</html>
