@@ -52,4 +52,6 @@ public class PlantDaoImpl implements PlantDao{
     private Session getSession() {
         return sessionFactory.getCurrentSession();
     }
+
+    // TODO: 28/02/2016 maybe add a method to drop the table during init 
 }
