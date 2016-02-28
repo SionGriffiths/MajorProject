@@ -22,7 +22,9 @@ public class PlantImage {
     @Column
     private String filePath;
 
-
+    @ManyToOne
+    @JoinColumn(name = "plant_id", nullable = false)
+    private Plant plant;
 
     public PlantImage(String filepath){
         this.filePath = filepath;
@@ -45,5 +47,13 @@ public class PlantImage {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public Plant getPlant() {
+        return plant;
+    }
+
+    public void setPlant(Plant plant) {
+        this.plant = plant;
     }
 }

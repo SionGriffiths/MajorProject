@@ -21,7 +21,7 @@ public class Plant {
     @JoinColumn(name="plant_meta_data_id")
     private Metadata plantMetaData;
 
-    @ElementCollection
+    @OneToMany(mappedBy = "plant", cascade = {CascadeType.ALL})
     private List<PlantImage> plantImages;
 
     @Id

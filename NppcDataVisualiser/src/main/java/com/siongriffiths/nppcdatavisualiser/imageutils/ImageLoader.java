@@ -8,8 +8,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
-import java.io.IOException;
-
 
 /**
  * Created on 27/02/2016.
@@ -41,12 +39,10 @@ public class ImageLoader {
                 File[] files = subDir.listFiles();
                 if(files != null){
                     for(File imagefile : files){
-                        LOGGER.info("get path = " + imagefile.getName() + "\n"
-                                    + "get can path = " + subDir.getName() + "\n"
-                                    + "get abs path = " + dir.getName());
                         String imagePath = dir.getName() + "/" + subDir.getName() + "/" + imagefile.getName();
                         PlantImage plantImage = new PlantImage(imagePath);
-                        plantImageDao.savePlantImage(plantImage);
+                        plantImage.setPlant(plant);
+//                        plantImageDao.savePlantImage(plantImage);
                         plant.addPlantImage(plantImage);
                     }
                 }
