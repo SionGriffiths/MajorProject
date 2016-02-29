@@ -22,15 +22,15 @@ public class InitialisationController {
     private ImageLoader imageLoader;
 
     @RequestMapping
-    public ModelAndView showInit(){
-        return new ModelAndView("init/default");
+    public String showInit(){
+        return "init/default";
     }
 
     @RequestMapping("/createPlants")
-    public ModelAndView createPlants() {
+    public String createPlants() {
         LOGGER.info("Plants init");
         imageLoader.testing();
-        return new ModelAndView("init/default");
+        return "init/default";
     }
 
 }

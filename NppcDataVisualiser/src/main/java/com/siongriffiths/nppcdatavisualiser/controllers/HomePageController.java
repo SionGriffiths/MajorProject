@@ -22,7 +22,7 @@ public class HomePageController {
      * @return the default home view
      */
     @RequestMapping
-    public ModelAndView showHome() {
-        return new ModelAndView("home/default");
+    public String showHome() {
+        return "home/default";
     }
 }

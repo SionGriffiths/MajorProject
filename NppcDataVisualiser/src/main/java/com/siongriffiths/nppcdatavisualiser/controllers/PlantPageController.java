@@ -25,15 +25,15 @@ public class PlantPageController {
 
     @RequestMapping
     // TODO: 28/02/2016 - Maybe just query the barcodes here and add them to page rather than the plant objects
-    public ModelAndView showPlants(Model model){
+    public String showPlants(Model model){
         model.addAttribute("plantList", plantManager.getAllPlants());
-        return new ModelAndView("plants/show");
+        return "plants/show";
     }
 
     @RequestMapping("{plantBarCode}")
-    public ModelAndView showPlantDetail(Model model, @PathVariable("plantBarCode") String barCode){
+    public String showPlantDetail(Model model, @PathVariable("plantBarCode") String barCode){
         LOGGER.info(barCode);
         model.addAttribute("plant", plantManager.getPlantByBarcode(barCode));
-        return new ModelAndView("plants/plantdetail");
+        return "plants/plantdetail";
     }
 }
