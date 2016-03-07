@@ -8,10 +8,22 @@
 
 <h1 layout:fragment="header">PlantDetail</h1>
 <div layout:fragment="content">
-<p th:text="'This is the detail page for ' + ${plant.getBarCode()}" />
+    <p th:text="'This is the detail page for ' + ${plant.getBarCode()}" />
 
-    <div th:each="plantImage,status : ${plant.getPlantImages()}">
-        <img th:src="@{/{path}(path=${plantImage.getFilePath()})}"/>
+    <div th:each="plantImage,status : ${plant.getPlantImages()}" th:class="'plant_image container'">
+        <div class="col-xs-6">
+            <img th:src="@{/{path}(path=${plantImage.getFilePath()})}" th:class="img-responsive"/>
+        </div>
+       <!--todo - Get ID of plant image into a hidden field in the form, use to look up and input data-->
+        <div class="col-xs-6">
+            <form action="#" th:action="@{tagged}" th:object="${plantDetailsForm}" method="post" class="form-inline" >
+                <div class="form-group">
+                    <input type="hidden" name="plantImageID" th:value="${plantImage.getId()}" />
+                    <input type="text" class="form-control" th:field="*{tagContent}" placeholder="Tag this image" />
+                    <input type="submit" value="Add tag" class="btn"/>
+                </div>
+            </form>
+        </div>
     </div>
 
 </div>

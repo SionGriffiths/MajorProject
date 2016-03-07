@@ -1,8 +1,10 @@
 package com.siongriffiths.nppcdatavisualiser.plants;
 
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
+import com.siongriffiths.nppcdatavisualiser.data.TagData;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created on 26/02/2016.
@@ -18,12 +20,19 @@ public class PlantImage {
     private Metadata plantImageMetaData;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     @Column
     private String filePath;
 
     @ManyToOne
     @JoinColumn(name = "plant_id", nullable = false)
     private Plant plant;
+
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<TagData> tags;
 
     public PlantImage(){}
 
@@ -32,7 +41,13 @@ public class PlantImage {
         plantImageMetaData = new Metadata();
     }
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public Metadata getPlantImageMetaData() {
         return plantImageMetaData;
