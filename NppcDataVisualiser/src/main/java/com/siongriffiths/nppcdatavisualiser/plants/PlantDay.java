@@ -1,6 +1,7 @@
 package com.siongriffiths.nppcdatavisualiser.plants;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,8 +25,44 @@ public class PlantDay {
     @OneToMany(mappedBy = "plantDay", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private List<PlantImage> plantImages;
 
+    private Date date;
+
     public PlantDay(){}
 
+    public PlantDay(Date date){
+        this.date = date;
+    }
 
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Plant getPlant() {
+        return plant;
+    }
+
+    public void setPlant(Plant plant) {
+        this.plant = plant;
+    }
+
+    public List<PlantImage> getPlantImages() {
+        return plantImages;
+    }
+
+    public void setPlantImages(List<PlantImage> plantImages) {
+        this.plantImages = plantImages;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }

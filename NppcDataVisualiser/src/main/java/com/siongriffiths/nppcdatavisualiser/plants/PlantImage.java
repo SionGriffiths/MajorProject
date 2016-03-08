@@ -70,11 +70,11 @@ public class PlantImage {
         this.filePath = filePath;
     }
 
-    public PlantDay getPlant() {
+    public PlantDay getPlantDay() {
         return plantDay;
     }
 
-    public void setPlant(PlantDay plantDay) {
+    public void setPlantDay(PlantDay plantDay) {
         this.plantDay = plantDay;
     }
 
