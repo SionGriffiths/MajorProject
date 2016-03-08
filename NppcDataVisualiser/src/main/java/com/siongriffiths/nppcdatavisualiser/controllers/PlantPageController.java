@@ -53,15 +53,11 @@ public class PlantPageController {
         model.addAttribute("plantDetailsForm" ,plantDetailsForm);
 
         String content = plantDetailsForm.getTagContent();
+        // TODO: 08/03/2016 NULL check on plant. 
         PlantImage image = plantImageManager.getPlantImageByID(Long.parseLong(plantDetailsForm.getPlantImageID()));
-        LOGGER.info("id = " +plantDetailsForm.getPlantImageID());
-        LOGGER.info("content = " + content);
-        LOGGER.info("Plant image ID is " + image.getId());
-
         TagData tag = tagManager.createOrGetTag(content);
         plantImageManager.tagPlantImage(tag, image);
         tagManager.saveTagData(tag);
-        //don't save if enter same tag info.
         plantImageManager.savePlantImage(image);
     }
 

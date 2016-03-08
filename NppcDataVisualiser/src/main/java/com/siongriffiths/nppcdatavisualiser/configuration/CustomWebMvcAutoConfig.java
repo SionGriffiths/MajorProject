@@ -17,17 +17,16 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
  */
 @Configuration
 @AutoConfigureAfter(DispatcherServletAutoConfiguration.class)
-public class CustomWebMvcAutoConfig extends
-        WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter {
+public class CustomWebMvcAutoConfig extends WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter {
 
-    @Value("${image-repository.root}")
+    @Value("${image-repository.root.static-link}")
     private String imageRepoRoot;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         String myExternalFilePath = imageRepoRoot;
 
-        registry.addResourceHandler("/m/**").addResourceLocations(myExternalFilePath);
+        registry.addResourceHandler("/images/**").addResourceLocations(myExternalFilePath);
 
         super.addResourceHandlers(registry);
     }

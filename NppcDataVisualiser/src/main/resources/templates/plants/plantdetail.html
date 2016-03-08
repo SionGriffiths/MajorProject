@@ -14,15 +14,15 @@
         <div class="col-xs-6">
             <img th:src="@{/{path}(path=${plantImage.getFilePath()})}" th:class="img-responsive"/>
         </div>
-       <!--todo - Get ID of plant image into a hidden field in the form, use to look up and input data-->
+        <!--todo - Get ID of plant image into a hidden field in the form, use to look up and input data-->
         <div class="col-xs-6">
             <div th:each="plantImageTag,status : ${plantImage.getTags()}" th:class="'plant_image container'">
                 <p th:text="${plantImageTag.getTagContent()}"/>
-                </div>
+            </div>
             <form action="#" th:action="@{tagged}" th:object="${plantDetailsForm}" method="post" class="form-inline" >
                 <div class="form-group">
                     <input type="hidden" name="plantImageID" th:value="${plantImage.getId()}" />
-                    <input type="text" class="form-control" th:field="*{tagContent}" placeholder="Tag this image" />
+                    <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control" th:field="*{tagContent}" placeholder="Tag this image" />
                     <input type="submit" value="Add tag" class="btn"/>
                 </div>
             </form>

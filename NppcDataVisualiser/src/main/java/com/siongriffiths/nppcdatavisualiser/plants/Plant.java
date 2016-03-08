@@ -21,7 +21,7 @@ public class Plant {
     private Metadata plantMetaData;
 
     @OneToMany(mappedBy = "plant", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    private List<PlantImage> plantImages;
+    private List<PlantDay> plantDays;
 
     @Id
     @Column(name = "bar_code")
@@ -33,11 +33,11 @@ public class Plant {
     public Plant(String barCode){
         this.barCode = barCode;
         plantMetaData = new Metadata();
-        plantImages = new ArrayList<>();
+        plantDays = new ArrayList<>();
     }
 
-    public void addPlantImage(PlantImage plantImage){
-        plantImages.add(plantImage);
+    public void addPlantDay(PlantDay plantDay){
+        plantDays.add(plantDay);
     }
 
     public Metadata getPlantMetaData() {
@@ -48,13 +48,13 @@ public class Plant {
         this.plantMetaData = plantMetaData;
     }
 
-    public List<PlantImage> getPlantImages() {
-        return plantImages;
+    public List<PlantDay> getPlantDays() {
+        return plantDays;
     }
 
 
-    public void setPlantImages(List<PlantImage> plantImages) {
-        this.plantImages = plantImages;
+    public void setPlantDays(List<PlantDay> plantDays) {
+        this.plantDays = plantDays;
     }
 
     public String getBarCode() {

@@ -30,8 +30,8 @@ public class PlantImage {
     private String filePath;
 
     @ManyToOne
-    @JoinColumn(name = "plant_id", nullable = false)
-    private Plant plant;
+    @JoinColumn(name = "plant_day_id", nullable = false)
+    private PlantDay plantDay;
 
     @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name="plantimage_tag", joinColumns=@JoinColumn(name="plantimage_id"),
@@ -70,16 +70,13 @@ public class PlantImage {
         this.filePath = filePath;
     }
 
-    public Plant getPlant() {
-        return plant;
+    public PlantDay getPlant() {
+        return plantDay;
     }
 
-    public void setPlant(Plant plant) {
-        this.plant = plant;
+    public void setPlant(PlantDay plantDay) {
+        this.plantDay = plantDay;
     }
-
-
-    //https://howtoprogramwithjava.com/hibernate-manytomany-unidirectional-bidirectional/
 
     public Set<TagData> getTags() {
         return tags;
