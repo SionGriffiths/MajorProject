@@ -33,7 +33,7 @@ public class PlantImage {
     @JoinColumn(name = "plant_id", nullable = false)
     private Plant plant;
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name="plantimage_tag", joinColumns=@JoinColumn(name="plantimage_id"),
             inverseJoinColumns = @JoinColumn(name="tag_id"))
     private Set<TagData> tags;
