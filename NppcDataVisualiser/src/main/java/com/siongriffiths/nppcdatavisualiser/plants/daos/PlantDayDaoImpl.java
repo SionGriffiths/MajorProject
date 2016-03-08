@@ -1,5 +1,9 @@
 package com.siongriffiths.nppcdatavisualiser.plants.daos;
 
+import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,4 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository("plantDayDao")
 @Transactional
 public class PlantDayDaoImpl implements PlantDayDao {
+
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
+
+    @Override
+    public void savePlantDay(PlantDay plantDay) {
+        getSession().saveOrUpdate(plantDay);
+    }
+
+    private Session getSession() {
+        return sessionFactory.getCurrentSession();
+    }
 }

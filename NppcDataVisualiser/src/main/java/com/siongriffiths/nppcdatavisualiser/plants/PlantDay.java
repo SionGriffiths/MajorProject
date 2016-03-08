@@ -1,6 +1,7 @@
 package com.siongriffiths.nppcdatavisualiser.plants;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,10 +28,12 @@ public class PlantDay {
 
     private Date date;
 
-    public PlantDay(){}
+    public PlantDay(){
+    }
 
     public PlantDay(Date date){
         this.date = date;
+        plantImages = new ArrayList<>();
     }
 
 
@@ -52,6 +55,10 @@ public class PlantDay {
 
     public List<PlantImage> getPlantImages() {
         return plantImages;
+    }
+
+    public void addPlantImage(PlantImage plantImage){
+        plantImages.add(plantImage);
     }
 
     public void setPlantImages(List<PlantImage> plantImages) {
