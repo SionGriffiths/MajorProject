@@ -4,7 +4,10 @@ import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created on 26/02/2016.
@@ -30,15 +33,17 @@ public class PlantImage {
     @JoinColumn(name = "plant_id", nullable = false)
     private Plant plant;
 
-
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<TagData> tags;
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name="plantimage_tag", joinColumns=@JoinColumn(name="plantimage_id"),
+            inverseJoinColumns = @JoinColumn(name="tag_id"))
+    private Set<TagData> tags;
 
     public PlantImage(){}
 
     public PlantImage(String filepath){
         this.filePath = filepath;
         plantImageMetaData = new Metadata();
+        tags = new HashSet<>();
     }
 
     public long getId() {
@@ -71,5 +76,20 @@ public class PlantImage {
 
     public void setPlant(Plant plant) {
         this.plant = plant;
+    }
+
+
+    //https://howtoprogramwithjava.com/hibernate-manytomany-unidirectional-bidirectional/
+
+    public Set<TagData> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<TagData> tags) {
+        this.tags = tags;
+    }
+
+    public void addTag(TagData tag){
+        tags.add(tag);
     }
 }

@@ -11,6 +11,7 @@ import org.hibernate.Session;
 public interface PlantImageDao {
 
     void savePlantImage(PlantImage plantImage);
+    PlantImage getPlantImageById(long ID);
 
 
 }

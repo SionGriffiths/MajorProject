@@ -38,6 +38,7 @@ public class PlantDaoImpl implements PlantDao{
         return getSession().createQuery("FROM Plant").list();
     }
 
+    //TODO : move this query to use Hibernate criteria ?
     @Override
     public Plant getPlantByBarcode(String barcode) {
 

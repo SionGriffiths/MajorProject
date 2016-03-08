@@ -1,5 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.plants.daos;
 
+import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,8 +25,15 @@ public class PlantImageDaoImpl implements PlantImageDao {
         getSession().saveOrUpdate(plantImage);
     }
 
+    @Override
+    public PlantImage getPlantImageById(long ID) {
+       return (PlantImage) getSession().get(PlantImage.class, ID);
+    }
+
     private Session getSession() {
         return sessionFactory.getCurrentSession();
     }
+
+
 
 }

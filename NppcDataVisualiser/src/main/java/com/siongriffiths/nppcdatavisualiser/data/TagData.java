@@ -1,9 +1,9 @@
 package com.siongriffiths.nppcdatavisualiser.data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
+
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created on 07/03/2016.
@@ -19,6 +19,15 @@ public class TagData {
 
     private String tagContent;
 
+    @ManyToMany(cascade=CascadeType.ALL, mappedBy="tags")
+    private Set<PlantImage> taggedImages;
+
+
+    public TagData(){}
+
+    public TagData(String content){
+        tagContent = content;
+    }
 
     public long getId() {
         return id;
@@ -37,4 +46,11 @@ public class TagData {
     }
 
 
+    public Set<PlantImage> getTaggedImages() {
+        return taggedImages;
+    }
+
+    public void setTaggedImages(Set<PlantImage> taggedImages) {
+        this.taggedImages = taggedImages;
+    }
 }

@@ -5,7 +5,7 @@ package com.siongriffiths.nppcdatavisualiser.controlobjects;
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  *
- * POJO class used to represent a front end form and act as a data transfer object for form submission
+ * Form backing object pojo class used to represent a front end form and act as a data transfer object for form submission
  */
 public class PlantDetailsForm {
 

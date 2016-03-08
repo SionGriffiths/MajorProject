@@ -2,6 +2,10 @@ package com.siongriffiths.nppcdatavisualiser.controllers;
 
 import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantDetailsForm;
 import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantForm;
+import com.siongriffiths.nppcdatavisualiser.data.TagData;
+import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
+import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
+import com.siongriffiths.nppcdatavisualiser.plants.service.PlantImageManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +27,10 @@ public class PlantPageController {
 
     @Autowired
     private PlantManager plantManager;
+    @Autowired
+    private PlantImageManager plantImageManager;
+    @Autowired
+    private TagManager tagManager;
 
     @RequestMapping
     public String showPlants(Model model){
@@ -43,10 +51,18 @@ public class PlantPageController {
     @RequestMapping(value = "/tagged", method = RequestMethod.POST)
     public void tagPlant(@ModelAttribute PlantDetailsForm plantDetailsForm, Model model){
         model.addAttribute("plantDetailsForm" ,plantDetailsForm);
+
+        String content = plantDetailsForm.getTagContent();
+        PlantImage image = plantImageManager.getPlantImageByID(Long.parseLong(plantDetailsForm.getPlantImageID()));
         LOGGER.info("id = " +plantDetailsForm.getPlantImageID());
-        LOGGER.info("content = " +plantDetailsForm.getTagContent());
+        LOGGER.info("content = " + content);
+        LOGGER.info("Plant image ID is " + image.getId());
 
+        TagData tag = tagManager.createOrGetTag(content);
+        plantImageManager.tagPlantImage(tag, image);
+        tagManager.saveTagData(tag);
+        //don't save if enter same tag info.
+        plantImageManager.savePlantImage(image);
     }
-
 
 }
