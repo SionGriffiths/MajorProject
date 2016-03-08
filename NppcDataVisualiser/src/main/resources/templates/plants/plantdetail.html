@@ -16,6 +16,9 @@
         </div>
        <!--todo - Get ID of plant image into a hidden field in the form, use to look up and input data-->
         <div class="col-xs-6">
+            <div th:each="plantImageTag,status : ${plantImage.getTags()}" th:class="'plant_image container'">
+                <p th:text="${plantImageTag.getTagContent()}"/>
+                </div>
             <form action="#" th:action="@{tagged}" th:object="${plantDetailsForm}" method="post" class="form-inline" >
                 <div class="form-group">
                     <input type="hidden" name="plantImageID" th:value="${plantImage.getId()}" />
