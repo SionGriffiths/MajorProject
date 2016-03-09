@@ -2,7 +2,9 @@ package com.siongriffiths.nppcdatavisualiser.plants.service;
 
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantDao;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,5 +33,17 @@ public class PlantManagerImpl implements PlantManager {
     @Override
     public Plant getPlantByBarcode(String barcode) {
        return plantDao.getPlantByBarcode(barcode);
+    }
+
+    @Override
+    public Plant getAndInitialisePOLantByBarCode(String barcode) {
+        Plant plant = getPlantByBarcode(barcode);
+        return plant;
+    }
+
+
+    @Override
+    public void initializePlantObject(Plant plant) {
+        Hibernate.initialize(plant.getPlantDays());
     }
 }

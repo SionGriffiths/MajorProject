@@ -4,6 +4,7 @@ import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantDetailsForm;
 import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantForm;
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
+import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantImageManager;
@@ -45,7 +46,10 @@ public class PlantPageController {
     @RequestMapping("{plantBarCode}")
     public String showPlantDetail(Model model, @PathVariable("plantBarCode") String barCode){
         LOGGER.info(barCode);
-        model.addAttribute("plant", plantManager.getPlantByBarcode(barCode));
+        Plant targetPlant  = plantManager.getAndInitialisePOLantByBarCode(barCode);
+        plantManager.initializePlantObject(targetPlant);
+        model.addAttribute("plant", targetPlant);
+
         model.addAttribute("plantDetailsForm" ,new PlantDetailsForm());
         return "plants/plantdetail";
     }

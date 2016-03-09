@@ -12,6 +12,12 @@ import java.util.List;
 public interface PlantManager {
 
     void savePlant(Plant plant);
+
     List<Plant> getAllPlants();
+
     Plant getPlantByBarcode(String barcode);
+
+    Plant getAndInitialisePOLantByBarCode(String barcode);
+
+    void initializePlantObject(Plant plant);
 }

@@ -9,24 +9,27 @@
 <h1 layout:fragment="header">PlantDetail</h1>
 <div layout:fragment="content">
     <p th:text="'This is the detail page for ' + ${plant.getBarCode()}" />
+    <p th:text="'There are '  + ${plant.getPlantDays().size()} + ' days recorded for this plant meight'"/>
+    <div th:each="plantDay,status : ${plant.getPlantDays()}" th:class="'plant_image container'">
 
-    <div th:each="plantImage,status : ${plant.getPlantImages()}" th:class="'plant_image container'">
-        <div class="col-xs-6">
-            <img th:src="@{/{path}(path=${plantImage.getFilePath()})}" th:class="img-responsive"/>
-        </div>
-        <!--todo - Get ID of plant image into a hidden field in the form, use to look up and input data-->
-        <div class="col-xs-6">
-            <div th:each="plantImageTag,status : ${plantImage.getTags()}" th:class="'plant_image container'">
-                <p th:text="${plantImageTag.getTagContent()}"/>
-            </div>
-            <form action="#" th:action="@{tagged}" th:object="${plantDetailsForm}" method="post" class="form-inline" >
-                <div class="form-group">
-                    <input type="hidden" name="plantImageID" th:value="${plantImage.getId()}" />
-                    <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control" th:field="*{tagContent}" placeholder="Tag this image" />
-                    <input type="submit" value="Add tag" class="btn"/>
-                </div>
-            </form>
-        </div>
+        <p th:text="'There are ' + ${plantDay.getPlantImages().size()} + ' images associated with  ' + ${plantDay.getDate()} "/>
+
+        <!--<div class="col-xs-6">-->
+            <!--<img th:src="@{/{path}(path=${plantImage.getFilePath()})}" th:class="img-responsive"/>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;todo - Get ID of plant image into a hidden field in the form, use to look up and input data&ndash;&gt;-->
+        <!--<div class="col-xs-6">-->
+            <!--<div th:each="plantImageTag,status : ${plantImage.getTags()}" th:class="'plant_image container'">-->
+                <!--<p th:text="${plantImageTag.getTagContent()}"/>-->
+            <!--</div>-->
+            <!--<form action="#" th:action="@{tagged}" th:object="${plantDetailsForm}" method="post" class="form-inline" >-->
+                <!--<div class="form-group">-->
+                    <!--<input type="hidden" name="plantImageID" th:value="${plantImage.getId()}" />-->
+                    <!--<input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control" th:field="*{tagContent}" placeholder="Tag this image" />-->
+                    <!--<input type="submit" value="Add tag" class="btn"/>-->
+                <!--</div>-->
+            <!--</form>-->
+        <!--</div>-->
     </div>
 
 </div>

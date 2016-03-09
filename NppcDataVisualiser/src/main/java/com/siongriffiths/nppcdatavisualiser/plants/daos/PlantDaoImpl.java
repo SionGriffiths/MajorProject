@@ -3,6 +3,7 @@ package com.siongriffiths.nppcdatavisualiser.plants.daos;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import org.apache.log4j.Logger;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -45,8 +46,9 @@ public class PlantDaoImpl implements PlantDao{
         String hibernateQuery = "FROM Plant WHERE bar_code =:bar_code";
         Query query = getSession().createQuery(hibernateQuery);
         query.setParameter("bar_code", barcode);
-
-        return (Plant)query.uniqueResult();
+        Plant plant = (Plant)query.uniqueResult();
+        Hibernate.initialize(plant.getPlantDays()); //Initialize lazy collection on plant fetch
+        return plant;
     }
 
 

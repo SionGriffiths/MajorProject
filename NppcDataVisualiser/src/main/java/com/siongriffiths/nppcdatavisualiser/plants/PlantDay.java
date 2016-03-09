@@ -54,7 +54,7 @@ public class PlantDay {
         this.plant = plant;
     }
 
-    @OneToMany(mappedBy = "plantDay", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "plantDay", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     public List<PlantImage> getPlantImages() {
         return plantImages;
     }

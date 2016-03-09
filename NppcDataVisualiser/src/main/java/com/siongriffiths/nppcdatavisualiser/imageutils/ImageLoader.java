@@ -97,7 +97,7 @@ public class ImageLoader {
             e.printStackTrace();
         }
 
-        LOGGER.info("name of file is  : " + trimmedName);
+//        LOGGER.info("name of file is  : " + trimmedName);
         return date;
     }
 }
