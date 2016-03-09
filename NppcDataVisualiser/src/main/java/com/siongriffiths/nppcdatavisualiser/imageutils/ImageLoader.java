@@ -35,7 +35,7 @@ public class ImageLoader {
     @Value("${image-repository.root.dir}")
     private String imageRepoRoot;
 
-
+//todo handle loading of duplicate information - i.e check idS FIRST? :(
     public static final Logger LOGGER = Logger.getLogger(ImageLoader.class);
 
 
@@ -68,8 +68,6 @@ public class ImageLoader {
                             image.setFilePath(path);
                             image.setPlantDay(plantDay);
                             plantDay.addPlantImage(image);
-//                            plantImageManager.savePlantImage(image);
-//                            plantDayManager.savePlantDay(plantDay);
                         }
                     }
                 }

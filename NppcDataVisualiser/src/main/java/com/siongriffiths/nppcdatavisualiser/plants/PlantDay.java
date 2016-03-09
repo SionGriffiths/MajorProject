@@ -15,15 +15,13 @@ import java.util.List;
 @Entity
 public class PlantDay {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "plant_id", nullable = false)
+
     private Plant plant;
 
-    @OneToMany(mappedBy = "plantDay", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+
     private List<PlantImage> plantImages;
 
     private Date date;
@@ -36,7 +34,8 @@ public class PlantDay {
         plantImages = new ArrayList<>();
     }
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public long getId() {
         return id;
     }
@@ -45,6 +44,8 @@ public class PlantDay {
         this.id = id;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "plant_id", nullable = false)
     public Plant getPlant() {
         return plant;
     }
@@ -53,6 +54,7 @@ public class PlantDay {
         this.plant = plant;
     }
 
+    @OneToMany(mappedBy = "plantDay", cascade = {CascadeType.ALL})
     public List<PlantImage> getPlantImages() {
         return plantImages;
     }

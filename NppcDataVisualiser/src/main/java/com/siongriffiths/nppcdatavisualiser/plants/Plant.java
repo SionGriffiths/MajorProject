@@ -16,15 +16,9 @@ import java.util.List;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"bar_code"}))
 public class Plant {
 
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="plant_meta_data_id")
+    private long id;
     private Metadata plantMetaData;
-
-    @OneToMany(mappedBy = "plant", cascade = {CascadeType.ALL})
     private List<PlantDay> plantDays;
-
-    @Id
-    @Column(name = "bar_code")
     private String barCode;
 
     //Default constructor required for mapping from orm
@@ -36,10 +30,22 @@ public class Plant {
         plantDays = new ArrayList<>();
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public void addPlantDay(PlantDay plantDay){
         plantDays.add(plantDay);
     }
 
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="plant_meta_data_id")
     public Metadata getPlantMetaData() {
         return plantMetaData;
     }
@@ -48,6 +54,8 @@ public class Plant {
         this.plantMetaData = plantMetaData;
     }
 
+    //Accessor is annotated to avoid eager fetch on object creation
+    @OneToMany(mappedBy = "plant", cascade = {CascadeType.ALL} ,fetch = FetchType.EAGER)
     public List<PlantDay> getPlantDays() {
         return plantDays;
     }
@@ -57,6 +65,7 @@ public class Plant {
         this.plantDays = plantDays;
     }
 
+    @Column(name = "bar_code")
     public String getBarCode() {
         return barCode;
     }

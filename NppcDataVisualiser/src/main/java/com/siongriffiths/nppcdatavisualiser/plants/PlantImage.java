@@ -18,24 +18,19 @@ import java.util.Set;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"filePath"}))
 public class PlantImage {
 
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="plant_image_meta_data_id")
+
     private Metadata plantImageMetaData;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private long id;
 
-    @Column
+
     private String filePath;
 
-    @ManyToOne
-    @JoinColumn(name = "plant_day_id", nullable = false)
+
     private PlantDay plantDay;
 
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name="plantimage_tag", joinColumns=@JoinColumn(name="plantimage_id"),
-            inverseJoinColumns = @JoinColumn(name="tag_id"))
+
     private Set<TagData> tags;
 
     public PlantImage(){}
@@ -46,6 +41,8 @@ public class PlantImage {
         tags = new HashSet<>();
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public long getId() {
         return id;
     }
@@ -54,6 +51,8 @@ public class PlantImage {
         this.id = id;
     }
 
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="plant_image_meta_data_id")
     public Metadata getPlantImageMetaData() {
         return plantImageMetaData;
     }
@@ -62,6 +61,7 @@ public class PlantImage {
         this.plantImageMetaData = plantImageMetaData;
     }
 
+    @Column
     public String getFilePath() {
         return filePath;
     }
@@ -70,6 +70,8 @@ public class PlantImage {
         this.filePath = filePath;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "plant_day_id", nullable = false)
     public PlantDay getPlantDay() {
         return plantDay;
     }
@@ -78,6 +80,9 @@ public class PlantImage {
         this.plantDay = plantDay;
     }
 
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name="plantimage_tag", joinColumns=@JoinColumn(name="plantimage_id"),
+            inverseJoinColumns = @JoinColumn(name="tag_id"))
     public Set<TagData> getTags() {
         return tags;
     }

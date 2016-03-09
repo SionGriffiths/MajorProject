@@ -5,6 +5,7 @@ import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantForm;
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
+import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantImageManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 import org.apache.log4j.Logger;
@@ -29,6 +30,8 @@ public class PlantPageController {
     private PlantManager plantManager;
     @Autowired
     private PlantImageManager plantImageManager;
+    @Autowired
+    private PlantDayManager plantDayManager;
     @Autowired
     private TagManager tagManager;
 
