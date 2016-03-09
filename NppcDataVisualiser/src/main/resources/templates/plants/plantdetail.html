@@ -13,7 +13,7 @@
 <div layout:fragment="content">
     <p th:text="'This is the detail page for ' + ${plant.getBarCode()}" />
     <p th:text="'There are '  + ${plant.getPlantDays().size()} + ' days recorded for this plant meight'"/>
-    <div th:each="plantDay,status : ${plant.getPlantDays()}" th:class="'plant_image container'">
+    <div th:each="plantDay,status : ${plant.getPlantDays()}" th:class="'plant_day_container container'">
 
         <p th:text="'There are ' + ${plantDay.getPlantImages().size()} + ' images associated with  ' + ${plantDay.getDate()} "/>
 

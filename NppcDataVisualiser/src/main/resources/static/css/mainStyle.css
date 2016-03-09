@@ -6,3 +6,11 @@
     margin: 0 auto; /* Align slide image horizontally center */
     width : 100%;
 }
+
+
+.plant_day_container{
+
+    border-bottom: 2px solid olivedrab ;
+    border-top: 2px solid olivedrab ;
+
+}
