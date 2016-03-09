@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created on 27/02/2016.
@@ -29,7 +28,7 @@ public class InitialisationController {
     @RequestMapping("/createPlants")
     public String createPlants() {
         LOGGER.info("Plants init");
-        imageLoader.testing();
+        imageLoader.initPlantImages();
         return "init/default";
     }
 

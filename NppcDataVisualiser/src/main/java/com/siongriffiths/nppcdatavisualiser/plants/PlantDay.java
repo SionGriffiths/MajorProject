@@ -2,6 +2,7 @@ package com.siongriffiths.nppcdatavisualiser.plants;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * Represents a day in the life of a plant. Essentailly a wrapper for the many images per day of a given plant.
  */
 @Entity
-public class PlantDay {
+public class PlantDay implements Comparable<PlantDay>{
 
 
     private long id;
@@ -73,5 +74,10 @@ public class PlantDay {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public int compareTo(PlantDay o) {
+        return this.getDate().compareTo(o.getDate());
     }
 }
