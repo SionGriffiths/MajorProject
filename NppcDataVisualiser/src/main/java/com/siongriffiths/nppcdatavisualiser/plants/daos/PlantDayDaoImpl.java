@@ -27,6 +27,11 @@ public class PlantDayDaoImpl implements PlantDayDao {
         getSession().saveOrUpdate(plantDay);
     }
 
+    @Override
+    public PlantDay getPlantDayById(long Id) {
+        return (PlantDay) getSession().get(PlantDay.class, Id);
+    }
+
     private Session getSession() {
         return sessionFactory.getCurrentSession();
     }

@@ -27,11 +27,7 @@ public class PlantImageManagerImpl implements PlantImageManager {
        return plantImageDao.getPlantImageById(id);
     }
 
-    @Override
-    public void tagPlantImage(TagData tag, PlantImage image) {
-//        tag.setPlantImage
-        image.addTag(tag);
-    }
+
 
 
 }

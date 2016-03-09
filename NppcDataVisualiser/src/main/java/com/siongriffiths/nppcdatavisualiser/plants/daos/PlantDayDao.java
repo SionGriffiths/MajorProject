@@ -9,4 +9,5 @@ import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
  */
 public interface PlantDayDao {
     void savePlantDay(PlantDay plantDay);
+    PlantDay getPlantDayById(long Id);
 }

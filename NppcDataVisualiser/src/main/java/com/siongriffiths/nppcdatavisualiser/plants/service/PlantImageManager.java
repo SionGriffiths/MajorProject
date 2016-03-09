@@ -13,5 +13,5 @@ public interface PlantImageManager {
     void savePlantImage(PlantImage plantImage);
     //    void addTagData(TagData tagData)
     PlantImage getPlantImageByID(long id);
-    void tagPlantImage(TagData tag, PlantImage image);
+//    void tagPlantImage(TagData tag, PlantImage image);
 }

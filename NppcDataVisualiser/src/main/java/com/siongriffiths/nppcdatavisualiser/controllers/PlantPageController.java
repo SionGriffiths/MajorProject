@@ -5,6 +5,7 @@ import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantForm;
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
+import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantImageManager;
@@ -61,11 +62,11 @@ public class PlantPageController {
 
         String content = plantDetailsForm.getTagContent();
         // TODO: 08/03/2016 NULL check on plant. 
-        PlantImage image = plantImageManager.getPlantImageByID(Long.parseLong(plantDetailsForm.getPlantImageID()));
+        PlantDay day = plantDayManager.getPlantDayByID(Long.parseLong(plantDetailsForm.getPlantDayID()));
         TagData tag = tagManager.createOrGetTag(content);
-        plantImageManager.tagPlantImage(tag, image);
+        plantDayManager.tagPlantDay(tag, day);
         tagManager.saveTagData(tag);
-        plantImageManager.savePlantImage(image);
+        plantDayManager.savePlantDay(day);
     }
 
 }

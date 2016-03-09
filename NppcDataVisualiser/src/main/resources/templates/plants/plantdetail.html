@@ -36,19 +36,19 @@
             </div>
 
         </div>
+        <div class="col-xs-6">
+            <div th:each="plantDayTag,status : ${plantDay.getTags()}" th:class="'plant_image container'">
+                <p th:text="${plantDayTag.getTagContent()}"/>
+            </div>
+            <form action="#" th:action="@{tagged}" th:object="${plantDetailsForm}" method="post" class="form-inline" >
+                <div class="form-group">
+                    <input type="hidden" name="plantDayID" th:value="${plantDay.getId()}" />
+                    <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control" th:field="*{tagContent}" placeholder="Add a tag" />
+                    <input type="submit" value="Add tag" class="btn"/>
+                </div>
+            </form>
+        </div>
 
-         <!--<div class="col-xs-6">-->
-            <!--<div th:each="plantImageTag,status : ${plantImage.getTags()}" th:class="'plant_image container'">-->
-                <!--<p th:text="${plantImageTag.getTagContent()}"/>-->
-            <!--</div>-->
-            <!--<form action="#" th:action="@{tagged}" th:object="${plantDetailsForm}" method="post" class="form-inline" >-->
-                <!--<div class="form-group">-->
-                    <!--<input type="hidden" name="plantImageID" th:value="${plantImage.getId()}" />-->
-                    <!--<input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control" th:field="*{tagContent}" placeholder="Tag this image" />-->
-                    <!--<input type="submit" value="Add tag" class="btn"/>-->
-                <!--</div>-->
-            <!--</form>-->
-        <!--</div>-->
     </div>
 
 </div>

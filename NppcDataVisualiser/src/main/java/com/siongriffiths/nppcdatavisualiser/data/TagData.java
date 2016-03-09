@@ -1,5 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.data;
 
+import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
 
 import javax.persistence.*;
@@ -13,14 +14,12 @@ import java.util.Set;
 @Entity
 public class TagData {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String tagContent;
 
-    @ManyToMany(cascade=CascadeType.ALL, mappedBy="tags")
-    private Set<PlantImage> taggedImages;
+
+    private Set<PlantDay> taggedImages;
 
 
     public TagData(){}
@@ -29,6 +28,9 @@ public class TagData {
         tagContent = content;
     }
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public long getId() {
         return id;
     }
@@ -45,12 +47,12 @@ public class TagData {
         this.tagContent = tagContent;
     }
 
-
-    public Set<PlantImage> getTaggedImages() {
+    @ManyToMany(cascade=CascadeType.ALL, mappedBy="tags")
+    public Set<PlantDay> getTaggedImages() {
         return taggedImages;
     }
 
-    public void setTaggedImages(Set<PlantImage> taggedImages) {
+    public void setTaggedImages(Set<PlantDay> taggedImages) {
         this.taggedImages = taggedImages;
     }
 }

@@ -1,10 +1,9 @@
 package com.siongriffiths.nppcdatavisualiser.plants;
 
+import com.siongriffiths.nppcdatavisualiser.data.TagData;
+
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created on 08/03/2016.
@@ -19,20 +18,22 @@ public class PlantDay implements Comparable<PlantDay>{
 
     private long id;
 
-
     private Plant plant;
-
 
     private List<PlantImage> plantImages;
 
     private Date date;
 
+    private Set<TagData> tags;
+
     public PlantDay(){
+        new PlantDay(new Date());
     }
 
     public PlantDay(Date date){
         this.date = date;
         plantImages = new ArrayList<>();
+        tags = new HashSet<>();
     }
 
     @Id
@@ -76,8 +77,25 @@ public class PlantDay implements Comparable<PlantDay>{
         this.date = date;
     }
 
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name="plantday_tag", joinColumns=@JoinColumn(name="plantday_id"),
+            inverseJoinColumns = @JoinColumn(name="tag_id"))
+    public Set<TagData> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<TagData> tags) {
+        this.tags = tags;
+    }
+
+    public void addTag(TagData tag){
+        tags.add(tag);
+    }
+
     @Override
     public int compareTo(PlantDay o) {
         return this.getDate().compareTo(o.getDate());
     }
+
+
 }

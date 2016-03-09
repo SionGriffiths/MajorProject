@@ -30,15 +30,11 @@ public class PlantImage {
 
     private PlantDay plantDay;
 
-
-    private Set<TagData> tags;
-
     public PlantImage(){}
 
     public PlantImage(String filepath){
         this.filePath = filepath;
         plantImageMetaData = new Metadata();
-        tags = new HashSet<>();
     }
 
     @Id
@@ -80,18 +76,4 @@ public class PlantImage {
         this.plantDay = plantDay;
     }
 
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name="plantimage_tag", joinColumns=@JoinColumn(name="plantimage_id"),
-            inverseJoinColumns = @JoinColumn(name="tag_id"))
-    public Set<TagData> getTags() {
-        return tags;
-    }
-
-    public void setTags(Set<TagData> tags) {
-        this.tags = tags;
-    }
-
-    public void addTag(TagData tag){
-        tags.add(tag);
-    }
 }

@@ -10,7 +10,7 @@ package com.siongriffiths.nppcdatavisualiser.controlobjects;
 public class PlantDetailsForm {
 
     private String tagContent;
-    private String plantImageID;
+    private String plantDayID;
 
     public String getTagContent() {
         return tagContent;
@@ -20,11 +20,11 @@ public class PlantDetailsForm {
         this.tagContent = tagContent;
     }
 
-    public String getPlantImageID() {
-        return plantImageID;
+    public String getPlantDayID() {
+        return plantDayID;
     }
 
-    public void setPlantImageID(String plantImageID) {
-        this.plantImageID = plantImageID;
+    public void setPlantDayID(String plantDayID) {
+        this.plantDayID = plantDayID;
     }
 }
