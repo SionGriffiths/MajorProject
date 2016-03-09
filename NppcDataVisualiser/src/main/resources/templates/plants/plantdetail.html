@@ -6,13 +6,39 @@
 </head>
 <body>
 
-<h1 layout:fragment="header">PlantDetail</h1>
+<h1 layout:fragment="header">Plant Detail</h1>
 <div layout:fragment="content">
     <p th:text="'This is the detail page for ' + ${plant.getBarCode()}" />
     <p th:text="'There are '  + ${plant.getPlantDays().size()} + ' days recorded for this plant meight'"/>
     <div th:each="plantDay,status : ${plant.getPlantDays()}" th:class="'plant_image container'">
 
         <p th:text="'There are ' + ${plantDay.getPlantImages().size()} + ' images associated with  ' + ${plantDay.getDate()} "/>
+
+        <div class="col-xs-6">
+
+            <div th:id="'carousel'+${status.index}" class="carousel slide" data-ride="carousel">
+                <!-- Carousel indicators -->
+                <!--<ol class="carousel-indicators">-->
+                    <!--<li data-target="#myCarousel" data-slide-to="0" class="active"></li>-->
+                    <!--<li data-target="#myCarousel" data-slide-to="1"></li>-->
+                    <!--<li data-target="#myCarousel" data-slide-to="2"></li>-->
+                <!--</ol>-->
+                <!-- Wrapper for carousel items -->
+                <div class="carousel-inner">
+                    <div th:each="image,statusInner : ${plantDay.getPlantImages()}" th:class="${statusInner.index == 0}? 'item active' : 'item'">
+                        <img th:src="'/images/' + ${image.getFilePath()}" />
+                    </div>
+                </div>
+                <!-- Carousel controls -->
+                <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="carousel-control right" href="#myCarousel" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+
+        </div>
 
         <!--<div class="col-xs-6">-->
             <!--<img th:src="@{/{path}(path=${plantImage.getFilePath()})}" th:class="img-responsive"/>-->
