@@ -20,7 +20,7 @@ public class Plant {
     @JoinColumn(name="plant_meta_data_id")
     private Metadata plantMetaData;
 
-    @OneToMany(mappedBy = "plant", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "plant", cascade = {CascadeType.ALL})
     private List<PlantDay> plantDays;
 
     @Id
