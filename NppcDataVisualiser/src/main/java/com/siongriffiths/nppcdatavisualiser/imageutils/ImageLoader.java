@@ -37,8 +37,7 @@ public class ImageLoader {
     @Value("${image-repository.root.dir}")
     private String imageRepoRoot;
 
-    //todo handle loading of duplicate information - i.e check idS FIRST? :(
-    public static final Logger LOGGER = Logger.getLogger(ImageLoader.class);
+    private static final Logger LOGGER = Logger.getLogger(ImageLoader.class);
 
 
     public void initPlantImages() {
@@ -124,7 +123,7 @@ public class ImageLoader {
 
     private void associateImageToDay(PlantImage image, PlantDay day){
         day.addPlantImage(image);
-        image.setPlantDay(day);
+        image.setPlantDay(day); //// TODO: 10/03/2016 Do we need bi-directional references between image and day?
     }
 
     private void createPlantDay(Date date, Plant plant, PlantImage image){

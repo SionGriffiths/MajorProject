@@ -1,30 +1,21 @@
 $( document ).ready(function() {
 
 
-
-    $(".dayTag").on('submit', function(e) {
-        var $form = $(this);
+    $(".add_tag_btn").click( function(e) {
         e.preventDefault();
-        $.ajax({
-            url: $form.attr('action'),
-            type: 'post',
-            data: $form.serialize(),
-            success: function(response) {
+        var $btn = $(this);
+        var $form = $btn.parent().parent();
+        var $plantId = $form.find('input[name="plantDayID"]').val();
+        var $tagContent = $form.find('input[name="tagContent"]').val();
+        var $url = "/plants/addTag";
 
-              var targetElem =  $form.closest(".col-xs-6").children(".plant_day_tags");
-               targetElem.html(parseReponseToHtml(response));
-            }
-        });
+        if($plantId != '' && $tagContent != ''){
+            $url += '/' + $plantId + '/' + $tagContent;
+        }
+
+
+        $("#plant_day_tags"+$plantId).load($url);
+
     });
-
-
-    function parseReponseToHtml(jsonResponse){
-        var htmlString = "";
-        $(jsonResponse).each(function(){
-            console.log(this.tagContent);
-          htmlString += "<span class='tag_text'>"+this.tagContent+"</span> ";
-        });
-        return htmlString;
-    }
 
 });

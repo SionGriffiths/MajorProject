@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+</head>
+
+<body>
+<div th:fragment="tagFragment">
+
+    <span th:each="plantDayTag,status : ${plantDay.getTags()}" th:text="${plantDayTag.getTagContent()}" class="tag_text" >
+
+    </span>
+
+</div>
+</body>
+</html>

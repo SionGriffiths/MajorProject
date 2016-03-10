@@ -1,23 +1,19 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
-import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantDetailsForm;
-import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantForm;
-import com.siongriffiths.nppcdatavisualiser.data.TagData;
-import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
-import com.siongriffiths.nppcdatavisualiser.plants.Plant;
-import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
-import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
-import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
-import com.siongriffiths.nppcdatavisualiser.plants.service.PlantImageManager;
-import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Set;
+        import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantDetailsForm;
+        import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantForm;
+        import com.siongriffiths.nppcdatavisualiser.data.TagData;
+        import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
+        import com.siongriffiths.nppcdatavisualiser.plants.Plant;
+        import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
+        import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
+        import com.siongriffiths.nppcdatavisualiser.plants.service.PlantImageManager;
+        import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
+        import org.apache.log4j.Logger;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.stereotype.Controller;
+        import org.springframework.ui.Model;
+        import org.springframework.web.bind.annotation.*;
 
 /**
  * Created on 28/02/2016.
@@ -28,7 +24,10 @@ import java.util.Set;
 @RequestMapping("/plants")
 public class PlantPageController {
 
-    public static final Logger LOGGER = Logger.getLogger(PlantPageController.class);
+    private static final String PLANT_NOT_FOUND_PATH = "plants/notfound";
+    private static final String PLANT_DETAIL_PATH = "plants/plantdetail";
+    private static final String PLANT_DAY_TAG_FRAGMENT =  "plants/tagFragment :: tagFragment";
+    private static final Logger LOGGER = Logger.getLogger(PlantPageController.class);
 
     @Autowired
     private PlantManager plantManager;
@@ -46,28 +45,37 @@ public class PlantPageController {
         return "plants/show";
     }
 
-    @RequestMapping("{plantBarCode}")
+    //// TODO: 10/03/2016 sanitize inputs - look into using filter chains and sanitize eveything
+    @RequestMapping(value = "{plantBarCode}")
     public String showPlantDetail(Model model, @PathVariable("plantBarCode") String barCode){
         LOGGER.info(barCode);
-        Plant targetPlant  = plantManager.getAndInitialisePOLantByBarCode(barCode);
-        plantManager.initializePlantObject(targetPlant);
-        model.addAttribute("plant", targetPlant);
 
-        model.addAttribute("plantDetailsForm" ,new PlantDetailsForm());
-        return "plants/plantdetail";
+        String viewPath;
+
+        Plant targetPlant  = plantManager.getAndInitialisePlantByBarCode(barCode);
+        if(targetPlant == null){
+            model.addAttribute("barcode", barCode);
+            viewPath = PLANT_NOT_FOUND_PATH;
+        }else {
+//        plantManager.initializePlantObject(targetPlant);
+            model.addAttribute("plant", targetPlant);
+//            model.addAttribute("plantDetailsForm", new PlantDetailsForm());
+            viewPath = PLANT_DETAIL_PATH;
+        }
+        return viewPath;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/tagged", method = RequestMethod.POST)
-    public Set<TagData> tagPlant(@ModelAttribute PlantDetailsForm plantDetailsForm, Model model){
-        model.addAttribute("plantDetailsForm" ,new PlantDetailsForm());
-        String content = plantDetailsForm.getTagContent();
-        PlantDay day = plantDayManager.getPlantDayByID(Long.parseLong(plantDetailsForm.getPlantDayID()));
-        TagData tag = tagManager.createOrGetTag(content);
+
+    @RequestMapping(value = "/addTag/{plantDayId}/{tagContent}")
+    public String tagPlant( Model model, @PathVariable("plantDayId") String plantDayID,
+                            @PathVariable("tagContent") String tagContent){
+        PlantDay day = plantDayManager.getPlantDayByID(Long.parseLong(plantDayID));
+        TagData tag = tagManager.createOrGetTag(tagContent);
         plantDayManager.tagPlantDay(tag, day);
         tagManager.saveTagData(tag);
         plantDayManager.savePlantDay(day);
-        return day.getTags();
+        model.addAttribute("plantDay", day);
+        return PLANT_DAY_TAG_FRAGMENT;
     }
 
 }

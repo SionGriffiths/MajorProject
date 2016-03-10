@@ -1,0 +1,17 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Plant not found</title>
+</head>
+<body>
+
+<h1 layout:fragment="header">Plant not Found</h1>
+<div layout:fragment="content">
+
+    <p th:text="'Could not find plant with barcode ' + ${barcode}" ></p>
+    <a href="#" class="back_button btn btn-default">Go back</a>
+
+</div>
+</body>
+</html>

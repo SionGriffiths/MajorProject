@@ -11,9 +11,9 @@
 <body>
 
 <h1 layout:fragment="header">Plant Detail</h1>
-<div layout:fragment="content">
+<div layout:fragment="content" th:unless="${plant == null}">
     <p th:text="'This is the detail page for ' + ${plant.getBarCode()}" />
-    <p th:text="'There are '  + ${plant.getPlantDays().size()} + ' days recorded for this plant meight'"/>
+    <p th:text="'There are '  + ${plant.getPlantDays().size()} + ' days recorded for this plant'"/>
     <div th:each="plantDay,status : ${plant.getPlantDays()}" th:class="'plant_day_container container'">
 
         <p th:text="'There are ' + ${plantDay.getPlantImages().size()} + ' images associated with  ' + ${plantDay.getDate()} "/>
@@ -38,16 +38,17 @@
 
         </div>
         <div class="col-xs-6">
-            <div  th:class="'plant_day_tags container'">
-<span th:each="plantDayTag,status : ${plantDay.getTags()}" th:text="${plantDayTag.getTagContent()}" class="tag_text" >
+            <div  th:id="'plant_day_tags'+${plantDay.getId()}" th:class="'plant_day_tags container'">
 
-</span>
+    <!--<span th:each="plantDayTag,status : ${plantDay.getTags()}" th:text="${plantDayTag.getTagContent()}" class="tag_text" ></span>-->
+   <div th:replace="plants/tagFragment :: tagFragment"   ></div>
             </div>
-            <form action="#" th:action="@{tagged}" th:object="${plantDetailsForm}" method="post" class="form-inline dayTag" >
+
+            <form>
                 <div class="form-group">
                     <input type="hidden" name="plantDayID" th:value="${plantDay.getId()}" />
-                    <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control" th:field="*{tagContent}" placeholder="Add tag " />
-                    <input type="submit" value="Add tag" class="btn"/>
+                    <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control" name="tagContent" placeholder="Add tag " />
+                    <button  class="add_tag_btn btn btn-default">Add tag</button>
                 </div>
             </form>
         </div>

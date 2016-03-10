@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/init")
 public class InitialisationController {
 
-    public static final Logger LOGGER = Logger.getLogger(InitialisationController.class);
+    private static final Logger LOGGER = Logger.getLogger(InitialisationController.class);
 
     @Autowired
     private ImageLoader imageLoader;

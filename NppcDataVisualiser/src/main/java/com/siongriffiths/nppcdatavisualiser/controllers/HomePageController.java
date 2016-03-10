@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/")
 public class HomePageController {
 
-    public static final Logger LOGGER = Logger.getLogger(HomePageController.class);
+    private static final Logger LOGGER = Logger.getLogger(HomePageController.class);
 
     /**
      * showHome returns the default home view

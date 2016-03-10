@@ -36,7 +36,7 @@ public class PlantManagerImpl implements PlantManager {
     }
 
     @Override
-    public Plant getAndInitialisePOLantByBarCode(String barcode) {
+    public Plant getAndInitialisePlantByBarCode(String barcode) {
         Plant plant = getPlantByBarcode(barcode);
         return plant;
     }

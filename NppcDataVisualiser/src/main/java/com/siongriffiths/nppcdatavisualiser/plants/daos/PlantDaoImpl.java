@@ -22,7 +22,7 @@ import java.util.List;
 @Transactional
 public class PlantDaoImpl implements PlantDao{
 
-    public static final Logger LOGGER = Logger.getLogger(PlantDaoImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(PlantDaoImpl.class);
 
 
     @Autowired
@@ -47,7 +47,9 @@ public class PlantDaoImpl implements PlantDao{
         Query query = getSession().createQuery(hibernateQuery);
         query.setParameter("bar_code", barcode);
         Plant plant = (Plant)query.uniqueResult();
-        Hibernate.initialize(plant.getPlantDays()); //Initialize lazy collection on plant fetch
+        if(plant != null) {
+            Hibernate.initialize(plant.getPlantDays()); //Initialize lazy collection on plant fetch
+        }
         return plant;
     }
 
