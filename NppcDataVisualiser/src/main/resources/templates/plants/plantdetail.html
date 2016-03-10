@@ -38,10 +38,10 @@
 
         </div>
         <div class="col-xs-6">
-            <div th:each="plantDayTag,status : ${plantDay.getTags()}" th:class="'plant_day_tags container'">
+            <div  th:class="'plant_day_tags container'">
+<span th:each="plantDayTag,status : ${plantDay.getTags()}" th:text="${plantDayTag.getTagContent()}" class="tag_text" >
 
-                    <p th:text="${plantDayTag.getTagContent()}" class="tag_text"/>
-
+</span>
             </div>
             <form action="#" th:action="@{tagged}" th:object="${plantDetailsForm}" method="post" class="form-inline dayTag" >
                 <div class="form-group">
