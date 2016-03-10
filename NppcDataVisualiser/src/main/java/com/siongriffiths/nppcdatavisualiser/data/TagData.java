@@ -1,10 +1,9 @@
 package com.siongriffiths.nppcdatavisualiser.data;
 
-import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
-import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
-
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * Created on 07/03/2016.
@@ -19,15 +18,13 @@ public class TagData {
     private String tagContent;
 
 
-    private Set<PlantDay> taggedImages;
-
-
-    public TagData(){}
+    public TagData(){
+        new TagData("");
+    }
 
     public TagData(String content){
         tagContent = content;
     }
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,12 +44,24 @@ public class TagData {
         this.tagContent = tagContent;
     }
 
-    @ManyToMany(cascade=CascadeType.ALL, mappedBy="tags")
-    public Set<PlantDay> getTaggedImages() {
-        return taggedImages;
+
+    // TODO: 10/03/2016 Verify these generated methods do what we need
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TagData tagData = (TagData) o;
+
+        if (id != tagData.id) return false;
+        return tagContent.equals(tagData.tagContent);
+
     }
 
-    public void setTaggedImages(Set<PlantDay> taggedImages) {
-        this.taggedImages = taggedImages;
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + tagContent.hashCode();
+        return result;
     }
 }
