@@ -2,6 +2,7 @@ package com.siongriffiths.nppcdatavisualiser.data.doas;
 
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -27,6 +28,7 @@ public class TagDataDaoImpl implements TagDataDao {
     public TagData getTagByContent(String content) {
         Criteria criteria = getSession().createCriteria(TagData.class);
         TagData tagdata = (TagData)criteria.add(Restrictions.eq("tagContent", content)).uniqueResult();
+
         return tagdata;
     }
 

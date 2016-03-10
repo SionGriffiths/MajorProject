@@ -17,6 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Set;
+
 /**
  * Created on 28/02/2016.
  *
@@ -57,16 +59,15 @@ public class PlantPageController {
 
     @ResponseBody
     @RequestMapping(value = "/tagged", method = RequestMethod.POST)
-    public void tagPlant(@ModelAttribute PlantDetailsForm plantDetailsForm, Model model){
-        model.addAttribute("plantDetailsForm" ,plantDetailsForm);
-
+    public Set<TagData> tagPlant(@ModelAttribute PlantDetailsForm plantDetailsForm, Model model){
+        model.addAttribute("plantDetailsForm" ,new PlantDetailsForm());
         String content = plantDetailsForm.getTagContent();
-        // TODO: 08/03/2016 NULL check on plant. 
         PlantDay day = plantDayManager.getPlantDayByID(Long.parseLong(plantDetailsForm.getPlantDayID()));
         TagData tag = tagManager.createOrGetTag(content);
         plantDayManager.tagPlantDay(tag, day);
         tagManager.saveTagData(tag);
         plantDayManager.savePlantDay(day);
+        return day.getTags();
     }
 
 }

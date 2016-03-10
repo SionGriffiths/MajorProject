@@ -55,7 +55,7 @@ public class Plant {
     }
 
     //Accessor is annotated to avoid eager fetch on object creation
-    @OneToMany(mappedBy = "plant", cascade = {CascadeType.ALL})
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     public List<PlantDay> getPlantDays() {
         return plantDays;
     }

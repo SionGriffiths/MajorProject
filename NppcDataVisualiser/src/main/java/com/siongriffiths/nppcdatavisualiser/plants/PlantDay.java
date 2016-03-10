@@ -18,8 +18,6 @@ public class PlantDay implements Comparable<PlantDay>{
 
     private long id;
 
-    private Plant plant;
-
     private List<PlantImage> plantImages;
 
     private Date date;
@@ -44,16 +42,6 @@ public class PlantDay implements Comparable<PlantDay>{
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "plant_id", nullable = false)
-    public Plant getPlant() {
-        return plant;
-    }
-
-    public void setPlant(Plant plant) {
-        this.plant = plant;
     }
 
     @OneToMany(mappedBy = "plantDay", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)

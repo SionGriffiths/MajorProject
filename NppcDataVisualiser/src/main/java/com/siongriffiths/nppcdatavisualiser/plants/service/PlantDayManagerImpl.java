@@ -23,6 +23,11 @@ public class PlantDayManagerImpl implements PlantDayManager {
     }
 
     @Override
+    public void updatePlantDay(PlantDay plantDay) {
+        plantDayDao.updatePlantDay(plantDay);
+    }
+
+    @Override
     public void tagPlantDay(TagData tag, PlantDay day) {
         day.addTag(tag);
     }

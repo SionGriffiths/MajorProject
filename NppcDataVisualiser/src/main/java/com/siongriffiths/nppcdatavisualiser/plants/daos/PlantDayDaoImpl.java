@@ -35,4 +35,9 @@ public class PlantDayDaoImpl implements PlantDayDao {
     private Session getSession() {
         return sessionFactory.getCurrentSession();
     }
+
+    @Override
+    public void updatePlantDay(PlantDay plantDay){
+        getSession().merge(plantDay);
+    }
 }

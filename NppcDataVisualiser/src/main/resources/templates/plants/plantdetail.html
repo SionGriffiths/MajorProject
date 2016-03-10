@@ -4,6 +4,7 @@
 <head>
 
     <script src="/js/carousel.js"></script>
+    <script src="/js/plantDetails.js"></script>
 
     <title>Plant Detail Page</title>
 </head>
@@ -37,13 +38,15 @@
 
         </div>
         <div class="col-xs-6">
-            <div th:each="plantDayTag,status : ${plantDay.getTags()}" th:class="'plant_image container'">
-                <p th:text="${plantDayTag.getTagContent()}"/>
+            <div th:each="plantDayTag,status : ${plantDay.getTags()}" th:class="'plant_day_tags container'">
+
+                    <p th:text="${plantDayTag.getTagContent()}" class="tag_text"/>
+
             </div>
-            <form action="#" th:action="@{tagged}" th:object="${plantDetailsForm}" method="post" class="form-inline" >
+            <form action="#" th:action="@{tagged}" th:object="${plantDetailsForm}" method="post" class="form-inline dayTag" >
                 <div class="form-group">
                     <input type="hidden" name="plantDayID" th:value="${plantDay.getId()}" />
-                    <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control" th:field="*{tagContent}" placeholder="Add a tag" />
+                    <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control" th:field="*{tagContent}" placeholder="Add tag " />
                     <input type="submit" value="Add tag" class="btn"/>
                 </div>
             </form>

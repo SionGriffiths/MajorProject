@@ -59,6 +59,7 @@ public class ImageLoader {
                         String cameraType = cameraTypeFile.getName();
                         LOGGER.debug("Image type : " + cameraType);
 
+                        // TODO: 09/03/2016 change this to use a property or filter
                         if(cameraType.equalsIgnoreCase("nir")){
                             continue;
                         }
@@ -128,13 +129,12 @@ public class ImageLoader {
 
     private void createPlantDay(Date date, Plant plant, PlantImage image){
         PlantDay plantDay = new PlantDay(date);
-        plantDay.setPlant(plant);
         associateImageToDay(image,plantDay);
         plant.addPlantDay(plantDay);
     }
 
-    private String normaliseFilePath(String retardPath){
-        return FilenameUtils.separatorsToUnix(retardPath);
+    private String normaliseFilePath(String pathToNormalise){
+        return FilenameUtils.separatorsToUnix(pathToNormalise);
     }
 
     private String removeSurplusDirectoryGibberish(String path){
