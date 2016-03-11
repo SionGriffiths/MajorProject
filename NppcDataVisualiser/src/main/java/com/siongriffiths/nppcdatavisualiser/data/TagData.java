@@ -45,7 +45,7 @@ public class TagData {
     }
 
 
-    // TODO: 10/03/2016 Verify these generated methods do what we need
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

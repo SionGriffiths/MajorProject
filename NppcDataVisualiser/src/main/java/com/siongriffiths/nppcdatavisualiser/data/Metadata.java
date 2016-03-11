@@ -1,9 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -20,11 +17,15 @@ public class Metadata implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    // TODO: 11/03/2016 find out a reasonable size for this column length
+    @Column(length=100000)
     private HashMap<String,String> dataAttributes;
-
     public Metadata(){
         dataAttributes = new HashMap<>();
+        dataAttributes.put("Growth Stage","0"); //// TODO: 11/03/2016 Move default values to experiment config properties?
     }
+
+
 
     public void addDataAttribute(String key, String value){
         dataAttributes.put(key,value);
@@ -34,4 +35,15 @@ public class Metadata implements Serializable {
         return dataAttributes;
     }
 
+    public void setDataAttributes(HashMap<String, String> dataAttributes) {
+        this.dataAttributes = dataAttributes;
+    }
+
+    public String getGrowthStage() {
+        return dataAttributes.get("Growth Stage");
+    }
+
+    public void setGrowthStage(String growthStage) {
+        dataAttributes.put("Growth Stage", growthStage);
+    }
 }

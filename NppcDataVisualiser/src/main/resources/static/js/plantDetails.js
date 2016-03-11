@@ -6,7 +6,7 @@ $( document ).ready(function() {
         var $btn = $(this);
         var $form = $btn.parent().parent();
         var $plantId = $form.find('input[name="plantDayID"]').val();
-        var $tagContent = $form.find('input[name="tagContent"]').val();
+        var $tagContent = encodeURIComponent($form.find('input[name="tagContent"]').val());
         var $url = "/plants/addTag";
 
         if($plantId != '' && $tagContent != ''){
@@ -20,8 +20,8 @@ $( document ).ready(function() {
         var $btn = $(this);
         var $form = $btn.parent().parent();
         var $plantId = $form.find('input[name="plantDayID"]').val();
-        var $aName = $form.find('input[name="attribName"]').val();
-        var $aVal = $form.find('input[name="attribValue"]').val();
+        var $aName = encodeURIComponent($form.find('input[name="attribName"]').val());
+        var $aVal = encodeURIComponent($form.find('input[name="attribValue"]').val());
         var $url = "/plants/addTag";
 
         if($plantId != '' && $aName != '' && $aVal != ''){
