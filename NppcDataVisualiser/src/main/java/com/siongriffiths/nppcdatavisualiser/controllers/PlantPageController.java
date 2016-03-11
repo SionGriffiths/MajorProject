@@ -1,6 +1,7 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
 import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantForm;
+import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
@@ -81,8 +82,12 @@ public class PlantPageController {
     @RequestMapping(value = "/addTag/{plantDayId}/{attribName}/{attribValue}", method = RequestMethod.GET)
     public String tagPlant( Model model, @PathVariable("plantDayId") String plantDayID,
                             @PathVariable("attribName") String attribName,
-                            @PathVariable("attribName") String attribValue) {
-
+                            @PathVariable("attribValue") String attribValue) {
+        PlantDay day = plantDayManager.getPlantDayByID(Long.parseLong(plantDayID));
+        Metadata plantDayData = day.getPlantDayMetaData();
+        plantDayData.addDataAttribute(attribName,attribValue);
+        plantDayManager.savePlantDay(day);
+        model.addAttribute("plantDay", day);
         return PLANT_DAY_ATTRIB_FRAGMENT;
     }
 

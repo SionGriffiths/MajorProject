@@ -16,7 +16,9 @@
 
 
 <div th:fragment="attribFragment">
-    <p>This is attrib fragment</p>
+    <p th:each="entry: ${plantDay.getPlantDayMetaData().getDataAttributes()}">
+        <span th:text="'Key: ' + ${entry.key} + ', Value: ' + ${entry.value}"></span>
+    </p>
 </div>
 
 </body>
