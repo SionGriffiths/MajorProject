@@ -18,8 +18,8 @@
 
         <p th:text="'There are ' + ${plantDay.getPlantImages().size()} + ' images associated with  ' + ${plantDay.getDate()} "/>
 
-        <div class="col-xs-6">
 
+        <div class="col-xs-6">
             <div th:id="'carousel'+${status.index}" class="carousel slide" data-ride="carousel">
 
                 <div class="carousel-inner">
@@ -35,21 +35,42 @@
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </a>
             </div>
-
         </div>
+
+        <!--todo do we want all things as fragments?? like these forms..-->
+
         <div class="col-xs-6">
             <div  th:id="'plant_day_tags'+${plantDay.getId()}" th:class="'plant_day_tags container'">
-                <div th:replace="plants/tagFragment :: tagFragment"   ></div>
+                <div th:replace="plants/plantFragments :: tagFragment"   ></div>
             </div>
 
             <form>
                 <div class="form-group">
                     <input type="hidden" name="plantDayID" th:value="${plantDay.getId()}" />
                     <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control" name="tagContent" placeholder="Add tag " />
+                    <!--<button  class="add_tag_btn btn btn-default">Add tag</button>-->
                     <button  class="add_tag_btn btn btn-default">Add tag</button>
                 </div>
             </form>
+
+            <div  th:id="'plant_day_attribs'+${plantDay.getId()}" th:class="'plant_day_tags container'">
+                <div th:replace="plants/plantFragments :: attribFragment"   ></div>
+            </div>
+
+            <form>
+                <div class="form-group">
+
+                    <input type="hidden" name="plantDayID" th:value="${plantDay.getId()}" />
+                    <input  type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control" name="attribName" placeholder="Add attribute name " />
+                    <input  type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control" name="attribValue" placeholder="Add attribute value " />
+
+                    <button  class="add_tag_btn btn btn-default">Add Attribute</button>
+                </div>
+            </form>
         </div>
+
+
+
 
     </div>
 

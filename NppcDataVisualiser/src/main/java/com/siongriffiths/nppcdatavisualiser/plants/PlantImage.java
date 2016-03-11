@@ -19,9 +19,6 @@ import java.util.Set;
 public class PlantImage {
 
 
-    private Metadata plantImageMetaData;
-
-
     private long id;
 
 
@@ -34,7 +31,6 @@ public class PlantImage {
 
     public PlantImage(String filepath){
         this.filePath = filepath;
-        plantImageMetaData = new Metadata();
     }
 
     @Id
@@ -47,17 +43,7 @@ public class PlantImage {
         this.id = id;
     }
 
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name="plant_image_meta_data_id")
-    public Metadata getPlantImageMetaData() {
-        return plantImageMetaData;
-    }
-
-    public void setPlantImageMetaData(Metadata plantImageMetaData) {
-        this.plantImageMetaData = plantImageMetaData;
-    }
-
-    @Column
+       @Column
     public String getFilePath() {
         return filePath;
     }

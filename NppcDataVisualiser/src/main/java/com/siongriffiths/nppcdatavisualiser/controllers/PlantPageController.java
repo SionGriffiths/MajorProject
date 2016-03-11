@@ -26,7 +26,7 @@ public class PlantPageController {
 
     private static final String PLANT_NOT_FOUND_PATH = "plants/notfound";
     private static final String PLANT_DETAIL_PATH = "plants/plantdetail";
-    private static final String PLANT_DAY_TAG_FRAGMENT =  "plants/tagFragment :: tagFragment";
+    private static final String PLANT_DAY_TAG_FRAGMENT =  "plants/plantFragments :: tagFragment";
     private static final Logger LOGGER = Logger.getLogger(PlantPageController.class);
 
     @Autowired

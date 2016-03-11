@@ -1,5 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.plants;
 
+import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
 
 import javax.persistence.*;
@@ -24,6 +25,8 @@ public class PlantDay implements Comparable<PlantDay>{
 
     private Set<TagData> tags;
 
+    private Metadata plantDayMetaData;
+
     public PlantDay(){
         new PlantDay(new Date());
     }
@@ -32,6 +35,7 @@ public class PlantDay implements Comparable<PlantDay>{
         this.date = date;
         plantImages = new ArrayList<>();
         tags = new HashSet<>();
+        plantDayMetaData = new Metadata();
     }
 
     @Id
@@ -56,6 +60,17 @@ public class PlantDay implements Comparable<PlantDay>{
     public void setPlantImages(List<PlantImage> plantImages) {
         this.plantImages = plantImages;
     }
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="plant_day_meta_data_id")
+    public Metadata getPlantDayMetaData() {
+        return plantDayMetaData;
+    }
+
+    public void setPlantDayMetaData(Metadata plantDayMetaData) {
+        this.plantDayMetaData = plantDayMetaData;
+    }
+
 
     public Date getDate() {
         return date;
