@@ -5,6 +5,8 @@ package com.siongriffiths.nppcdatavisualiser.controlobjects;
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
+
+//// TODO: 11/03/2016 make sure you need this
 public class PlantForm {
 
     private String barCode;

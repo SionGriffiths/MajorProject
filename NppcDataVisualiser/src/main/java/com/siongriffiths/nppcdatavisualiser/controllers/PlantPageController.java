@@ -1,19 +1,19 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
-        import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantDetailsForm;
-        import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantForm;
-        import com.siongriffiths.nppcdatavisualiser.data.TagData;
-        import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
-        import com.siongriffiths.nppcdatavisualiser.plants.Plant;
-        import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
-        import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
-        import com.siongriffiths.nppcdatavisualiser.plants.service.PlantImageManager;
-        import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
-        import org.apache.log4j.Logger;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.stereotype.Controller;
-        import org.springframework.ui.Model;
-        import org.springframework.web.bind.annotation.*;
+import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantForm;
+import com.siongriffiths.nppcdatavisualiser.data.TagData;
+import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
+import com.siongriffiths.nppcdatavisualiser.plants.Plant;
+import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
+import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
+import com.siongriffiths.nppcdatavisualiser.plants.service.PlantImageManager;
+import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Created on 28/02/2016.
@@ -57,9 +57,7 @@ public class PlantPageController {
             model.addAttribute("barcode", barCode);
             viewPath = PLANT_NOT_FOUND_PATH;
         }else {
-//        plantManager.initializePlantObject(targetPlant);
             model.addAttribute("plant", targetPlant);
-//            model.addAttribute("plantDetailsForm", new PlantDetailsForm());
             viewPath = PLANT_DETAIL_PATH;
         }
         return viewPath;

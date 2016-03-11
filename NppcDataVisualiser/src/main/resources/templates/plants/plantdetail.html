@@ -39,9 +39,7 @@
         </div>
         <div class="col-xs-6">
             <div  th:id="'plant_day_tags'+${plantDay.getId()}" th:class="'plant_day_tags container'">
-
-    <!--<span th:each="plantDayTag,status : ${plantDay.getTags()}" th:text="${plantDayTag.getTagContent()}" class="tag_text" ></span>-->
-   <div th:replace="plants/tagFragment :: tagFragment"   ></div>
+                <div th:replace="plants/tagFragment :: tagFragment"   ></div>
             </div>
 
             <form>
