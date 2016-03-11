@@ -11,11 +11,23 @@ $( document ).ready(function() {
 
         if($plantId != '' && $tagContent != ''){
             $url += '/' + $plantId + '/' + $tagContent;
+            $("#plant_day_tags"+$plantId).load($url);
         }
+    });
 
+    $(".add_attrib_btn").click( function(e) {
+        e.preventDefault();
+        var $btn = $(this);
+        var $form = $btn.parent().parent();
+        var $plantId = $form.find('input[name="plantDayID"]').val();
+        var $aName = $form.find('input[name="attribName"]').val();
+        var $aVal = $form.find('input[name="attribValue"]').val();
+        var $url = "/plants/addTag";
 
-        $("#plant_day_tags"+$plantId).load($url);
-
+        if($plantId != '' && $aName != '' && $aVal != ''){
+            $url += '/' + $plantId + '/' + $aName +'/' +$aVal;
+            $("#plant_day_attribs"+$plantId).load($url);
+        }
     });
 
 

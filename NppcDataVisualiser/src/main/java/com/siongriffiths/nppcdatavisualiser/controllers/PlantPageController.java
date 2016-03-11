@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created on 28/02/2016.
@@ -27,6 +28,7 @@ public class PlantPageController {
     private static final String PLANT_NOT_FOUND_PATH = "plants/notfound";
     private static final String PLANT_DETAIL_PATH = "plants/plantdetail";
     private static final String PLANT_DAY_TAG_FRAGMENT =  "plants/plantFragments :: tagFragment";
+    private static final String PLANT_DAY_ATTRIB_FRAGMENT =  "plants/plantFragments :: attribFragment";
     private static final Logger LOGGER = Logger.getLogger(PlantPageController.class);
 
     @Autowired
@@ -64,9 +66,9 @@ public class PlantPageController {
     }
 
 
-    @RequestMapping(value = "/addTag/{plantDayId}/{tagContent}")
+    @RequestMapping(value = "/addTag/{plantDayId}/{tagContent}", method = RequestMethod.GET)
     public String tagPlant( Model model, @PathVariable("plantDayId") String plantDayID,
-                            @PathVariable("tagContent") String tagContent){
+                            @PathVariable("tagContent") String tagContent) {
         PlantDay day = plantDayManager.getPlantDayByID(Long.parseLong(plantDayID));
         TagData tag = tagManager.createOrGetTag(tagContent);
         plantDayManager.tagPlantDay(tag, day);
@@ -75,5 +77,14 @@ public class PlantPageController {
         model.addAttribute("plantDay", day);
         return PLANT_DAY_TAG_FRAGMENT;
     }
+
+    @RequestMapping(value = "/addTag/{plantDayId}/{attribName}/{attribValue}", method = RequestMethod.GET)
+    public String tagPlant( Model model, @PathVariable("plantDayId") String plantDayID,
+                            @PathVariable("attribName") String attribName,
+                            @PathVariable("attribName") String attribValue) {
+
+        return PLANT_DAY_ATTRIB_FRAGMENT;
+    }
+
 
 }
