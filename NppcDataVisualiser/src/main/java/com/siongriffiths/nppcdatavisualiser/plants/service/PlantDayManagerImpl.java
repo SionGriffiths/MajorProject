@@ -6,6 +6,8 @@ import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantDayDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created on 08/03/2016.
  *
@@ -30,6 +32,11 @@ public class PlantDayManagerImpl implements PlantDayManager {
     @Override
     public PlantDay getPlantDayByID(long id) {
         return plantDayDao.findOne(id);
+    }
+
+    @Override
+    public List<PlantDay> findPlantDaysByTag(TagData tagData) {
+       return plantDayDao.findByTagData(tagData.getId());
     }
 
 

@@ -1,6 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
-import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantTagInfo;
+import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantDayTagInfo;
 import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantForm;
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
@@ -57,7 +57,7 @@ public class PlantPageController {
 
         String viewPath;
 
-        model.addAttribute("plantTagInfo" ,new PlantTagInfo());
+        model.addAttribute("plantTagInfo" ,new PlantDayTagInfo());
 
         Plant targetPlant  = plantManager.getAndInitialisePlantByBarCode(barCode);
         if(targetPlant == null){
@@ -85,14 +85,15 @@ public class PlantPageController {
 
 
     @RequestMapping(value = "/tagged", method = RequestMethod.POST)
-    public String tagPlant(@ModelAttribute PlantTagInfo plantTagInfo, Model model){
-        model.addAttribute("plantTagInfo" ,new PlantTagInfo());
-        String content = plantTagInfo.getTagContent();
-        PlantDay day = plantDayManager.getPlantDayByID(Long.parseLong(plantTagInfo.getPlantDayID()));
+    public String tagPlant(@ModelAttribute PlantDayTagInfo plantDayTagInfo, Model model){
+        model.addAttribute("plantTagInfo" ,new PlantDayTagInfo());
+        String content = plantDayTagInfo.getTagContent();
+        PlantDay day = plantDayManager.getPlantDayByID(Long.parseLong(plantDayTagInfo.getPlantDayID()));
         TagData tag = tagManager.createOrGetTag(content);
         plantDayManager.tagPlantDay(tag, day);
         tagManager.saveTagData(tag);
         plantDayManager.savePlantDay(day);
+        plantDayManager.findPlantDaysByTag(tag);
         model.addAttribute("plantDay", day);
         return PLANT_DAY_TAG_FRAGMENT;
     }

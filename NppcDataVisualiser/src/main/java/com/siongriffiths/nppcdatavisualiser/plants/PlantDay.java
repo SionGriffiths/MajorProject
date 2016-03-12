@@ -48,7 +48,7 @@ public class PlantDay implements Comparable<PlantDay>{
         this.id = id;
     }
 
-    @OneToMany(mappedBy = "plantDay", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "plantDay", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     public List<PlantImage> getPlantImages() {
         return plantImages;
     }
@@ -80,8 +80,9 @@ public class PlantDay implements Comparable<PlantDay>{
         this.date = date;
     }
 
-    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name="plantday_tag", joinColumns=@JoinColumn(name="plantday_id"),
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name="plantday_tag",
+            joinColumns=@JoinColumn(name="plantday_id"),
             inverseJoinColumns = @JoinColumn(name="tag_id"))
     public Set<TagData> getTags() {
         return tags;
