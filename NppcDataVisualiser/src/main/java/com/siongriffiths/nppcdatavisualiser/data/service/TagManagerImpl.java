@@ -19,15 +19,14 @@ public class TagManagerImpl implements TagManager {
 
     @Override
     public void saveTagData(TagData tagData) {
-        tagDataDao.saveTagData(tagData);
+        tagDataDao.save(tagData);
     }
 
     @Override
     public TagData createOrGetTag(String content) {
 
-        TagData queryTag = tagDataDao.getTagByContent(content);
-        TagData returnValue = (queryTag != null) ? queryTag : new TagData(content);
-        return returnValue;
+        TagData queryTag = tagDataDao.findByTagContent(content);
+        return (queryTag != null) ? queryTag : new TagData(content);
     }
 
 

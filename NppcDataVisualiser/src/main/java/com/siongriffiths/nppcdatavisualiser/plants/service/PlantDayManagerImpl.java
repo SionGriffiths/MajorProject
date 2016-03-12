@@ -19,12 +19,7 @@ public class PlantDayManagerImpl implements PlantDayManager {
 
     @Override
     public void savePlantDay(PlantDay plantDay) {
-        plantDayDao.savePlantDay(plantDay);
-    }
-
-    @Override
-    public void updatePlantDay(PlantDay plantDay) {
-        plantDayDao.updatePlantDay(plantDay);
+        plantDayDao.save(plantDay);
     }
 
     @Override
@@ -34,7 +29,7 @@ public class PlantDayManagerImpl implements PlantDayManager {
 
     @Override
     public PlantDay getPlantDayByID(long id) {
-        return plantDayDao.getPlantDayById(id);
+        return plantDayDao.findOne(id);
     }
 
 

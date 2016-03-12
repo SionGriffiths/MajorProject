@@ -1,6 +1,7 @@
 package controllers;
 
 import com.siongriffiths.nppcdatavisualiser.Application;
+import defaults.AbstractTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,11 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * Basic test, based on examples given in https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-// Use SpringApplicationConfiguration over ContextConfiguration to actually hook into spring boot for test running.
-@SpringApplicationConfiguration(classes = Application.class)
-public class HomePageControllerWebTest {
+public class HomePageControllerWebTest extends AbstractTest {
 
     @Autowired
     private WebApplicationContext wac;

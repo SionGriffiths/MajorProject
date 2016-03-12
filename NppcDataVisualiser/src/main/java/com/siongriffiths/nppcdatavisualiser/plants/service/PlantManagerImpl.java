@@ -4,7 +4,6 @@ import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantDao;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,23 +21,22 @@ public class PlantManagerImpl implements PlantManager {
 
     @Override
     public void savePlant(Plant plant) {
-        plantDao.savePlant(plant);
+        plantDao.save(plant);
     }
 
     @Override
     public List<Plant> getAllPlants() {
-        return  plantDao.getAllPlants();
+        return  plantDao.findAll();
     }
 
     @Override
-    public Plant getPlantByBarcode(String barcode) {
-       return plantDao.getPlantByBarcode(barcode);
+    public Plant getPlantByBarcode(String barCode) {
+       return plantDao.findByBarCode(barCode);
     }
 
     @Override
-    public Plant getAndInitialisePlantByBarCode(String barcode) {
-        Plant plant = getPlantByBarcode(barcode);
-        return plant;
+    public Plant getAndInitialisePlantByBarCode(String barCode) {
+        return getPlantByBarcode(barCode);
     }
 
 

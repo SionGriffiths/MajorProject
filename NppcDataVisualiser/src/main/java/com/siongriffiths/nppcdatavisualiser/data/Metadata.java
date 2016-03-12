@@ -13,19 +13,27 @@ import java.util.HashMap;
 @Entity
 public class Metadata implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+
+    private Integer id;
 
     // TODO: 11/03/2016 find out a reasonable size for this column length
     @Column(length=100000)
     private HashMap<String,String> dataAttributes;
+
     public Metadata(){
         dataAttributes = new HashMap<>();
         dataAttributes.put("Growth Stage","0"); //// TODO: 11/03/2016 Move default values to experiment config properties?
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public void addDataAttribute(String key, String value){
         dataAttributes.put(key,value);

@@ -51,8 +51,6 @@ public class ImageLoader {
 
                 File[] cameraTypeFiles = plantDir.listFiles();
 
-//                maybe make recursive attempt from here
-
                 if (cameraTypeFiles != null) {
                     for(File cameraTypeFile : cameraTypeFiles){
                         String cameraType = cameraTypeFile.getName();

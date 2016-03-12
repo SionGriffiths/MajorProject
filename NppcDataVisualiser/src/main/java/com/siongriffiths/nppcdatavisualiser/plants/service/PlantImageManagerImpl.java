@@ -19,12 +19,12 @@ public class PlantImageManagerImpl implements PlantImageManager {
 
     @Override
     public void savePlantImage(PlantImage plantImage) {
-        plantImageDao.savePlantImage(plantImage);
+        plantImageDao.save(plantImage);
     }
 
     @Override
     public PlantImage getPlantImageByID(long id) {
-       return plantImageDao.getPlantImageById(id);
+       return plantImageDao.findOne(id);
     }
 
 

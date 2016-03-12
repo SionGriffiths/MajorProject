@@ -10,9 +10,6 @@ import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
  */
 public interface PlantDayManager {
     void savePlantDay(PlantDay plantDay);
-    void updatePlantDay(PlantDay plantDay);
     void tagPlantDay(TagData tag, PlantDay day);
-
     PlantDay getPlantDayByID(long id);
-
 }

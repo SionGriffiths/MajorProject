@@ -2,6 +2,9 @@
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
       layout:decorator="layout">
 <head>
+    <script src="/js/plotly-latest.min.js"></script>
+    <script src="/js/plotlytest.js"></script>
+
     <title>Plants Page</title>
 </head>
 <body>
@@ -16,6 +19,7 @@
         </div>
         <div class="col-xs-6">
             <p>Some text and stuff tags on a per-plant level here plox</p>
+            <div th:id="'plotlyTest'+${plant.getBarCode()}"></div>
         </div>
     </div>
 

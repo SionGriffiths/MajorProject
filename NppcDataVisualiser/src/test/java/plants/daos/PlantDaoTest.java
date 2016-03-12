@@ -1,15 +1,11 @@
 package plants.daos;
 
-import com.siongriffiths.nppcdatavisualiser.Application;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantDao;
-
+import defaults.AbstractTest;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -20,10 +16,8 @@ import static org.junit.Assert.assertNotNull;
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@SpringApplicationConfiguration(classes ={Application.class} )
-public class PlantDaoTest {
+@Transactional
+public class PlantDaoTest extends AbstractTest {
 
     @Autowired
     PlantDao plantDao;
@@ -36,15 +30,15 @@ public class PlantDaoTest {
 
         Plant plant = new Plant();
         plant.setBarCode(initialBarCode);
-        plantDao.savePlant(plant);
+        plantDao.save(plant);
 
-        Plant retrievedPlant = plantDao.getPlantByBarcode(initialBarCode);
+        Plant retrievedPlant = plantDao.findByBarCode(initialBarCode);
 
         assertNotNull(retrievedPlant);
         assertEquals(retrievedPlant.getBarCode(),initialBarCode);
 
         retrievedPlant.setBarCode(secondaryBarCode);
-        plantDao.savePlant(retrievedPlant);
+        plantDao.save(retrievedPlant);
     }
 
 }
