@@ -7,23 +7,31 @@ package com.siongriffiths.nppcdatavisualiser.controlobjects;
  */
 public class PlantDayAttributeInfo {
 
-    private String attibName;
-    private String attibVal;
+    private String plantDayID;
+    private String attribName;
+    private String attribVal;
 
-
-    public String getAttibName() {
-        return attibName;
+    public String getPlantDayID() {
+        return plantDayID;
     }
 
-    public void setAttibName(String attibName) {
-        this.attibName = attibName;
+    public void setPlantDayID(String plantDayID) {
+        this.plantDayID = plantDayID;
     }
 
-    public String getAttibVal() {
-        return attibVal;
+    public String getAttribName() {
+        return attribName;
     }
 
-    public void setAttibVal(String attibVal) {
-        this.attibVal = attibVal;
+    public void setAttribName(String attribName) {
+        this.attribName = attribName;
+    }
+
+    public String getAttribVal() {
+        return attribVal;
+    }
+
+    public void setAttribVal(String attribVal) {
+        this.attribVal = attribVal;
     }
 }

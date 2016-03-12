@@ -14,5 +14,6 @@ public interface PlantDayManager {
     void savePlantDay(PlantDay plantDay);
     void tagPlantDay(TagData tag, PlantDay day);
     PlantDay getPlantDayByID(long id);
+    PlantDay getPlantDayByID(String id);
     List<PlantDay> findPlantDaysByTag(TagData tagData);
 }

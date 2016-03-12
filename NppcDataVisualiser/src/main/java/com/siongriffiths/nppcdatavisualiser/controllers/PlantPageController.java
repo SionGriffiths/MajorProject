@@ -1,5 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
+import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantDayAttributeInfo;
 import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantDayTagInfo;
 import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantForm;
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
@@ -58,6 +59,7 @@ public class PlantPageController {
         String viewPath;
 
         model.addAttribute("plantTagInfo" ,new PlantDayTagInfo());
+        model.addAttribute("plantDayAttributeInfo", new PlantDayAttributeInfo());
 
         Plant targetPlant  = plantManager.getAndInitialisePlantByBarCode(barCode);
         if(targetPlant == null){
@@ -70,25 +72,22 @@ public class PlantPageController {
         return viewPath;
     }
 
-
-    @RequestMapping(value = "/addTag/{plantDayId}/{attribName}/{attribValue}", method = RequestMethod.GET)
-    public String tagPlant( Model model, @PathVariable("plantDayId") String plantDayID,
-                            @PathVariable("attribName") String attribName,
-                            @PathVariable("attribValue") String attribValue) {
-        PlantDay day = plantDayManager.getPlantDayByID(Long.parseLong(plantDayID));
+    @RequestMapping(value = "/addAttribute", method = RequestMethod.POST)
+    public String addAttribute(@ModelAttribute PlantDayAttributeInfo plantDayAttributeInfo, Model model) {
+        model.addAttribute("plantDayAttributeInfo", new PlantDayAttributeInfo());
+        PlantDay day = plantDayManager.getPlantDayByID(plantDayAttributeInfo.getPlantDayID());
         Metadata plantDayData = day.getPlantDayMetaData();
-        plantDayData.addDataAttribute(attribName,attribValue);
+        plantDayData.addDataAttribute(plantDayAttributeInfo.getAttribName(),plantDayAttributeInfo.getAttribVal());
         plantDayManager.savePlantDay(day);
         model.addAttribute("plantDay", day);
         return PLANT_DAY_ATTRIB_FRAGMENT;
     }
 
-
     @RequestMapping(value = "/tagged", method = RequestMethod.POST)
-    public String tagPlant(@ModelAttribute PlantDayTagInfo plantDayTagInfo, Model model){
+    public String tagPlantDay(@ModelAttribute PlantDayTagInfo plantDayTagInfo, Model model){
         model.addAttribute("plantTagInfo" ,new PlantDayTagInfo());
         String content = plantDayTagInfo.getTagContent();
-        PlantDay day = plantDayManager.getPlantDayByID(Long.parseLong(plantDayTagInfo.getPlantDayID()));
+        PlantDay day = plantDayManager.getPlantDayByID(plantDayTagInfo.getPlantDayID());
         TagData tag = tagManager.createOrGetTag(content);
         plantDayManager.tagPlantDay(tag, day);
         tagManager.saveTagData(tag);

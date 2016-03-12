@@ -44,12 +44,11 @@
                 <div th:replace="plants/plantFragments :: tagFragment"   ></div>
             </div>
 
-            <form th:action="@{tagged}" th:object="${plantDayTagInfo}" class="tag_form">
+            <form th:action="@{tagged}" th:object="${plantDayTagInfo}" class="plant_day_tag_form">
                 <div class="form-group" >
                     <input type="hidden" name="plantDayID" th:value="${plantDay.getId()}" />
-                    <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control" name="tagContent" placeholder="Add tag " />
-
-                    <!--<button  class="add_tag_btn btn btn-default">Add tag</button>-->
+                    <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control"
+                           name="tagContent" placeholder="Add tag " />
                     <input type="submit" value="Tag" />
                 </div>
             </form>
@@ -58,14 +57,14 @@
                 <div th:replace="plants/plantFragments :: attribFragment"   ></div>
             </div>
 
-            <form>
+            <form th:action="@{addAttribute}" th:object="${plantDayAttributeInfo}" class="plant_day_attrib_form">
                 <div class="form-group">
-
                     <input type="hidden" name="plantDayID" th:value="${plantDay.getId()}" />
-                    <input  type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control" name="attribName" placeholder="Add attribute name " />
-                    <input  type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control" name="attribValue" placeholder="Add attribute value " />
-
-                    <button  class="add_attrib_btn btn btn-default">Add Attribute</button>
+                    <input  type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control"
+                            name="attribName" placeholder="Add attribute name" />
+                    <input  type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control"
+                            name="attribVal" placeholder="Add attribute value" />
+                    <input type="submit" value="Add Attribute" />
                 </div>
             </form>
         </div>

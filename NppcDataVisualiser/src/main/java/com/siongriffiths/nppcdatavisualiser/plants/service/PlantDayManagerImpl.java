@@ -35,8 +35,14 @@ public class PlantDayManagerImpl implements PlantDayManager {
     }
 
     @Override
+    public PlantDay getPlantDayByID(String id) {
+        long parsedId = Long.parseLong(id);
+        return getPlantDayByID(parsedId);
+    }
+
+    @Override
     public List<PlantDay> findPlantDaysByTag(TagData tagData) {
-       return plantDayDao.findByTagData(tagData.getId());
+        return plantDayDao.findByTagData(tagData.getId());
     }
 
 
