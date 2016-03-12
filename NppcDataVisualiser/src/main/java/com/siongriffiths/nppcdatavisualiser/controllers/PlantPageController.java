@@ -1,5 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
+import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantTagInfo;
 import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantForm;
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
@@ -13,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,11 +51,13 @@ public class PlantPageController {
     }
 
     //// TODO: 10/03/2016 sanitize inputs - look into using filter chains and sanitize eveything
-    @RequestMapping(value = "{plantBarCode}")
+    @RequestMapping(value = "{plantBarCode}",method = RequestMethod.GET)
     public String showPlantDetail(Model model, @PathVariable("plantBarCode") String barCode){
         LOGGER.info(barCode);
 
         String viewPath;
+
+        model.addAttribute("plantTagInfo" ,new PlantTagInfo());
 
         Plant targetPlant  = plantManager.getAndInitialisePlantByBarCode(barCode);
         if(targetPlant == null){
@@ -66,18 +70,6 @@ public class PlantPageController {
         return viewPath;
     }
 
-
-    @RequestMapping(value = "/addTag/{plantDayId}/{tagContent}", method = RequestMethod.GET)
-    public String tagPlant( Model model, @PathVariable("plantDayId") String plantDayID,
-                            @PathVariable("tagContent") String tagContent) {
-        PlantDay day = plantDayManager.getPlantDayByID(Long.parseLong(plantDayID));
-        TagData tag = tagManager.createOrGetTag(tagContent);
-        plantDayManager.tagPlantDay(tag, day);
-        tagManager.saveTagData(tag);
-        plantDayManager.savePlantDay(day);
-        model.addAttribute("plantDay", day);
-        return PLANT_DAY_TAG_FRAGMENT;
-    }
 
     @RequestMapping(value = "/addTag/{plantDayId}/{attribName}/{attribValue}", method = RequestMethod.GET)
     public String tagPlant( Model model, @PathVariable("plantDayId") String plantDayID,
@@ -92,4 +84,16 @@ public class PlantPageController {
     }
 
 
+    @RequestMapping(value = "/tagged", method = RequestMethod.POST)
+    public String tagPlant(@ModelAttribute PlantTagInfo plantTagInfo, Model model){
+        model.addAttribute("plantTagInfo" ,new PlantTagInfo());
+        String content = plantTagInfo.getTagContent();
+        PlantDay day = plantDayManager.getPlantDayByID(Long.parseLong(plantTagInfo.getPlantDayID()));
+        TagData tag = tagManager.createOrGetTag(content);
+        plantDayManager.tagPlantDay(tag, day);
+        tagManager.saveTagData(tag);
+        plantDayManager.savePlantDay(day);
+        model.addAttribute("plantDay", day);
+        return PLANT_DAY_TAG_FRAGMENT;
+    }
 }

@@ -7,7 +7,7 @@ package com.siongriffiths.nppcdatavisualiser.controlobjects;
  *
  * Form backing object pojo class used to represent a front end form and act as a data transfer object for form submission
  */
-public class PlantDetailsForm {
+public class PlantTagInfo {
 
     private String tagContent;
     private String plantDayID;
