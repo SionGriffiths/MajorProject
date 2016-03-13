@@ -15,12 +15,6 @@ public class Metadata{
 
 
     private Integer id;
-    //http://stackoverflow.com/questions/7876724/how-to-return-mapkey-value-with-hql
-
-
-    // TODO: 11/03/2016 find out a reasonable size for this column length
-
-    //Hibernate requires that persistent collection-valued fields be declared as an interface
 
     private Map<String,String> dataAttributes;
 
@@ -43,7 +37,6 @@ public class Metadata{
         dataAttributes.put(key,value);
     }
 
-    //http://stackoverflow.com/questions/3393649/storing-a-mapstring-string-using-jpa
     @ElementCollection
     public Map<String, String> getDataAttributes() {
         return dataAttributes;

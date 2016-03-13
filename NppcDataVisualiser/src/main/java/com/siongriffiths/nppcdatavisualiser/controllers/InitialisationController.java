@@ -1,6 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
-import com.siongriffiths.nppcdatavisualiser.imageutils.ImageLoader;
+import com.siongriffiths.nppcdatavisualiser.system.service.InitialisationService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ public class InitialisationController {
     private static final Logger LOGGER = Logger.getLogger(InitialisationController.class);
 
     @Autowired
-    private ImageLoader imageLoader;
+    InitialisationService initialisationService;
 
     @RequestMapping
     public String showInit(){
@@ -28,7 +28,9 @@ public class InitialisationController {
     @RequestMapping("/createPlants")
     public String createPlants() {
         LOGGER.info("Plants init");
-        imageLoader.initPlantImages();
+        if(Boolean.FALSE.equals(initialisationService.getInitilisedStatus())) {
+            initialisationService.initSystem();
+        }
         return "init/default";
     }
 
