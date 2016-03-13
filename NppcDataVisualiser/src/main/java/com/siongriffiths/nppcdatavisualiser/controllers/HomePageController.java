@@ -13,9 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/")
-public class HomePageController {
+public class HomePageController extends DefaultController {
 
-    private static final Logger LOGGER = Logger.getLogger(HomePageController.class);
 
     /**
      * showHome returns the default home view

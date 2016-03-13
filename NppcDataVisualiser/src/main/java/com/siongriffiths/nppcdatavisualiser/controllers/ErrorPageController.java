@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
 @Controller
-public class ErrorPageController implements ErrorController {
+public class ErrorPageController extends DefaultController implements ErrorController {
 
     private static final String ERROR_PATH = "/error";
 

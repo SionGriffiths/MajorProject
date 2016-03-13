@@ -12,7 +12,6 @@ import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantDayAttributeInfo;
 import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantForm;
 import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantDayTagInfo;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,14 +27,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping("/plants")
-public class PlantPageController {
+public class PlantPageController extends DefaultController {
 
     private static final String PLANTS_SHOW_PATH = "plants/show";
     private static final String PLANT_NOT_FOUND_PATH = "plants/notfound";
     private static final String PLANT_DETAIL_PATH = "plants/plantdetail";
     private static final String PLANT_DAY_TAG_FRAGMENT =  "plants/plantFragments :: tagFragment";
     private static final String PLANT_DAY_ATTRIB_FRAGMENT =  "plants/plantFragments :: attribFragment";
-    private static final Logger LOGGER = Logger.getLogger(PlantPageController.class);
 
     @Autowired
     private PlantManager plantManager;
@@ -56,7 +54,7 @@ public class PlantPageController {
     //// TODO: 10/03/2016 sanitize inputs - look into using filter chains and sanitize eveything
     @RequestMapping(value = "{plantBarCode}",method = RequestMethod.GET)
     public String showPlantDetail(Model model, @PathVariable("plantBarCode") String barCode){
-        LOGGER.info(barCode);
+        logger.info(barCode);
 
         String viewPath;
 

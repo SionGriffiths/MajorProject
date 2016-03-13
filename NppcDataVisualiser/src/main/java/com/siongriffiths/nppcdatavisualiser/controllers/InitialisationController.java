@@ -1,7 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
 import com.siongriffiths.nppcdatavisualiser.system.service.InitialisationService;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/init")
-public class InitialisationController {
+public class InitialisationController extends DefaultController {
 
-    private static final Logger LOGGER = Logger.getLogger(InitialisationController.class);
+
 
     @Autowired
     InitialisationService initialisationService;
@@ -27,7 +26,7 @@ public class InitialisationController {
 
     @RequestMapping("/createPlants")
     public String createPlants() {
-        LOGGER.info("Plants init");
+        logger.info("Plants init");
         if(Boolean.FALSE.equals(initialisationService.getInitilisedStatus())) {
             initialisationService.initSystem();
         }

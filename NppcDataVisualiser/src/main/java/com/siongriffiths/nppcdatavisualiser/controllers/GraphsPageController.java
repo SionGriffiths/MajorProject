@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/graphs")
-public class GraphsPageController {
+public class GraphsPageController extends DefaultController{
 
     @RequestMapping
     public String showGraphsPage(){
