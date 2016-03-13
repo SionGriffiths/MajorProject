@@ -1,4 +1,4 @@
-package com.siongriffiths.nppcdatavisualiser.controlobjects;
+package com.siongriffiths.nppcdatavisualiser.plants.controlobjects;
 
 /**
  * Created on 02/03/2016.
