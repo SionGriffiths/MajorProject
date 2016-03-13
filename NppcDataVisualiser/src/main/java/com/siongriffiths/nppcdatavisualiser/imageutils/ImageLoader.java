@@ -128,6 +128,7 @@ public class ImageLoader {
         PlantDay plantDay = new PlantDay(date);
         associateImageToDay(image,plantDay);
         plant.addPlantDay(plantDay);
+        plantDay.setPlant(plant);
     }
 
     private String normaliseFilePath(String pathToNormalise){

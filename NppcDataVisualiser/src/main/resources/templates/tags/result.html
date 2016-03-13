@@ -13,7 +13,7 @@
     <p th:text="'There is tag ' + ${tag.getTagContent()}" ></p>
     <p th:text="'There\'s ' +${taggedDays.size()} + ' tagged days/images with tag ' +${tag.getTagContent()} "/>
     <div th:each="day,status : ${taggedDays}" class="row plant_row">
-        <p th:text="${day.getDate()}"/> <a th:href="'/plants'" class="btn btn-default">View Plant Page</a>
+        <p th:text="${day.getDate()}"/> <a th:href="'/plants/'+${day.getPlant().getBarCode()}" class="btn btn-default">View Plant Page</a>
     </div>
 
 

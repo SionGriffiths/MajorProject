@@ -27,6 +27,10 @@ public class PlantDay implements Comparable<PlantDay>{
 
     private Metadata plantDayMetaData;
 
+    private Plant plant;
+
+
+
     public PlantDay(){
         new PlantDay(new Date());
     }
@@ -60,6 +64,17 @@ public class PlantDay implements Comparable<PlantDay>{
     public void setPlantImages(List<PlantImage> plantImages) {
         this.plantImages = plantImages;
     }
+
+    @ManyToOne
+    @JoinColumn(name = "plant_plant_days", nullable = false)
+    public Plant getPlant() {
+        return plant;
+    }
+
+    public void setPlant(Plant plant) {
+        this.plant = plant;
+    }
+
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="plant_day_meta_data_id")

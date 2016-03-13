@@ -53,8 +53,7 @@ public class TagData {
 
         TagData tagData = (TagData) o;
 
-        if (id != tagData.id) return false;
-        return tagContent.equals(tagData.tagContent);
+        return id == tagData.id && tagContent.equals(tagData.tagContent);
 
     }
 

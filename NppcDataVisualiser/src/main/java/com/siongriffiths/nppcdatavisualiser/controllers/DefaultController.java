@@ -17,9 +17,7 @@ import java.util.Map;
  */
 public class DefaultController {
 
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
-
-
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @ExceptionHandler(Exception.class)
     public void handleException(
