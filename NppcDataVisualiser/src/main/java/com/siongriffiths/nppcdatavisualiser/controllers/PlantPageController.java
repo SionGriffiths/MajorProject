@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/plants")
 public class PlantPageController {
 
+    private static final String PLANTS_SHOW_PATH = "plants/show";
     private static final String PLANT_NOT_FOUND_PATH = "plants/notfound";
     private static final String PLANT_DETAIL_PATH = "plants/plantdetail";
     private static final String PLANT_DAY_TAG_FRAGMENT =  "plants/plantFragments :: tagFragment";
@@ -48,7 +49,7 @@ public class PlantPageController {
     public String showPlants(Model model){
         model.addAttribute("plantList", plantManager.getAllPlants());
         model.addAttribute("plantForm" ,new PlantForm());
-        return "plants/show";
+        return PLANTS_SHOW_PATH;
     }
 
     //// TODO: 10/03/2016 sanitize inputs - look into using filter chains and sanitize eveything
@@ -62,6 +63,7 @@ public class PlantPageController {
         model.addAttribute("plantDayAttributeInfo", new PlantDayAttributeInfo());
 
         Plant targetPlant  = plantManager.getAndInitialisePlantByBarCode(barCode);
+
         if(targetPlant == null){
             model.addAttribute("barcode", barCode);
             viewPath = PLANT_NOT_FOUND_PATH;
@@ -69,6 +71,7 @@ public class PlantPageController {
             model.addAttribute("plant", targetPlant);
             viewPath = PLANT_DETAIL_PATH;
         }
+
         return viewPath;
     }
 
@@ -83,6 +86,7 @@ public class PlantPageController {
         return PLANT_DAY_ATTRIB_FRAGMENT;
     }
 
+
     @RequestMapping(value = "/tagged", method = RequestMethod.POST)
     public String tagPlantDay(@ModelAttribute PlantDayTagInfo plantDayTagInfo, Model model){
         model.addAttribute("plantTagInfo" ,new PlantDayTagInfo());
@@ -92,7 +96,6 @@ public class PlantPageController {
         plantDayManager.tagPlantDay(tag, day);
         tagManager.saveTagData(tag);
         plantDayManager.savePlantDay(day);
-        plantDayManager.findPlantDaysByTag(tag);
         model.addAttribute("plantDay", day);
         return PLANT_DAY_TAG_FRAGMENT;
     }

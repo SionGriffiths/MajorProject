@@ -1,8 +1,8 @@
 package com.siongriffiths.nppcdatavisualiser.data;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created on 26/02/2016.
@@ -11,14 +11,18 @@ import java.util.HashMap;
  */
 
 @Entity
-public class Metadata implements Serializable {
+public class Metadata{
 
 
     private Integer id;
+    //http://stackoverflow.com/questions/7876724/how-to-return-mapkey-value-with-hql
+
 
     // TODO: 11/03/2016 find out a reasonable size for this column length
-    @Column(length=100000)
-    private HashMap<String,String> dataAttributes;
+
+    //Hibernate requires that persistent collection-valued fields be declared as an interface
+
+    private Map<String,String> dataAttributes;
 
     public Metadata(){
         dataAttributes = new HashMap<>();
@@ -39,19 +43,14 @@ public class Metadata implements Serializable {
         dataAttributes.put(key,value);
     }
 
-    public HashMap<String, String> getDataAttributes() {
+    //http://stackoverflow.com/questions/3393649/storing-a-mapstring-string-using-jpa
+    @ElementCollection
+    public Map<String, String> getDataAttributes() {
         return dataAttributes;
     }
 
-    public void setDataAttributes(HashMap<String, String> dataAttributes) {
+    public void setDataAttributes(Map<String, String> dataAttributes) {
         this.dataAttributes = dataAttributes;
     }
 
-    public String getGrowthStage() {
-        return dataAttributes.get("Growth Stage");
-    }
-
-    public void setGrowthStage(String growthStage) {
-        dataAttributes.put("Growth Stage", growthStage);
-    }
 }
