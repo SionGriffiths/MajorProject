@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Tag Page</title>
+</head>
+<body>
+
+<h1 layout:fragment="header">Tags</h1>
+<div layout:fragment="content">
+
+
+    <p th:text="'There are ' + ${tags.size()} + ' tags in the system :'" ></p>
+    <div th:each="tag,status : ${tags}" class="row plant_row">
+        <a th:href="'/tags/'+${tag.getTagContent()}"  th:text="${tag.getTagContent()}" />
+    </div>
+
+
+
+</div>
+</body>
+</html>

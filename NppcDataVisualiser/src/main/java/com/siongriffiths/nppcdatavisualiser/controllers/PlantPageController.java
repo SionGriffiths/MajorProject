@@ -86,7 +86,7 @@ public class PlantPageController extends DefaultController {
     }
 
 
-    @RequestMapping(value = "/tagged", method = RequestMethod.POST)
+    @RequestMapping(value = "/addTag", method = RequestMethod.POST)
     public String tagPlantDay(@ModelAttribute PlantDayTagInfo plantDayTagInfo, Model model){
         model.addAttribute("plantTagInfo" ,new PlantDayTagInfo());
         String content = plantDayTagInfo.getTagContent();

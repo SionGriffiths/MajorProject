@@ -9,8 +9,8 @@
 
 
 <div th:fragment="tagFragment">
-    <span th:each="plantDayTag,status : ${plantDay.getTags()}"
-          th:text="${plantDayTag.getTagContent()}" class="tag_text" >
+    <span th:each="plantDayTag,status : ${plantDay.getTags()}">
+        <a th:href="'/tags/'+${plantDayTag.getTagContent()}"  th:text="${plantDayTag.getTagContent()}" class="tag_text" />
     </span>
 </div>
 

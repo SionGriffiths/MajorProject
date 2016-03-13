@@ -1,0 +1,23 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Tag Result</title>
+</head>
+<body>
+
+<h1 layout:fragment="header">Tags</h1>
+<div layout:fragment="content">
+
+
+    <p th:text="'There is tag ' + ${tag.getTagContent()}" ></p>
+    <p th:text="'There\'s ' +${taggedDays.size()} + ' tagged days/images with tag ' +${tag.getTagContent()} "/>
+    <div th:each="day,status : ${taggedDays}" class="row plant_row">
+        <p th:text="${day.getDate()}"/> <a th:href="'/plants'" class="btn btn-default">View Plant Page</a>
+    </div>
+
+
+
+</div>
+</body>
+</html>

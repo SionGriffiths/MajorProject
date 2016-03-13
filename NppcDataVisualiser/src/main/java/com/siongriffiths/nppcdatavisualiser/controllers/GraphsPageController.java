@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/graphs")
 public class GraphsPageController extends DefaultController{
 
+    private static final String GRAPHS_SHOW_PATH = "graphs/show";
+
+
     @RequestMapping
     public String showGraphsPage(){
-        return "graphs/show";
+        return GRAPHS_SHOW_PATH;
     }
 
 }

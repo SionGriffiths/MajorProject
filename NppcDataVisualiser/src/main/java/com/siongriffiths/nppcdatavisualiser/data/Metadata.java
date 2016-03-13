@@ -1,5 +1,9 @@
 package com.siongriffiths.nppcdatavisualiser.data;
 
+
+
+import org.hibernate.search.annotations.Indexed;
+
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +15,7 @@ import java.util.Map;
  */
 
 @Entity
+@Indexed
 public class Metadata{
 
 
@@ -36,6 +41,7 @@ public class Metadata{
     public void addDataAttribute(String key, String value){
         dataAttributes.put(key,value);
     }
+
 
     @ElementCollection
     public Map<String, String> getDataAttributes() {
