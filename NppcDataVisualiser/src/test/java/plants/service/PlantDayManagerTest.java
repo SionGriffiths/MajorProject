@@ -7,7 +7,7 @@ import defaults.AbstractTest;
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
-public class PlantDayManagerTest extends AbstractTest{
+public class PlantDayManagerTest {
 
 
 
