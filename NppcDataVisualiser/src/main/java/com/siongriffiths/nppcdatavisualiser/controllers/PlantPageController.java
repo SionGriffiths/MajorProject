@@ -1,8 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
-import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantDayAttributeInfo;
-import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantDayTagInfo;
-import com.siongriffiths.nppcdatavisualiser.controlobjects.PlantForm;
+
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
@@ -11,6 +9,9 @@ import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantImageManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
+import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantDayAttributeInfo;
+import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantForm;
+import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantDayTagInfo;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
