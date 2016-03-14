@@ -27,9 +27,9 @@ public class InitialisationController extends DefaultController {
     @RequestMapping("/createPlants")
     public String createPlants() {
         logger.info("Plants init");
-//        if(Boolean.FALSE.equals(initialisationService.getInitilisedStatus())) {
+        if(Boolean.FALSE.equals(initialisationService.getInitilisedStatus())) {
             initialisationService.initSystem();
-//        }
+        }
         return "init/default";
     }
 

@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
  * @author Siôn Griffiths / sig2@aber.ac.uk
  *
  *
- * The code in this class is adapted from http://stackoverflow.com/questions/21123437/how-do-i-use-spring-boot-to-serve-static-content-located-in-dropbox-folder
+ * http://stackoverflow.com/questions/21123437/how-do-i-use-spring-boot-to-serve-static-content-located-in-dropbox-folder/26939359#26939359
  */
 @Configuration
 @AutoConfigureAfter(DispatcherServletAutoConfiguration.class)

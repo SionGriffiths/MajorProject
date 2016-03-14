@@ -66,7 +66,7 @@ public class PlantDay implements Comparable<PlantDay>{
     }
 
     @ManyToOne
-    @JoinColumn(name = "plant_plant_days", nullable = false)
+    @JoinColumn(name = "plant_id", nullable = false)
     public Plant getPlant() {
         return plant;
     }

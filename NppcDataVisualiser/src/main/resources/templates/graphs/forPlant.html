@@ -3,14 +3,19 @@
       layout:decorator="layout">
 <head>
     <script src="/js/plotly-latest.min.js"></script>
-    <title>Graphs Page</title>
+
+
+    <title>Plant Graphs Page</title>
 </head>
 <body>
 
 <h1 layout:fragment="header">Graphs</h1>
 <div layout:fragment="content">
 
-<p>graph</p>
+    <p th:text="'Graphs for plant '+${plant.getBarCode()}+' can be constucted from the following attributes :'" />
+    <div th:each="attrib,status : ${attribs}" class="row ">
+        <p th:text="${attrib}"/>
+    </div>
 
 </div>
 </body>
