@@ -1,9 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.data;
 
 
-
-import org.hibernate.search.annotations.Indexed;
-
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +12,6 @@ import java.util.Map;
  */
 
 @Entity
-@Indexed
 public class Metadata{
 
 
