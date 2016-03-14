@@ -17,11 +17,11 @@ public class Metadata{
 
     private Integer id;
 
-    private Map<String,Integer> dataAttributes;
+    private Map<String,String> dataAttributes;
 
     public Metadata(){
         dataAttributes = new HashMap<>();
-        dataAttributes.put("Growth Stage",0); //// TODO: 11/03/2016 Move default values to experiment config properties?
+        dataAttributes.put("Growth Stage","0"); //// TODO: 11/03/2016 Move default values to experiment config properties?
     }
 
     @Id
@@ -34,17 +34,17 @@ public class Metadata{
         this.id = id;
     }
 
-    public void addDataAttribute(String key, Integer value){
+    public void addDataAttribute(String key, String value){
         dataAttributes.put(key,value);
     }
 
 
     @ElementCollection
-    public Map<String, Integer> getDataAttributes() {
+    public Map<String, String> getDataAttributes() {
         return dataAttributes;
     }
 
-    public void setDataAttributes(Map<String, Integer> dataAttributes) {
+    public void setDataAttributes(Map<String, String> dataAttributes) {
         this.dataAttributes = dataAttributes;
     }
 

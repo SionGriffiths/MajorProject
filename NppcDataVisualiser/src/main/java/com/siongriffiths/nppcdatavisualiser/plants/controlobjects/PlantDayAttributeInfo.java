@@ -9,7 +9,7 @@ public class PlantDayAttributeInfo {
 
     private String plantDayID;
     private String attribName;
-    private Integer attribVal;
+    private String attribVal;
 
     public String getPlantDayID() {
         return plantDayID;
@@ -27,11 +27,11 @@ public class PlantDayAttributeInfo {
         this.attribName = attribName;
     }
 
-    public Integer getAttribVal() {
+    public String getAttribVal() {
         return attribVal;
     }
 
-    public void setAttribVal(Integer attribVal) {
+    public void setAttribVal(String attribVal) {
         this.attribVal = attribVal;
     }
 }

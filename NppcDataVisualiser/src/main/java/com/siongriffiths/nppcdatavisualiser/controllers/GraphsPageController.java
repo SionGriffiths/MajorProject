@@ -1,5 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
+import com.siongriffiths.nppcdatavisualiser.data.service.GraphingManager;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
@@ -9,8 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -28,6 +32,8 @@ public class GraphsPageController extends DefaultController{
 
     @Autowired
     PlantManager plantManager;
+    @Autowired
+    GraphingManager graphingManager;
 
     @RequestMapping
     public String showGraphsPage(){
@@ -61,6 +67,20 @@ public class GraphsPageController extends DefaultController{
             attribKeySet.addAll(day.getPlantDayMetaData().getDataAttributes().keySet());
         }
         return attribKeySet;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/byPlant/{plantBarCode}/fromData/{attrib1}/{attrib2}"
+            ,method = RequestMethod.GET)
+    public Map<String,List<String>> getGraphData(Model model,
+                                                 @PathVariable("plantBarCode") String barCode,
+                                                 @PathVariable("attrib1") String attrib1,
+                                                 @PathVariable("attrib2") String attrib2){
+
+        Plant targetPlant  = plantManager.getPlantByBarcode(barCode);
+
+        return graphingManager.getGraphDataForPlant(targetPlant,attrib1,attrib2);
     }
 
 }
