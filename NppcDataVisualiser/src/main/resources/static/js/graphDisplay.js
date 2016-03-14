@@ -2,15 +2,19 @@ $( document ).ready(function() {
 
     $('.make_graph').click(function() {
 
+        var $elem = $(this);
+        var $attrib = $elem.attr("data-attrib");
+        var $barCode = $elem.attr("data-barcode");
+        var $targetElement = $('div[id="' + $attrib + '"]');
+        var $url = $barCode + '/fromData/' + $attrib + '/date';
 
         $.ajax({
-            url:'O7-01111/fromData/Growth Stage/date',
+            url:$url,
             type: 'get',
             success: function(response) {
                 console.log(response);
-                $("div[id='Growth Stage']").addClass('graphDiv');
-                var div = $("div[id='Growth Stage']")[0];
-                //div.addClass('graphDiv');
+                $targetElement.addClass('graphDiv');
+                var div = $targetElement[0];
                 makePlotlyGraph(response,div);
             },
             error: function(response) {
