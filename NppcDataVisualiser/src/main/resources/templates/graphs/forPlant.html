@@ -13,8 +13,8 @@
 <div layout:fragment="content">
 
     <p th:text="'Graphs for plant '+${plant.getBarCode()}+' can be constucted from the following attributes :'" />
-    <div th:each="attrib,status : ${attribs}" class="row ">
-        <p th:text="${attrib}"/>
+    <div th:each="attrib,status : ${attribs}" class="row plant_row">
+        <p th:text="${attrib}"/> <a th:href="@{${plant.getBarCode()} + '/fromData/' + ${attrib} + '/date'}" class="btn btn-default">Create Graph</a>
     </div>
 
 </div>
