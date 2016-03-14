@@ -3,6 +3,7 @@
       layout:decorator="layout">
 <head>
     <script src="/js/plotly-latest.min.js"></script>
+    <script src="/js/graphDisplay.js"></script>
 
 
     <title>Plant Graphs Page</title>
@@ -14,7 +15,11 @@
 
     <p th:text="'Graphs for plant '+${plant.getBarCode()}+' can be constucted from the following attributes :'" />
     <div th:each="attrib,status : ${attribs}" class="row plant_row">
-        <p th:text="${attrib}"/> <a th:href="@{${plant.getBarCode()} + '/fromData/' + ${attrib} + '/date'}" class="btn btn-default">Create Graph</a>
+        <div class="col-xs-6">
+        <p th:text="${attrib}"/> <span class="make_graph btn btn-default">Create Graph</span>
+        </div>
+        <!--<p th:text="${attrib}"/> <a th:href="@{${plant.getBarCode()} + '/fromData/' + ${attrib} + '/date'}" class="make_graph btn btn-default">Create Graph</a>-->
+        <div th:id="${attrib}" class="col-xs-6">Graph</div>
     </div>
 
 </div>
