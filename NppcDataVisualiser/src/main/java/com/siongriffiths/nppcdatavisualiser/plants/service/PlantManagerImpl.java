@@ -34,14 +34,5 @@ public class PlantManagerImpl implements PlantManager {
        return plantDao.findByBarCode(barCode);
     }
 
-    @Override
-    public Plant getAndInitialisePlantByBarCode(String barCode) {
-        return getPlantByBarcode(barCode);
-    }
 
-
-    @Override
-    public void initializePlantObject(Plant plant) {
-        Hibernate.initialize(plant.getPlantDays());
-    }
 }

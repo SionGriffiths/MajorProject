@@ -26,8 +26,4 @@ public class PlantImageManagerImpl implements PlantImageManager {
     public PlantImage getPlantImageByID(long id) {
        return plantImageDao.findOne(id);
     }
-
-
-
-
 }

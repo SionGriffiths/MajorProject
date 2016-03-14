@@ -16,8 +16,4 @@ public interface PlantManager {
     List<Plant> getAllPlants();
 
     Plant getPlantByBarcode(String barCode);
-
-    Plant getAndInitialisePlantByBarCode(String barCode);
-
-    void initializePlantObject(Plant plant);
 }

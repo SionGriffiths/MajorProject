@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * Basic test, based on examples given in https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples
  */
-public class HomePageControllerWebTest extends AbstractTest {
+public class HomePageControllerWebTest extends AbstractControllerTest {
 
     @Autowired
     private WebApplicationContext wac;
@@ -38,7 +38,7 @@ public class HomePageControllerWebTest extends AbstractTest {
     }
 
     @Test
-    public void testHome() throws Exception {
+    public void testShowHome() throws Exception {
         this.mockMvc.perform(get("/")).andExpect(status().isOk())
                 .andExpect(content().string(containsString("<title>DEFAULT HOME")));
     }

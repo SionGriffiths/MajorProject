@@ -61,7 +61,7 @@ public class PlantPageController extends DefaultController {
         model.addAttribute("plantTagInfo" ,new PlantDayTagInfo());
         model.addAttribute("plantDayAttributeInfo", new PlantDayAttributeInfo());
 
-        Plant targetPlant  = plantManager.getAndInitialisePlantByBarCode(barCode);
+        Plant targetPlant  = plantManager.getPlantByBarcode(barCode);
 
         if(targetPlant == null){
             model.addAttribute("barcode", barCode);

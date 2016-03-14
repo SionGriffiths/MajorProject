@@ -55,9 +55,9 @@ public class PlantPageControllerTest  extends AbstractTest {
 
         String plantUrl = "/plants/"+testBarCode;
         this.mockMvc.perform(get(plantUrl)).andExpect(status().isOk())
-                .andExpect(content().string(containsString(testBarCode)));
+                .andExpect(content().string(containsString(testBarCode)));  //// TODO: 14/03/2016 this will always pass since the no plant page has the barcode in it
 
-        String notPlantUrl = "/plants/32435";
+        String notPlantUrl = "/plants/123456";
         this.mockMvc.perform(get(notPlantUrl)).andExpect(status().isOk())
                 .andExpect(content().string(containsString("Plant not Found")));
 
