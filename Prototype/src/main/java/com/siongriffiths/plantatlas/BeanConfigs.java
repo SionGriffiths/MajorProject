@@ -14,4 +14,6 @@ public class BeanConfigs {
     public ImageLoader imageLoader(){
         return new ImageLoader();
     }
+
+
 }
