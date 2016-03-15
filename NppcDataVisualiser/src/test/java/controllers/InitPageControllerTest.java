@@ -9,6 +9,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,7 +33,7 @@ public class InitPageControllerTest extends AbstractControllerTest {
 
     @Test
     public void testShowHome() throws Exception {
-        this.mockMvc.perform(get("/init")).andExpect(status().isOk())
+        this.mockMvc.perform(get("/init")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("<title>DEFAULT INIT")));
     }
 

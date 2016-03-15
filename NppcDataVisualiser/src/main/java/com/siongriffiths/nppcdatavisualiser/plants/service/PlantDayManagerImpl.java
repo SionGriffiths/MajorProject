@@ -1,11 +1,14 @@
 package com.siongriffiths.nppcdatavisualiser.plants.service;
 
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
+import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
+import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
 import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantDayDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,5 +48,38 @@ public class PlantDayManagerImpl implements PlantDayManager {
         return plantDayDao.findByTagData(tagData.getId());
     }
 
+
+
+    public void addToOrCreatePlantDay(Date date, PlantImage plantImage, Plant plant){
+        List<PlantDay> dayList = plant.getPlantDays();
+        boolean dayFound = false;
+
+        if(dayList.size() == 0){
+            createPlantDay(date,plant,plantImage);
+        } else {
+            for (PlantDay day : dayList) {
+                if (day.getDate().compareTo(date) == 0) {
+                    associateImageToDay(plantImage, day);
+                    dayFound = true;
+                    break;
+                }
+            }
+            if(!dayFound){
+                createPlantDay(date,plant,plantImage);
+            }
+        }
+    }
+
+    private void associateImageToDay(PlantImage image, PlantDay day){
+        day.addPlantImage(image);
+        image.setPlantDay(day); //// TODO: 10/03/2016 Do we need bi-directional references between image and day?
+    }
+
+    private void createPlantDay(Date date, Plant plant, PlantImage image){
+        PlantDay plantDay = new PlantDay(date);
+        associateImageToDay(image,plantDay);
+        plant.addPlantDay(plantDay);
+        plantDay.setPlant(plant);
+    }
 
 }

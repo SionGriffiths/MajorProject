@@ -82,7 +82,7 @@ public class ImageLoader {
                                                 Date date = extractDateFromImageName(plantImageFile.getName());
                                                 PlantImage plantImage = new PlantImage();
                                                 plantImage.setFilePath(path);
-                                                addToOrCreatePlantDay(date,plantImage,plant);
+                                                plantDayManager.addToOrCreatePlantDay(date,plantImage,plant);
                                                 // TODO: 09/03/2016 A less naive method of doing this would be lovely
                                             }
                                         }
@@ -99,37 +99,7 @@ public class ImageLoader {
         }
     }
 
-    private void addToOrCreatePlantDay(Date date, PlantImage plantImage, Plant plant){
-        List<PlantDay> dayList = plant.getPlantDays();
-        boolean dayFound = false;
 
-        if(dayList.size() == 0){
-            createPlantDay(date,plant,plantImage);
-        } else {
-            for (PlantDay day : dayList) {
-                if (day.getDate().compareTo(date) == 0) {
-                    associateImageToDay(plantImage, day);
-                    dayFound = true;
-                    break;
-                }
-            }
-            if(!dayFound){
-                createPlantDay(date,plant,plantImage);
-            }
-        }
-    }
-
-    private void associateImageToDay(PlantImage image, PlantDay day){
-        day.addPlantImage(image);
-        image.setPlantDay(day); //// TODO: 10/03/2016 Do we need bi-directional references between image and day?
-    }
-
-    private void createPlantDay(Date date, Plant plant, PlantImage image){
-        PlantDay plantDay = new PlantDay(date);
-        associateImageToDay(image,plantDay);
-        plant.addPlantDay(plantDay);
-        plantDay.setPlant(plant);
-    }
 
     private String normaliseFilePath(String pathToNormalise){
         return FilenameUtils.separatorsToUnix(pathToNormalise);

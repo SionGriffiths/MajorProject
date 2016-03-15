@@ -1,8 +1,11 @@
 package com.siongriffiths.nppcdatavisualiser.plants.service;
 
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
+import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
+import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,4 +19,5 @@ public interface PlantDayManager {
     PlantDay getPlantDayByID(long id);
     PlantDay getPlantDayByID(String id);
     List<PlantDay> findPlantDaysByTag(TagData tagData);
+    void addToOrCreatePlantDay(Date date, PlantImage plantImage, Plant plant);
 }

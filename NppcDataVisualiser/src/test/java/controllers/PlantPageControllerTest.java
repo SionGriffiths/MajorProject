@@ -1,5 +1,6 @@
 package controllers;
 
+import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
@@ -42,7 +43,7 @@ public class PlantPageControllerTest  extends AbstractTest {
 
     @Test
     public void testShowPlants() throws Exception {
-        this.mockMvc.perform(get("/plants")).andExpect(status().isOk())
+        this.mockMvc.perform(get("/plants")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("<title>Plants Page")));
     }
 
@@ -54,15 +55,15 @@ public class PlantPageControllerTest  extends AbstractTest {
         plant.setBarCode(testBarCode);
         plantManager.savePlant(plant);
 
-        this.mockMvc.perform(get("/plants")).andExpect(status().isOk())
+        this.mockMvc.perform(get("/plants")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString(testBarCode)));
 
         String plantUrl = "/plants/"+testBarCode;
-        this.mockMvc.perform(get(plantUrl)).andExpect(status().isOk())
+        this.mockMvc.perform(get(plantUrl)).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("This is the detail page for "+testBarCode)));
 
         String notPlantUrl = "/plants/123456";
-        this.mockMvc.perform(get(notPlantUrl)).andExpect(status().isOk())
+        this.mockMvc.perform(get(notPlantUrl)).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("Plant not Found")));
 
     }
@@ -87,4 +88,30 @@ public class PlantPageControllerTest  extends AbstractTest {
 
 
     }
+
+    @Test
+    public void testAddAttribToPlantDay() throws Exception{
+        PlantDay day = new PlantDay();
+        Plant plant = new Plant();
+        day.setPlant(plant);
+        day.setPlantDayMetaData(new Metadata());
+        plantManager.savePlant(plant);
+        plantDayManager.savePlantDay(day);
+
+        String id = Long.toString(day.getId());
+        String aName = "testAttributeName";
+        String aValue = "testAttributeValue";
+
+
+        this.mockMvc.perform(post("/plants/addAttribute")
+                .param("attribName",aName)
+                .param("attribVal",aValue)
+                .param("plantDayID",id))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString(aValue)))
+                .andExpect(content().string(containsString(aName)));
+
+    }
+
 }
