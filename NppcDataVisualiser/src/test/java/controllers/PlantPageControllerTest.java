@@ -1,25 +1,23 @@
 package controllers;
 
-import com.siongriffiths.nppcdatavisualiser.Application;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
-import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantDao;
+import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
+import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
+import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 import defaults.AbstractTest;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 /**
  * Created on 01/03/2016.
  *
@@ -30,7 +28,10 @@ public class PlantPageControllerTest  extends AbstractTest {
     @Autowired
     private WebApplicationContext wac;
     @Autowired
-    private PlantDao plantDao;
+    private PlantManager plantManager;
+    @Autowired
+    private PlantDayManager plantDayManager;
+
 
     private MockMvc mockMvc;
 
@@ -40,7 +41,7 @@ public class PlantPageControllerTest  extends AbstractTest {
     }
 
     @Test
-    public void testHome() throws Exception {
+    public void testShowPlants() throws Exception {
         this.mockMvc.perform(get("/plants")).andExpect(status().isOk())
                 .andExpect(content().string(containsString("<title>Plants Page")));
     }
@@ -51,15 +52,39 @@ public class PlantPageControllerTest  extends AbstractTest {
         String testBarCode = "55345";
         Plant plant = new Plant();
         plant.setBarCode(testBarCode);
-        plantDao.save(plant);
+        plantManager.savePlant(plant);
+
+        this.mockMvc.perform(get("/plants")).andExpect(status().isOk())
+                .andExpect(content().string(containsString(testBarCode)));
 
         String plantUrl = "/plants/"+testBarCode;
         this.mockMvc.perform(get(plantUrl)).andExpect(status().isOk())
-                .andExpect(content().string(containsString(testBarCode)));  //// TODO: 14/03/2016 this will always pass since the no plant page has the barcode in it
+                .andExpect(content().string(containsString("This is the detail page for "+testBarCode)));
 
         String notPlantUrl = "/plants/123456";
         this.mockMvc.perform(get(notPlantUrl)).andExpect(status().isOk())
                 .andExpect(content().string(containsString("Plant not Found")));
+
+    }
+
+    @Test
+    public void testTagPlantDay() throws Exception{
+        PlantDay day = new PlantDay();
+        Plant plant = new Plant();
+        day.setPlant(plant);
+        plantManager.savePlant(plant);
+        plantDayManager.savePlantDay(day);
+
+        String id = Long.toString(day.getId());
+        String tag = "testTagContent";
+
+        this.mockMvc.perform(post("/plants/addTag")
+                .param("tagContent",tag)
+                .param("plantDayID",id))
+                .andDo(print())
+                .andExpect(status().isOk())
+        .andExpect(content().string(containsString(tag)));
+
 
     }
 }
