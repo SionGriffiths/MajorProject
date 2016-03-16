@@ -2,6 +2,7 @@ package com.siongriffiths.nppcdatavisualiser.data.service;
 
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 import com.siongriffiths.nppcdatavisualiser.data.doas.MetaDataDao;
+import org.hibernate.metamodel.domain.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

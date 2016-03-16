@@ -1,9 +1,8 @@
-package com.siongriffiths.nppcdatavisualiser.utils;
+package com.siongriffiths.nppcdatavisualiser.data.service;
 
-import com.opencsv.CSVReader;
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
-import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
+import com.siongriffiths.nppcdatavisualiser.data.utils.ExperimentCSVReader;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
@@ -11,11 +10,8 @@ import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,59 +20,56 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created on 15/03/2016.
+ * Created on 16/03/2016.
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
-@Component
-public class ExperimentCSVReader {
+@Service("experimentDataImportService")
+public class ExperiemntDataImportServiceImpl implements ExperiemntDataImportService {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private static final String PLANT_ATTRIBUTE_COLUMN_MAPPING_STRING_PATTERN = "{{plant-a}}";
     private static final String PLANT_TAG_COLUMN_MAPPING_STRING_PATTERN = "{{plant-t}}";
     private static final String PLANT_DAY_ATTRIBUTE_COLUMN_MAPPING_STRING_PATTERN = "{{day-a}}";
     private static final String PLANT_BARCODE_COLUMN_MAPPING_STRING_PATTERN = "{{bc}}";
     private static final String IN_HEADER_KEY_VALUE_PAIR_DELIMITER = "~~";
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
-    PlantManager plantManager;
+    private PlantManager plantManager;
     @Autowired
-    PlantDayManager plantDayManager;
+    private  PlantDayManager plantDayManager;
     @Autowired
-    TagManager tagManager;
+    private TagManager tagManager;
+    @Autowired
+    private ExperimentCSVReader experimentCSVReader;
+
     private List<Integer> plantATypeColumnIndicies;
     private List<Integer> plantTTypeColumnIndicies;
     private List<Integer> plantDayATypeColumnIndicies;
     private int barcodeColumn;
 
 
-    public void doParse(){
 
-        try {
-            CSVReader  reader = new CSVReader(new FileReader("I:/Diss/MajorProject/Data/O7/annotated.csv"));
-            plantTTypeColumnIndicies = new ArrayList<>();
-            plantATypeColumnIndicies = new ArrayList<>();
-            plantDayATypeColumnIndicies = new ArrayList<>();
+    public void parseAnnotatedExperiemntDataCSVFile(String filePath){
+        List<String[]> parsedFile = experimentCSVReader.doParse(filePath);
 
-            String[] header = reader.readNext();
-            processHeaderColumns(header);
-            List<String[]> csvLines = reader.readAll();
+        String[] header = parsedFile.get(0);
 
-            for(String[] line : csvLines) {
-                enrichPlantRecord(barcodeColumn, plantATypeColumnIndicies,
-                        plantTTypeColumnIndicies, plantDayATypeColumnIndicies, header, line);
-            }
+        plantTTypeColumnIndicies = new ArrayList<>();
+        plantATypeColumnIndicies = new ArrayList<>();
+        plantDayATypeColumnIndicies = new ArrayList<>();
 
-        } catch (FileNotFoundException e) {
-            logger.error("CSV file not found" , e);
-        } catch (IOException e) {
-            logger.error("Couldn't parse line of file", e);
-        }
+        processHeaderColumns(header);
+
+        parsedFile.remove(0);
+        processCsvFile(parsedFile,header);
+
+
     }
 
 
-    private void processHeaderColumns(String[] header){
-
-        //// TODO: 16/03/2016 regex based string clean up in one go would be best eh?
+    public void processHeaderColumns(String[] header){
 
         for(int i = 0; i < header.length; i++){
             if (header[i].contains(PLANT_ATTRIBUTE_COLUMN_MAPPING_STRING_PATTERN)) {
@@ -95,7 +88,12 @@ public class ExperimentCSVReader {
         }
     }
 
-    // TODO: 16/03/2016 move these methods to a data service?
+    private void processCsvFile(List<String[]> csvFile, String[] header){
+        for(String[] line : csvFile) {
+            enrichPlantRecord(barcodeColumn, plantATypeColumnIndicies,
+                    plantTTypeColumnIndicies, plantDayATypeColumnIndicies, header, line);
+        }
+    }
 
     private void enrichPlantRecord(int barCodeIndex, List<Integer> plantAttribIndex,
                                    List<Integer> plantTagIndex, List<Integer> dayAttribIndex, String[] header, String[] line) {
@@ -142,7 +140,6 @@ public class ExperimentCSVReader {
                     DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                     Date date = format.parse(columnContent);
                     day = plantDayManager.findByPlantAndDate(plant, date);
-                    logger.debug("loaded plantDay");
                 } catch (ParseException e) {
                     logger.error("Cannot parse column content to date. Content was : " + columnContent
                             + " | Plant barcode in line : " + plant.getBarCode(), e);
@@ -156,18 +153,8 @@ public class ExperimentCSVReader {
                         plantDayManager.savePlantDay(day);
                     }
                 }
-
             }
         }
-
-
-    }
-    private String cleanAnnotation(String toClean){
-//        toClean =  toClean.replace(PLANT_ATTRIBUTE_COLUMN_MAPPING_STRING_PATTERN, "");
-//        toClean =  toClean.replace(PLANT_TAG_COLUMN_MAPPING_STRING_PATTERN, "");
-//        toClean =  toClean.replace(PLANT_BARCODE_COLUMN_MAPPING_STRING_PATTERN, "");
-//        toClean = toClean.replaceAll("/\\{\\{([^}]+)\\}\\}/", "");
-        return toClean;
     }
 
 }

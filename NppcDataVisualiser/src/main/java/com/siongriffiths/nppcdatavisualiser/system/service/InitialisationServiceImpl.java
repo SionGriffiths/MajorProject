@@ -1,9 +1,10 @@
 package com.siongriffiths.nppcdatavisualiser.system.service;
 
+import com.siongriffiths.nppcdatavisualiser.data.service.ExperiemntDataImportService;
 import com.siongriffiths.nppcdatavisualiser.data.service.MetaDataManager;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
 import com.siongriffiths.nppcdatavisualiser.imageutils.ImageLoader;
-import com.siongriffiths.nppcdatavisualiser.utils.ExperimentCSVReader;
+import com.siongriffiths.nppcdatavisualiser.data.utils.ExperimentCSVReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class InitialisationServiceImpl implements InitialisationService {
     @Autowired
     private ImageLoader imageLoader;
     @Autowired
-    private ExperimentCSVReader experimentCSVReader;
+    private ExperiemntDataImportService experiemntDataImportService;
     @Autowired
     private MetaDataManager metaDataManager;
     @Autowired
@@ -33,13 +34,13 @@ public class InitialisationServiceImpl implements InitialisationService {
     }
 
     public void initData(){
-        experimentCSVReader.doParse();
+        experiemntDataImportService.parseAnnotatedExperiemntDataCSVFile("I:/Diss/MajorProject/Data/O7/annotated.csv");
     }
 
     @Override
     public void resetData() {
         metaDataManager.resetAll();
-        tagManager.resetAll();
+//        tagManager.resetAll();
     }
 
     @Override
