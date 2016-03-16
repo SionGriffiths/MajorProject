@@ -1,12 +1,14 @@
 package com.siongriffiths.nppcdatavisualiser.plants.daos;
 
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
+import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,4 +25,5 @@ public interface PlantDayDao extends JpaRepository<PlantDay, Long> {
 
     PlantDay findByPlantDayMetaData(Metadata plantDayMetaData);
 
+    PlantDay findByPlantAndDate(Plant plant, Date date);
 }

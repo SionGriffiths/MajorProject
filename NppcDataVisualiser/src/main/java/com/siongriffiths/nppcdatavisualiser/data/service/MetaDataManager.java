@@ -14,4 +14,6 @@ public interface MetaDataManager {
     List<Metadata> findAll();
     void resetAll();
 
+    void saveMetaData(Metadata data);
+
 }

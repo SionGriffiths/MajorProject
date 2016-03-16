@@ -48,7 +48,10 @@ public class PlantDayManagerImpl implements PlantDayManager {
         return plantDayDao.findByTagData(tagData.getId());
     }
 
-
+    @Override
+    public PlantDay findByPlantAndDate(Plant plant, Date date) {
+        return plantDayDao.findByPlantAndDate(plant, date);
+    }
 
     public void addToOrCreatePlantDay(Date date, PlantImage plantImage, Plant plant){
         List<PlantDay> dayList = plant.getPlantDays();
@@ -68,6 +71,12 @@ public class PlantDayManagerImpl implements PlantDayManager {
                 createPlantDay(date,plant,plantImage);
             }
         }
+    }
+
+    @Override
+    public void addAttributeToDay(PlantDay day, String key, String value) {
+        day.getPlantDayMetaData().addDataAttribute(key, value);
+        savePlantDay(day);
     }
 
     private void associateImageToDay(PlantImage image, PlantDay day){

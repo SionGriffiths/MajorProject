@@ -34,5 +34,10 @@ public class MetaDataManagerImpl implements MetaDataManager {
 
     }
 
+    @Override
+    public void saveMetaData(Metadata data) {
+        metaDataDao.save(data);
+    }
+
 
 }
