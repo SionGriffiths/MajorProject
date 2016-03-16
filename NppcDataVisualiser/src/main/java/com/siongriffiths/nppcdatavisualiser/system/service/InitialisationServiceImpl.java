@@ -1,6 +1,9 @@
 package com.siongriffiths.nppcdatavisualiser.system.service;
 
+import com.siongriffiths.nppcdatavisualiser.data.service.MetaDataManager;
+import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
 import com.siongriffiths.nppcdatavisualiser.imageutils.ImageLoader;
+import com.siongriffiths.nppcdatavisualiser.utils.ExperimentCSVReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,19 +20,30 @@ public class InitialisationServiceImpl implements InitialisationService {
 
     @Autowired
     private ImageLoader imageLoader;
-
+    @Autowired
+    private ExperimentCSVReader experimentCSVReader;
+    @Autowired
+    private MetaDataManager metaDataManager;
+    @Autowired
+    private TagManager tagManager;
 
     public void initSystem(){
         imageLoader.initPlantImages();
-        systemInitialisedFlag = Boolean.TRUE;
+        setSystemInitialisedFlag(Boolean.TRUE);
+    }
+
+    public void initData(){
+        experimentCSVReader.doParse();
+    }
+
+    @Override
+    public void resetData() {
+        metaDataManager.resetAll();
+        tagManager.resetAll();
     }
 
     @Override
     public Boolean getInitilisedStatus() {
-        return systemInitialisedFlag;
-    }
-
-    public Boolean getSystemInitialisedFlag() {
         return systemInitialisedFlag;
     }
 

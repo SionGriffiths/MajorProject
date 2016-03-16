@@ -43,7 +43,7 @@
 
         <div class="col-xs-6">
             <div  th:id="'plant_day_tags'+${plantDay.getId()}" th:class="'plant_day_tags container'">
-                <div th:replace="plants/plantFragments :: tagFragment"   ></div>
+                <div th:replace="plants/plantFragments :: dayTagFragment"   ></div>
             </div>
 
             <form th:action="@{addTag}" th:object="${plantDayTagInfo}" class="plant_day_tag_form">
@@ -56,7 +56,7 @@
             </form>
 
             <div  th:id="'plant_day_attribs'+${plantDay.getId()}" th:class="'plant_day_attribs container'">
-                <div th:replace="plants/plantFragments :: attribFragment"   ></div>
+                <div th:replace="plants/plantFragments :: dayAttribFragment"   ></div>
             </div>
 
             <form th:action="@{addAttribute}" th:object="${plantDayAttributeInfo}" class="plant_day_attrib_form">

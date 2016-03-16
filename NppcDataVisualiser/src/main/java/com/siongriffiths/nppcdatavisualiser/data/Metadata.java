@@ -21,7 +21,6 @@ public class Metadata{
 
     public Metadata(){
         dataAttributes = new HashMap<>();
-        dataAttributes.put("Growth Stage","0"); //// TODO: 11/03/2016 Move default values to experiment config properties?
     }
 
     @Id

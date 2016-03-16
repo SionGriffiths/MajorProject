@@ -1,5 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.plants.service;
 
+import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantDao;
 import org.hibernate.Hibernate;
@@ -32,6 +33,11 @@ public class PlantManagerImpl implements PlantManager {
     @Override
     public Plant getPlantByBarcode(String barCode) {
        return plantDao.findByBarCode(barCode);
+    }
+
+    @Override
+    public void tagPlant(TagData tag, Plant plant) {
+        plant.addTag(tag);
     }
 
 

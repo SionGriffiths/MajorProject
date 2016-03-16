@@ -1,5 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.plants.service;
 
+import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 
 import java.util.List;
@@ -16,4 +17,8 @@ public interface PlantManager {
     List<Plant> getAllPlants();
 
     Plant getPlantByBarcode(String barCode);
+
+
+
+    void tagPlant(TagData tag, Plant plant);
 }

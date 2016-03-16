@@ -15,4 +15,5 @@ public interface TagManager {
     List<TagData> getAllTags();
     TagData createOrGetTag(String content);
     void saveTagData(TagData tagData);
+    void resetAll();
 }

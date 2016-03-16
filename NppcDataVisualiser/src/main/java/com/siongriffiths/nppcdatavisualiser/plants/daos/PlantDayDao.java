@@ -18,7 +18,6 @@ import java.util.List;
 public interface PlantDayDao extends JpaRepository<PlantDay, Long> {
 
 //    http://stackoverflow.com/questions/15153877/jpa-select-from-collection-with-many-to-many-association
-
     @Query("select p from PlantDay p join p.tags tag where tag.id = :tagId ")
     List<PlantDay> findByTagData(@Param("tagId") long id);
 

@@ -29,11 +29,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/plants")
 public class PlantPageController extends DefaultController {
 
+
     private static final String PLANTS_SHOW_PATH = "plants/show";
     private static final String PLANT_NOT_FOUND_PATH = "plants/notfound";
     private static final String PLANT_DETAIL_PATH = "plants/plantdetail";
-    private static final String PLANT_DAY_TAG_FRAGMENT =  "plants/plantFragments :: tagFragment";
-    private static final String PLANT_DAY_ATTRIB_FRAGMENT =  "plants/plantFragments :: attribFragment";
+    private static final String PLANT_DAY_TAG_FRAGMENT =  "plants/plantFragments :: dayTagFragment";
+    private static final String PLANT_DAY_ATTRIB_FRAGMENT =  "plants/plantFragments :: dayAttribFragment";
 
     @Autowired
     private PlantManager plantManager;

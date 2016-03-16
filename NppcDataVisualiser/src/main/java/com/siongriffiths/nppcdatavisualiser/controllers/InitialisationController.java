@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class InitialisationController extends DefaultController {
 
 
+    //// TODO: 16/03/2016 INIT should deal with removing previously persisted data
 
     @Autowired
     InitialisationService initialisationService;
@@ -33,4 +34,17 @@ public class InitialisationController extends DefaultController {
         return "init/default";
     }
 
+    @RequestMapping("/dataImport")
+    public String importMetaData(){
+        initialisationService.initData();
+        return "init/default";
+    }
+
+
+    // // TODO: 16/03/2016 this is sooooo slow
+    @RequestMapping("/resetData")
+    public String resetData(){
+        initialisationService.resetData();
+        return "init/default";
+    }
 }

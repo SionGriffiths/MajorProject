@@ -21,9 +21,15 @@
        </span>
         </div>
         <div class="col-xs-6">
-            <p>Some text and stuff tags on a per-plant level here plox</p>
+            <div  th:id="'plant_tags'+${plant.getBarCode()}" th:class="'plant_tags container'">
+                <div th:replace="plants/plantFragments :: plantTagFragment"   ></div>
+            </div>
+
+            <div  th:id="'plant_attribs'+${plant.getId()}" th:class="'plant_attribs container'">
+                <div th:replace="plants/plantFragments :: plantAttribFragment"   ></div>
+            </div>
+
             <a th:href="'/graphs/byPlant/'+${plant.getBarCode()}" class="btn btn-default">View Graphs</a>
-            <div th:id="'plotlyTest'+${plant.getBarCode()}"></div>
         </div>
 
     </div>

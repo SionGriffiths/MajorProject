@@ -25,6 +25,11 @@ public class TagManagerImpl implements TagManager {
     }
 
     @Override
+    public void resetAll() {
+        //// TODO: 16/03/2016 how do we delete tags nicely? too many references??
+    }
+
+    @Override
     public TagData getTagByContent(String content) {
         return tagDataDao.findByTagContent(content);
     }

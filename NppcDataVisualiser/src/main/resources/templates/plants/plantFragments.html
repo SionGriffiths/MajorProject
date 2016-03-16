@@ -8,18 +8,32 @@
 <body>
 
 
-<div th:fragment="tagFragment">
+<div th:fragment="dayTagFragment">
     <span th:each="plantDayTag,status : ${plantDay.getTags()}">
         <a th:href="'/tags/'+${plantDayTag.getTagContent()}"  th:text="${plantDayTag.getTagContent()}" class="tag_text" />
     </span>
 </div>
 
 
-<div th:fragment="attribFragment">
+<div th:fragment="plantTagFragment">
+    <span th:each="plantTag,status : ${plant.getTags()}">
+        <a th:href="'/tags/'+${plantTag.getTagContent()}"  th:text="${plantTag.getTagContent()}" class="tag_text" />
+    </span>
+</div>
+
+
+<div th:fragment="dayAttribFragment">
     <p th:each="entry: ${plantDay.getPlantDayMetaData().getDataAttributes()}">
         <span th:text="'Key: ' + ${entry.key} + ', Value: ' + ${entry.value}"></span>
     </p>
 </div>
+
+<div th:fragment="plantAttribFragment">
+    <p th:each="entry: ${plant.getPlantMetaData().getDataAttributes()}">
+        <span th:text="'Key: ' + ${entry.key} + ', Value: ' + ${entry.value}"></span>
+    </p>
+</div>
+
 
 </body>
 </html>

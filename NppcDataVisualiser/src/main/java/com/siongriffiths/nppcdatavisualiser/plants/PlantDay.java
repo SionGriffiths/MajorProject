@@ -40,6 +40,7 @@ public class PlantDay implements Comparable<PlantDay>{
         plantImages = new ArrayList<>();
         tags = new HashSet<>();
         plantDayMetaData = new Metadata();
+        plantDayMetaData.addDataAttribute("Growth Stage","0"); //// TODO: 11/03/2016 Move default values to experiment config properties?
     }
 
     @Id

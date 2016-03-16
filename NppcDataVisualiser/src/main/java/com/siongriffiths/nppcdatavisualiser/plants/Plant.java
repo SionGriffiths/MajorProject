@@ -1,10 +1,13 @@
 package com.siongriffiths.nppcdatavisualiser.plants;
 
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
+import com.siongriffiths.nppcdatavisualiser.data.TagData;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created on 26/02/2016.
@@ -19,6 +22,7 @@ public class Plant {
     private long id;
     private Metadata plantMetaData;
     private List<PlantDay> plantDays;
+    private Set<TagData> tags;
     private String barCode;
 
     //Default constructor required for mapping from orm
@@ -28,6 +32,7 @@ public class Plant {
         this.barCode = barCode;
         plantMetaData = new Metadata();
         plantDays = new ArrayList<>();
+        tags = new HashSet<>();
     }
 
     @Id
@@ -60,9 +65,24 @@ public class Plant {
         return plantDays;
     }
 
-
     public void setPlantDays(List<PlantDay> plantDays) {
         this.plantDays = plantDays;
+    }
+
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name="plant_tag",
+            joinColumns=@JoinColumn(name="plant_id"),
+            inverseJoinColumns = @JoinColumn(name="tag_id"))
+    public Set<TagData> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<TagData> tags) {
+        this.tags = tags;
+    }
+
+    public void addTag(TagData tag){
+        tags.add(tag);
     }
 
     @Column(name = "bar_code")

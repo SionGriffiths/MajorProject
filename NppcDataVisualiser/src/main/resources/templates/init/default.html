@@ -11,10 +11,12 @@
 
     <p>Do init things</p>
 
-    <form action="#" th:action="@{/init/createPlants}" >
-        <input type="submit" value="initialise plants" />
-    </form>
-
+    <!--<form action="#" th:action="@{/init/createPlants}" >-->
+        <!--<input type="submit" value="initialise plants" />-->
+    <!--</form>-->
+<a th:href="@{/init/createPlants}" class="btn btn-default">Init plants</a>
+<a th:href="@{/init/dataImport}" class="btn btn-default">Init data</a>
+<a th:href="@{/init/resetData}" class="btn btn-default">Reset data</a>
 
 </div>
 </body>
