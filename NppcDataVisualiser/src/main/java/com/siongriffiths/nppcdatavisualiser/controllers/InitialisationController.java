@@ -3,6 +3,7 @@ package com.siongriffiths.nppcdatavisualiser.controllers;
 import com.siongriffiths.nppcdatavisualiser.system.service.InitialisationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/init")
 public class InitialisationController extends DefaultController {
 
+private static final String INIT_PAGE_PATH = "init/default";
 
     //// TODO: 16/03/2016 INIT should deal with removing previously persisted data
 
@@ -31,20 +33,24 @@ public class InitialisationController extends DefaultController {
         if(Boolean.FALSE.equals(initialisationService.getInitilisedStatus())) {
             initialisationService.initSystem();
         }
-        return "init/default";
+        return INIT_PAGE_PATH;
+    }
+
+    @RequestMapping("/deletePlants")
+    public String deletePlants(){
+        initialisationService.deleteExperiementData();
+        return INIT_PAGE_PATH;
     }
 
     @RequestMapping("/dataImport")
     public String importMetaData(){
         initialisationService.initData();
-        return "init/default";
+        return INIT_PAGE_PATH;
     }
 
-
-    // // TODO: 16/03/2016 this is sooooo slow
     @RequestMapping("/resetData")
     public String resetData(){
         initialisationService.resetData();
-        return "init/default";
+        return INIT_PAGE_PATH;
     }
 }

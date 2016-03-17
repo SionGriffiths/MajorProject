@@ -11,4 +11,5 @@ public interface InitialisationService {
     void initData();
     void resetData();
     Boolean getInitilisedStatus();
+    void deleteExperiementData();
 }

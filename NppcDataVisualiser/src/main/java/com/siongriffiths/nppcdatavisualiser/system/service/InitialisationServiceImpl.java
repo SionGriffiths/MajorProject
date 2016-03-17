@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
-@Transactional
+//@Transactional
 @Service("initialisationService")
 public class InitialisationServiceImpl implements InitialisationService {
 
@@ -34,13 +34,8 @@ public class InitialisationServiceImpl implements InitialisationService {
     private PlantManager plantManager;
 
     public void initSystem(){
-
-        setSystemInitialisedFlag(Boolean.TRUE);
-        if(systemInitialisedFlag){
-            deleteExperiementData();
-        }
         imageLoader.initPlantImages();
-
+//        setSystemInitialisedFlag(Boolean.TRUE); //// TODO: 17/03/2016 persist experiemnts so can have init flags on plants and data, this will always be false at first run otherwise
     }
 
     public void initData(){
@@ -62,7 +57,7 @@ public class InitialisationServiceImpl implements InitialisationService {
         this.systemInitialisedFlag = systemInitialisedFlag;
     }
 
-    private void deleteExperiementData(){
+    public void deleteExperiementData(){
         plantManager.deleteAllPlants();
     }
 }
