@@ -44,7 +44,7 @@ private static final String INIT_PAGE_PATH = "init/default";
 
     @RequestMapping("/dataImport")
     public String importMetaData(){
-        initialisationService.initData();
+        initialisationService.initData("O7");
         return INIT_PAGE_PATH;
     }
 

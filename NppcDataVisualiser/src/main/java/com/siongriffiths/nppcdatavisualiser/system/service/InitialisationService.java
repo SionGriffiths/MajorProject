@@ -8,7 +8,7 @@ package com.siongriffiths.nppcdatavisualiser.system.service;
 public interface InitialisationService {
 
     void initSystem();
-    void initData();
+    void initData(String experiemntCode);
     void resetData();
     Boolean getInitilisedStatus();
     void deleteExperiementData();

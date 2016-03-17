@@ -7,6 +7,7 @@ import com.siongriffiths.nppcdatavisualiser.imageutils.ImageLoader;
 import com.siongriffiths.nppcdatavisualiser.data.utils.ExperimentCSVReader;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,13 +34,16 @@ public class InitialisationServiceImpl implements InitialisationService {
     @Autowired
     private PlantManager plantManager;
 
+    @Value("${experiment-data-root-directory}")
+    private String dataRoot;
+
     public void initSystem(){
         imageLoader.initPlantImages();
 //        setSystemInitialisedFlag(Boolean.TRUE); //// TODO: 17/03/2016 persist experiemnts so can have init flags on plants and data, this will always be false at first run otherwise
     }
 
-    public void initData(){
-        experiemntDataImportService.parseAnnotatedExperiemntDataCSVFile("I:/Diss/MajorProject/Data/O7/annotated.csv");
+    public void initData(String experiemntCode){
+        experiemntDataImportService.parseAnnotatedExperiemntDataCSVFile(dataRoot+experiemntCode+"/annotated.csv");
     }
 
     @Override
