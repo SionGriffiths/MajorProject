@@ -4,12 +4,11 @@ import com.siongriffiths.nppcdatavisualiser.data.service.ExperiemntDataImportSer
 import com.siongriffiths.nppcdatavisualiser.data.service.MetaDataManager;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
 import com.siongriffiths.nppcdatavisualiser.imageutils.ImageLoader;
-import com.siongriffiths.nppcdatavisualiser.data.utils.ExperimentCSVReader;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created on 13/03/2016.
@@ -22,7 +21,7 @@ public class InitialisationServiceImpl implements InitialisationService {
 
     private Boolean systemInitialisedFlag = Boolean.FALSE;
 
-
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private ImageLoader imageLoader;
     @Autowired
@@ -34,16 +33,13 @@ public class InitialisationServiceImpl implements InitialisationService {
     @Autowired
     private PlantManager plantManager;
 
-    @Value("${experiment-data-root-directory}")
-    private String dataRoot;
-
     public void initSystem(){
         imageLoader.initPlantImages();
 //        setSystemInitialisedFlag(Boolean.TRUE); //// TODO: 17/03/2016 persist experiemnts so can have init flags on plants and data, this will always be false at first run otherwise
     }
 
-    public void initData(String experiemntCode){
-        experiemntDataImportService.parseAnnotatedExperiemntDataCSVFile(dataRoot+experiemntCode+"/annotated.csv");
+    public void initData(String experimentDir){
+        experiemntDataImportService.parseAnnotatedExperiemntDataCSVFile(experimentDir+"/annotated.csv");
     }
 
     @Override

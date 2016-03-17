@@ -5,10 +5,7 @@ import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantImageManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.filefilter.DirectoryFileFilter;
-import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +15,10 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created on 27/02/2016.
@@ -40,6 +38,7 @@ public class ImageLoader {
 
     @Value("${image-repository.root.dir}")
     private String imageRepoRoot;
+
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -62,8 +61,11 @@ public class ImageLoader {
         if (directories != null) {
 
             for (File plantDir : directories) {
+
                 //create new plant with barcode = dirname
                 Plant plant = new Plant(plantDir.getName());
+                //track each day created for plant to avoid having to query for each image
+                Set <Date> dateSet = new HashSet<>();
 
                 File[] cameraTypeFiles = plantDir.listFiles();
 
@@ -92,9 +94,17 @@ public class ImageLoader {
                                                 String path = normaliseFilePath(plantImageFile.getPath());
                                                 path = removeSurplusDirectoryGibberish(path);
                                                 Date date = extractDateFromImageName(plantImageFile.getName());
+
                                                 PlantImage plantImage = new PlantImage();
                                                 plantImage.setFilePath(path);
-                                                plantDayManager.addToOrCreatePlantDay(date,plantImage,plant);
+
+                                                if(dateSet.contains(date)){
+                                                    plantDayManager.addToOrCreatePlantDay(date,plantImage,plant);
+                                                }else {
+                                                    dateSet.add(date);
+                                                }
+
+
                                                 // TODO: 09/03/2016 A less naive method of doing this would be lovely
                                             }
                                         }

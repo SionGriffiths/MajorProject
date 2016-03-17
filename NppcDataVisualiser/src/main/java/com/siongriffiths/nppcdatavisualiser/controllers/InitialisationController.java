@@ -2,8 +2,8 @@ package com.siongriffiths.nppcdatavisualiser.controllers;
 
 import com.siongriffiths.nppcdatavisualiser.system.service.InitialisationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -20,7 +20,11 @@ private static final String INIT_PAGE_PATH = "init/default";
     //// TODO: 16/03/2016 INIT should deal with removing previously persisted data
 
     @Autowired
-    InitialisationService initialisationService;
+  private InitialisationService initialisationService;
+
+    @Value("${experiment.data.root.dir}")
+    private String dataRoot;
+
 
     @RequestMapping
     public String showInit(){
@@ -44,7 +48,7 @@ private static final String INIT_PAGE_PATH = "init/default";
 
     @RequestMapping("/dataImport")
     public String importMetaData(){
-        initialisationService.initData("O7");
+        initialisationService.initData(dataRoot+"O7");
         return INIT_PAGE_PATH;
     }
 

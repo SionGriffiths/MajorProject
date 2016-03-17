@@ -7,7 +7,6 @@ import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
 import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantDayDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -55,6 +54,7 @@ public class PlantDayManagerImpl implements PlantDayManager {
         return plantDayDao.findByPlantAndDate(plant, date);
     }
 
+    //todo investigate where you can put this list
     public void addToOrCreatePlantDay(Date date, PlantImage plantImage, Plant plant){
         List<PlantDay> dayList = plant.getPlantDays();
         boolean dayFound = false;

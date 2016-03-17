@@ -54,17 +54,18 @@ public class ExperiemntDataImportServiceImpl implements ExperiemntDataImportServ
     public void parseAnnotatedExperiemntDataCSVFile(String filePath){
         List<String[]> parsedFile = experimentCSVReader.doParse(filePath);
 
-        String[] header = parsedFile.get(0);
+        if(parsedFile != null) {
+            String[] header = parsedFile.get(0);
 
-        plantTTypeColumnIndicies = new ArrayList<>();
-        plantATypeColumnIndicies = new ArrayList<>();
-        plantDayATypeColumnIndicies = new ArrayList<>();
+            plantTTypeColumnIndicies = new ArrayList<>();
+            plantATypeColumnIndicies = new ArrayList<>();
+            plantDayATypeColumnIndicies = new ArrayList<>();
 
-        processHeaderColumns(header);
+            processHeaderColumns(header);
 
-        parsedFile.remove(0);
-        processCsvFile(parsedFile,header);
-
+            parsedFile.remove(0);
+            processCsvFile(parsedFile, header);
+        }
 
     }
 
