@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
-@Transactional
+
 @Service("plantImageManager")
 public class PlantImageManagerImpl implements PlantImageManager {
 

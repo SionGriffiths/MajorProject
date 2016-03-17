@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
-@Transactional
+
 @Service("plantManager")
 public class PlantManagerImpl implements PlantManager {
 
