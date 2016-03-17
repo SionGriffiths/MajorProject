@@ -4,6 +4,7 @@ import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.data.doas.TagDataDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
+@Transactional
 @Service("tagManager")
 public class TagManagerImpl implements TagManager {
 

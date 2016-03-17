@@ -5,12 +5,14 @@ import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
 import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantImageDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created on 07/03/2016.
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
+@Transactional
 @Service("plantImageManager")
 public class PlantImageManagerImpl implements PlantImageManager {
 

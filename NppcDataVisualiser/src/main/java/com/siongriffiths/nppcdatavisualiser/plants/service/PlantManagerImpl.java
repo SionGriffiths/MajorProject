@@ -6,6 +6,7 @@ import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantDao;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
+@Transactional
 @Service("plantManager")
 public class PlantManagerImpl implements PlantManager {
 
@@ -23,6 +25,11 @@ public class PlantManagerImpl implements PlantManager {
     @Override
     public void savePlant(Plant plant) {
         plantDao.save(plant);
+    }
+
+    @Override
+    public void deleteAllPlants() {
+        plantDao.deleteAll();
     }
 
     @Override

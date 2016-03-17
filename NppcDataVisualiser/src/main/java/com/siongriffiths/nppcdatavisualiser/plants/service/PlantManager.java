@@ -14,11 +14,11 @@ public interface PlantManager {
 
     void savePlant(Plant plant);
 
+    void deleteAllPlants();
+
     List<Plant> getAllPlants();
 
     Plant getPlantByBarcode(String barCode);
-
-
 
     void tagPlant(TagData tag, Plant plant);
 }

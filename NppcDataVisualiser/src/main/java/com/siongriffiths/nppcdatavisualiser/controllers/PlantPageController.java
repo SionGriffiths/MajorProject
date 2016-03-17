@@ -75,6 +75,7 @@ public class PlantPageController extends DefaultController {
         return viewPath;
     }
 
+
     @RequestMapping(value = "/addAttribute", method = RequestMethod.POST)
     public String addAttribute(@ModelAttribute PlantDayAttributeInfo plantDayAttributeInfo, Model model) {
         model.addAttribute("plantDayAttributeInfo", new PlantDayAttributeInfo());

@@ -5,6 +5,7 @@ import com.siongriffiths.nppcdatavisualiser.data.doas.MetaDataDao;
 import org.hibernate.metamodel.domain.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
+@Transactional
 @Service("metaDataManager")
 public class MetaDataManagerImpl implements MetaDataManager {
 

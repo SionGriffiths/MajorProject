@@ -7,6 +7,7 @@ import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
 import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantDayDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
+@Transactional
 @Service("plantDayManager")
 public class PlantDayManagerImpl implements PlantDayManager {
 

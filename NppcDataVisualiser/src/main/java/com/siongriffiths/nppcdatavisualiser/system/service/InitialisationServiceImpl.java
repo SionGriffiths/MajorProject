@@ -5,14 +5,17 @@ import com.siongriffiths.nppcdatavisualiser.data.service.MetaDataManager;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
 import com.siongriffiths.nppcdatavisualiser.imageutils.ImageLoader;
 import com.siongriffiths.nppcdatavisualiser.data.utils.ExperimentCSVReader;
+import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created on 13/03/2016.
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
+@Transactional
 @Service("initialisationService")
 public class InitialisationServiceImpl implements InitialisationService {
 
@@ -27,10 +30,17 @@ public class InitialisationServiceImpl implements InitialisationService {
     private MetaDataManager metaDataManager;
     @Autowired
     private TagManager tagManager;
+    @Autowired
+    private PlantManager plantManager;
 
     public void initSystem(){
-        imageLoader.initPlantImages();
+
         setSystemInitialisedFlag(Boolean.TRUE);
+        if(systemInitialisedFlag){
+            deleteExperiementData();
+        }
+        imageLoader.initPlantImages();
+
     }
 
     public void initData(){
@@ -50,6 +60,10 @@ public class InitialisationServiceImpl implements InitialisationService {
 
     public void setSystemInitialisedFlag(Boolean systemInitialisedFlag) {
         this.systemInitialisedFlag = systemInitialisedFlag;
+    }
+
+    private void deleteExperiementData(){
+        plantManager.deleteAllPlants();
     }
 }
 
