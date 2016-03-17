@@ -15,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/init")
 public class InitialisationController extends DefaultController {
 
-private static final String INIT_PAGE_PATH = "init/default";
+    private static final String INIT_PAGE_PATH = "init/default";
 
-    //// TODO: 16/03/2016 INIT should deal with removing previously persisted data
 
     @Autowired
-  private InitialisationService initialisationService;
+    private InitialisationService initialisationService;
 
     @Value("${experiment.data.root.dir}")
     private String dataRoot;

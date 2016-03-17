@@ -83,7 +83,7 @@ public class PlantDayManagerImpl implements PlantDayManager {
 
     private void associateImageToDay(PlantImage image, PlantDay day){
         day.addPlantImage(image);
-        image.setPlantDay(day); //// TODO: 10/03/2016 Do we need bi-directional references between image and day?
+        image.setPlantDay(day);
     }
 
     private void createPlantDay(Date date, Plant plant, PlantImage image){
