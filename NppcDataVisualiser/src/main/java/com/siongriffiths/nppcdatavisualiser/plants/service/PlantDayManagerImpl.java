@@ -54,8 +54,17 @@ public class PlantDayManagerImpl implements PlantDayManager {
         return plantDayDao.findByPlantAndDate(plant, date);
     }
 
-    //todo investigate where you can put this list
+    //todo investigate if saving the plant before this is faster than looping through all days
     public void addToOrCreatePlantDay(Date date, PlantImage plantImage, Plant plant){
+
+//        PlantDay day = findByPlantAndDate(plant,date);
+//
+//        if(day == null){
+//            createPlantDay(date,plant,plantImage);
+//        } else {
+//            associateImageToDay(plantImage,day);
+//        }
+
         List<PlantDay> dayList = plant.getPlantDays();
         boolean dayFound = false;
 

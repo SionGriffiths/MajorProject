@@ -17,8 +17,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created on 27/02/2016.
@@ -64,8 +62,7 @@ public class ImageLoader {
 
                 //create new plant with barcode = dirname
                 Plant plant = new Plant(plantDir.getName());
-                //track each day created for plant to avoid having to query for each image
-                Set <Date> dateSet = new HashSet<>();
+
 
                 File[] cameraTypeFiles = plantDir.listFiles();
 
@@ -98,11 +95,8 @@ public class ImageLoader {
                                                 PlantImage plantImage = new PlantImage();
                                                 plantImage.setFilePath(path);
 
-                                                if(dateSet.contains(date)){
-                                                    plantDayManager.addToOrCreatePlantDay(date,plantImage,plant);
-                                                }else {
-                                                    dateSet.add(date);
-                                                }
+                                                plantDayManager.addToOrCreatePlantDay(date,plantImage,plant);
+
 
 
                                                 // TODO: 09/03/2016 A less naive method of doing this would be lovely
