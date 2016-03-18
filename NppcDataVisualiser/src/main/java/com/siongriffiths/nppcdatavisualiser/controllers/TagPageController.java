@@ -1,10 +1,11 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
-import com.siongriffiths.nppcdatavisualiser.data.doas.TagDataDao;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
+import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
+import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +33,8 @@ public class TagPageController extends DefaultController{
     TagManager tagManager;
     @Autowired
     PlantDayManager plantDayManager;
+    @Autowired
+    PlantManager plantManager;
 
     @RequestMapping
     public String showTags(Model model){
@@ -53,8 +56,10 @@ public class TagPageController extends DefaultController{
             viewPath = TAG_NOT_FOUND_PATH;
         }else {
             List<PlantDay> taggedDays = plantDayManager.findPlantDaysByTag(tag);
+            List<Plant> taggedPlants = plantManager.findPlantsByTag(tag);
             model.addAttribute("tag",tag);
             model.addAttribute("taggedDays",taggedDays);
+            model.addAttribute("taggedPlants",taggedPlants);
             viewPath = TAGS_RESULT_PATH;
         }
 

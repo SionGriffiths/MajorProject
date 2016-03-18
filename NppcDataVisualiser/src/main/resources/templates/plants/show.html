@@ -2,10 +2,8 @@
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
       layout:decorator="layout">
 <head>
-    <script src="/js/plotly-latest.min.js"></script>
-    <script src="/js/plotlytest.js"></script>
-
     <title>Plants Page</title>
+    <script src="/js/plantsPage.js"></script>
 </head>
 <body>
 
@@ -14,19 +12,26 @@
     <p th:text="'There are ' + ${plantList.size()} + ' plants in the system :'" ></p>
     <div th:each="plant,status : ${plantList}" class="row plant_row">
         <div class="col-xs-6">
-            <span>
-                <h3 th:text="${plant.getBarCode()}"/>
-                <a th:href="@{plants/{path}(path=${plant.getBarCode()})}" class="plant_detail_link btn-default btn">View Images</a>
-                <a th:href="'/graphs/byPlant/'+${plant.getBarCode()}" class="btn btn-default">View Graphs</a>
-            </span>
+
+            <h3 th:text="${plant.getBarCode()}"/>
+            <a th:href="@{plants/{path}(path=${plant.getBarCode()})}" class="plant_detail_link btn-default btn">View Images</a>
+            <a th:href="'/graphs/byPlant/'+${plant.getBarCode()}" class="btn btn-default">View Graphs</a>
+
         </div>
 
         <div class="col-xs-6">
-            <div  th:id="'plant_tags'+${plant.getBarCode()}" th:class="'plant_tags container'">
+            <div  th:id="'plant_tags'+${plant.getId()}" th:class="'plant_tags container'">
                 <div th:replace="plants/plantFragments :: plantTagFragment"   ></div>
             </div>
 
-
+            <form th:action="@{plants/addPlantTag}" th:object="${plantTagInfo}" class="plant_tag_form">
+                <div class="form-group" >
+                    <input type="hidden" name="plantID" th:value="${plant.getId()}" />
+                    <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control"
+                           name="tagContent" placeholder="Add tag " />
+                    <input type="submit" value="Tag" />
+                </div>
+            </form>
 
 
 

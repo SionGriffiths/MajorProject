@@ -21,4 +21,11 @@ public interface PlantManager {
     Plant getPlantByBarcode(String barCode);
 
     void tagPlant(TagData tag, Plant plant);
+
+    List<Plant> findPlantsByTag(TagData tagData);
+
+    Plant getPlantByID(long id);
+
+    Plant getPlantByID(String id);
+
 }

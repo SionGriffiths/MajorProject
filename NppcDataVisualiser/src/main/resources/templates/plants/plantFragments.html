@@ -24,9 +24,6 @@
 
 <div th:fragment="dayAttribFragment">
     <div th:if="${plantDay.getPlantDayMetaData() != null}">
-        <!--<p th:each="entry: ${plantDay.getPlantDayMetaData().getDataAttributes()}">-->
-            <!--<span th:text="'Key: ' + ${entry.key} + ', Value: ' + ${entry.value}"></span>-->
-        <!--</p>-->
         <table class="table">
             <thead>
             <tr>
@@ -48,9 +45,6 @@
 
 <div th:fragment="plantAttribFragment">
     <div th:if="${plant.getPlantMetaData() != null}">
-        <!--<p th:each="entry: ${plant.getPlantMetaData().getDataAttributes()}">-->
-        <!--<span th:text="'Key: ' + ${entry.key} + ', Value: ' + ${entry.value}"></span>-->
-        <!--</p>-->
         <table class="table">
             <thead>
             <tr>

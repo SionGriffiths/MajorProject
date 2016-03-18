@@ -8,4 +8,10 @@ $( document ).ready(function() {
         parent.history.back();
         return false;
     });
+
+    $('.confirm-required').click(function(){
+        var message = $(this).attr("data-confirm-message");
+        return confirm("Are you sure you want to delete?");
+    })
+
 });

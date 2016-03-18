@@ -8,7 +8,7 @@ import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
 import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantDayAttributeInfo;
 import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantDayTagInfo;
-import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantForm;
+import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantTagInfo;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantImageManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
@@ -36,7 +36,7 @@ public class PlantPageController extends DefaultController {
     private static final String PLANT_DAY_TAG_FRAGMENT =  "plants/plantFragments :: dayTagFragment";
     private static final String PLANT_DAY_ATTRIB_FRAGMENT =  "plants/plantFragments :: dayAttribFragment";
     private static final String PLANT_ATTRIB_FRAGMENT =  "plants/plantFragments :: plantAttribFragment";
-    private static final String PLANT_TAG_FRAGMENT =  "plants/plantFragments :: plantAttribFragment";
+    private static final String PLANT_TAG_FRAGMENT =  "plants/plantFragments :: plantTagFragment";
 
     @Autowired
     private PlantManager plantManager;
@@ -50,7 +50,7 @@ public class PlantPageController extends DefaultController {
     @RequestMapping
     public String showPlants(Model model){
         model.addAttribute("plantList", plantManager.getAllPlants());
-        model.addAttribute("plantForm" ,new PlantForm());
+        model.addAttribute("plantTagInfo" ,new PlantTagInfo());
         return PLANTS_SHOW_PATH;
     }
 
@@ -90,8 +90,6 @@ public class PlantPageController extends DefaultController {
     }
 
 
-
-
     @RequestMapping(value = "/addDayTag", method = RequestMethod.POST)
     public String tagPlantDay(@ModelAttribute PlantDayTagInfo plantDayTagInfo, Model model){
         model.addAttribute("plantTagInfo" ,new PlantDayTagInfo());
@@ -104,4 +102,18 @@ public class PlantPageController extends DefaultController {
         model.addAttribute("plantDay", day);
         return PLANT_DAY_TAG_FRAGMENT;
     }
+
+    @RequestMapping(value = "/addPlantTag", method = RequestMethod.POST)
+    public String tagPlantDay(@ModelAttribute PlantTagInfo plantTagInfo, Model model){
+        model.addAttribute("plantTagInfo" ,new PlantTagInfo());
+        String content = plantTagInfo.getTagContent();
+        Plant plant = plantManager.getPlantByID(plantTagInfo.getPlantID());
+        TagData tag = tagManager.createOrGetTag(content);
+        plantManager.tagPlant(tag, plant);
+        tagManager.saveTagData(tag);
+        plantManager.savePlant(plant);
+        model.addAttribute("plant", plant);
+        return PLANT_TAG_FRAGMENT;
+    }
+
 }

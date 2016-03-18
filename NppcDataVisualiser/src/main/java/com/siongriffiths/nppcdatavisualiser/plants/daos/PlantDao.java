@@ -16,6 +16,9 @@ import java.util.List;
 @Repository("plantDao")
 public interface PlantDao extends JpaRepository<Plant,Long> {
 
+    @Query("select p from Plant p join p.tags tag where tag.id = :tagId ")
+    List<Plant> findByTagData(@Param("tagId") long id);
+
     Plant findByBarCode(String barCode);
 
 }
