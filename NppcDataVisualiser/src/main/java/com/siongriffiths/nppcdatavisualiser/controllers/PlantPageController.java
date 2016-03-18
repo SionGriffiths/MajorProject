@@ -6,12 +6,12 @@ import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
+import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantDayAttributeInfo;
+import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantDayTagInfo;
+import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantForm;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantImageManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
-import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantDayAttributeInfo;
-import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantForm;
-import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantDayTagInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +35,8 @@ public class PlantPageController extends DefaultController {
     private static final String PLANT_DETAIL_PATH = "plants/plantdetail";
     private static final String PLANT_DAY_TAG_FRAGMENT =  "plants/plantFragments :: dayTagFragment";
     private static final String PLANT_DAY_ATTRIB_FRAGMENT =  "plants/plantFragments :: dayAttribFragment";
+    private static final String PLANT_ATTRIB_FRAGMENT =  "plants/plantFragments :: plantAttribFragment";
+    private static final String PLANT_TAG_FRAGMENT =  "plants/plantFragments :: plantAttribFragment";
 
     @Autowired
     private PlantManager plantManager;
@@ -76,7 +78,7 @@ public class PlantPageController extends DefaultController {
     }
 
 
-    @RequestMapping(value = "/addAttribute", method = RequestMethod.POST)
+    @RequestMapping(value = "/addDayAttribute", method = RequestMethod.POST)
     public String addAttribute(@ModelAttribute PlantDayAttributeInfo plantDayAttributeInfo, Model model) {
         model.addAttribute("plantDayAttributeInfo", new PlantDayAttributeInfo());
         PlantDay day = plantDayManager.getPlantDayByID(plantDayAttributeInfo.getPlantDayID());
@@ -88,7 +90,9 @@ public class PlantPageController extends DefaultController {
     }
 
 
-    @RequestMapping(value = "/addTag", method = RequestMethod.POST)
+
+
+    @RequestMapping(value = "/addDayTag", method = RequestMethod.POST)
     public String tagPlantDay(@ModelAttribute PlantDayTagInfo plantDayTagInfo, Model model){
         model.addAttribute("plantTagInfo" ,new PlantDayTagInfo());
         String content = plantDayTagInfo.getTagContent();

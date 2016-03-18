@@ -44,7 +44,7 @@
                 <div th:replace="plants/plantFragments :: dayTagFragment"   ></div>
             </div>
 
-            <form th:action="@{addTag}" th:object="${plantDayTagInfo}" class="plant_day_tag_form">
+            <form th:action="@{addDayTag}" th:object="${plantDayTagInfo}" class="plant_day_tag_form">
                 <div class="form-group" >
                     <input type="hidden" name="plantDayID" th:value="${plantDay.getId()}" />
                     <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control"
@@ -57,7 +57,7 @@
                 <div th:replace="plants/plantFragments :: dayAttribFragment"   ></div>
             </div>
 
-            <form th:action="@{addAttribute}" th:object="${plantDayAttributeInfo}" class="plant_day_attrib_form">
+            <form th:action="@{addDayAttribute}" th:object="${plantDayAttributeInfo}" class="plant_day_attrib_form">
                 <div class="form-group">
                     <input type="hidden" name="plantDayID" th:value="${plantDay.getId()}" />
                     <input  type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control"

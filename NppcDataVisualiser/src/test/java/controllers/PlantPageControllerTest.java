@@ -79,7 +79,7 @@ public class PlantPageControllerTest  extends AbstractTest {
         String id = Long.toString(day.getId());
         String tag = "testTagContent";
 
-        this.mockMvc.perform(post("/plants/addTag")
+        this.mockMvc.perform(post("/plants/addDayTag")
                 .param("tagContent",tag)
                 .param("plantDayID",id))
                 .andDo(print())
@@ -103,7 +103,7 @@ public class PlantPageControllerTest  extends AbstractTest {
         String aValue = "testAttributeValue";
 
 
-        this.mockMvc.perform(post("/plants/addAttribute")
+        this.mockMvc.perform(post("/plants/addDayAttribute")
                 .param("attribName",aName)
                 .param("attribVal",aValue)
                 .param("plantDayID",id))
