@@ -14,4 +14,5 @@ public interface GraphingManager {
 
     Map<String,List<String>> getGraphDataForPlant(Plant plant, String attrib1, String attrib2);
 
+    Map<String,List<String>> getGraphData(String attribX, String attribY);
 }

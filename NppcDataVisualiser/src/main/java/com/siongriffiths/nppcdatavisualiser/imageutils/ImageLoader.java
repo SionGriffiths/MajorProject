@@ -40,19 +40,6 @@ public class ImageLoader {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
-//    build list of files then pass to another method to make the plants? quicker?
-//    public void initPlantImages(){
-//        File dir = new File(imageRepoRoot);
-//        Collection files = FileUtils.listFiles(
-//                dir,
-//                new RegexFileFilter("^(.*?)"),
-//                DirectoryFileFilter.DIRECTORY
-//        );
-//        logger.info("loaded dirs");
-//    }
-
-
     public void initPlantImages() {
         File dir = new File(imageRepoRoot);
         File[] directories = dir.listFiles();

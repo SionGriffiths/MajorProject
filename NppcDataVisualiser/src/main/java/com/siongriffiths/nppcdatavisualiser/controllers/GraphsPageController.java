@@ -1,5 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
+import com.siongriffiths.nppcdatavisualiser.data.controlobjects.GraphCreationInfo;
 import com.siongriffiths.nppcdatavisualiser.data.service.GraphingManager;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
@@ -36,7 +37,10 @@ public class GraphsPageController extends DefaultController{
     GraphingManager graphingManager;
 
     @RequestMapping
-    public String showGraphsPage(){
+    public String showGraphsPage(Model model){
+
+        model.addAttribute("graphCreationInfo", new GraphCreationInfo());
+        model.addAttribute("availableAttribs", getAttributeListForAllPlants(plantManager.getAllPlants()));
         return GRAPHS_SHOW_PATH;
     }
 
@@ -59,6 +63,30 @@ public class GraphsPageController extends DefaultController{
         return viewPath;
     }
 
+    @ResponseBody
+    @RequestMapping(value="/create", method= RequestMethod.POST)
+    public Map<String,List<String>> getGraphData(Model model, GraphCreationInfo graphInfo){
+
+
+        String attribX = graphInfo.getxAxisAttribute();
+        String attribY = graphInfo.getyAxisAttribute();
+        model.addAttribute("graphCreationInfo", new GraphCreationInfo());
+        return graphingManager.getGraphData(attribX,attribY);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/byPlant/{plantBarCode}/fromData/{attrib1}/{attrib2}"
+            ,method = RequestMethod.GET)
+    public Map<String,List<String>> getGraphDataForPlant(@PathVariable("plantBarCode") String barCode,
+                                                 @PathVariable("attrib1") String attrib1,
+                                                 @PathVariable("attrib2") String attrib2){
+
+        Plant targetPlant  = plantManager.getPlantByBarcode(barCode);
+
+        return graphingManager.getGraphDataForPlant(targetPlant,attrib1,attrib2);
+    }
+
+
 
 
     private Set<String> getDayAttributeListForPlant(Plant plant){
@@ -69,18 +97,12 @@ public class GraphsPageController extends DefaultController{
         return attribKeySet;
     }
 
-
-    @ResponseBody
-    @RequestMapping(value = "/byPlant/{plantBarCode}/fromData/{attrib1}/{attrib2}"
-            ,method = RequestMethod.GET)
-    public Map<String,List<String>> getGraphData(Model model,
-                                                 @PathVariable("plantBarCode") String barCode,
-                                                 @PathVariable("attrib1") String attrib1,
-                                                 @PathVariable("attrib2") String attrib2){
-
-        Plant targetPlant  = plantManager.getPlantByBarcode(barCode);
-
-        return graphingManager.getGraphDataForPlant(targetPlant,attrib1,attrib2);
+    private Set<String> getAttributeListForAllPlants(List<Plant> plantList){
+        Set<String> attribKeySet = new HashSet<>();
+        for(Plant plant : plantList){
+            attribKeySet.addAll(plant.getPlantMetaData().getDataAttributes().keySet());
+        }
+        return attribKeySet;
     }
 
 }

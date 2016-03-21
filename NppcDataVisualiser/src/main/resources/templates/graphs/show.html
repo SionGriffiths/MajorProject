@@ -3,6 +3,7 @@
       layout:decorator="layout">
 <head>
     <script src="/js/plotly-latest.min.js"></script>
+    <script src="/js/graphDisplay.js"></script>
     <title>Graphs Page</title>
 </head>
 <body>
@@ -10,7 +11,46 @@
 <h1 layout:fragment="header">Graphs</h1>
 <div layout:fragment="content">
 
-<p>graph</p>
+    <div class="row">
+
+        <div class="col-xs-3">
+
+            <form th:action="@{graphs/create}" th:object="${graphCreationInfo}" class="graph_create_form">
+
+                <div class="form-group">
+                    <label for="simpleX">Select X axis attribute :</label>
+                    <select id="simpleX" th:field="*{xAxisAttribute}">
+                        <option th:each="attrib : ${availableAttribs}"
+                                th:value="${attrib}"
+                                th:text="${attrib}">Test
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="simpleY">Select Y axis attribute :</label>
+                    <select id="simpleY" th:field="*{yAxisAttribute}">
+                        <option th:each="attrib : ${availableAttribs}"
+                                th:value="${attrib}"
+                                th:text="${attrib}">Test
+                        </option>
+                    </select>
+
+                </div>
+                <input type="submit" class="btn btn-default" value="Create Graph"/>
+            </form>
+            <!--<th:block th:each="attrib,status : ${availableAttribs}">-->
+            <!--<p th:text="${attrib}"></p>-->
+            <!--</th:block>-->
+
+        </div>
+        <div class="col-xs-9">
+            <div id="mainGraph"></div>
+        </div>
+
+    </div>
+
+
 
 </div>
 </body>
