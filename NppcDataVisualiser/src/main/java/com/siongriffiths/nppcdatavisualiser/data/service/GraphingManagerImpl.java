@@ -31,10 +31,12 @@ public class GraphingManagerImpl implements GraphingManager {
         List <String> attrib1List = new ArrayList<>();
         List <String> attrib2List = new ArrayList<>();
 
-        for(PlantDay day : plant.getPlantDays()){
-            if(day.getPlantDayMetaData().getDataAttributes().get(attrib1) != null){
-                attrib1List.add(day.getDate().toString());
-                attrib2List.add(day.getPlantDayMetaData().getDataAttributes().get(attrib1));
+        if(plant != null) {
+            for (PlantDay day : plant.getPlantDays()) {
+                if (day.getPlantDayMetaData().getDataAttributes().get(attrib1) != null) {
+                    attrib1List.add(day.getDate().toString());
+                    attrib2List.add(day.getPlantDayMetaData().getDataAttributes().get(attrib1));
+                }
             }
         }
 

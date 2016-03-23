@@ -14,5 +14,4 @@ public interface TagDataDao extends JpaRepository<TagData,Long>{
 
     TagData findByTagContent(String content);
 
-
 }
