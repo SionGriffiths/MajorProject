@@ -17,6 +17,8 @@ public class Experiment {
 
     private String experimentCode;
 
+    private Boolean initialised;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,5 +36,13 @@ public class Experiment {
 
     public void setExperimentCode(String experimentCode) {
         this.experimentCode = experimentCode;
+    }
+
+    public Boolean getInitialised() {
+        return initialised;
+    }
+
+    public void setInitialised(Boolean initialised) {
+        this.initialised = initialised;
     }
 }

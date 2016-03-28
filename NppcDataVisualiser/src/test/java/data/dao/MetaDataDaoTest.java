@@ -3,7 +3,6 @@ package data.dao;
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 import com.siongriffiths.nppcdatavisualiser.data.doas.MetaDataDao;
 import defaults.AbstractTest;
-import org.hibernate.mapping.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +44,7 @@ public class MetaDataDaoTest extends AbstractTest {
         Metadata data = new Metadata();
         metaDataDao.save(data);
         Integer orgId = data.getId();
-        LOGGER.info("\n \n  " + orgId);
+        logger.info("\n \n  " + orgId);
 
         String testGrowthStage = "2";
         data.addDataAttribute("testKey", "22");

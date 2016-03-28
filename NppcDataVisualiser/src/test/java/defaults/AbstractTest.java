@@ -19,7 +19,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @WebAppConfiguration
 public abstract class AbstractTest {
 
-    protected final Logger LOGGER = Logger.getLogger(this.getClass());
+    protected final Logger logger = Logger.getLogger(this.getClass());
 
 
 }

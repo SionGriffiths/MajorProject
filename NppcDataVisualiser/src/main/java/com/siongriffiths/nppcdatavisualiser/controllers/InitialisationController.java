@@ -4,25 +4,28 @@ import com.siongriffiths.nppcdatavisualiser.system.service.InitialisationService
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
  * Created on 27/02/2016.
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  *
- * InitialisationController is an MVC controller that processes all requests to the '/init' url.
- * InitialisationController provides access to administrative tasks such as loading plant from the data store
+ * InitialisationController is an MVC controller that processes all requests to the '/admin' url.
+ * InitialisationController provides access to administrative tasks such as loading plants from the data store
  * and handling experiemnt data import
  */
 @Controller
-@RequestMapping("/init")
+@RequestMapping("/admin")
 public class InitialisationController extends DefaultController {
 
     /**
      * View paths used by this controller
      */
-    private static final String INIT_PAGE_PATH = "init/default";
+    private static final String INIT_PAGE_PATH = "admin/default";
 
 
     /**
@@ -39,14 +42,20 @@ public class InitialisationController extends DefaultController {
     private String dataRoot;
 
 
+    //http://stackoverflow.com/questions/12576156/reading-a-list-from-properties-file-and-load-with-spring-annotation-value
+    @Value("#{'${available.experiment.codes}'.split(',')}")
+    private List<String> experiemntList;
+
     @RequestMapping
-    public String showInit(){
+    public String showInit(Model model){
+        model.addAttribute("experiemntList",experiemntList);
+
         return INIT_PAGE_PATH;
     }
 
     @RequestMapping("/createPlants")
     public String createPlants() {
-        logger.info("Plants init");
+        logger.info("Plants admin");
         if(Boolean.FALSE.equals(initialisationService.getInitilisedStatus())) {
             initialisationService.initSystem();
         }

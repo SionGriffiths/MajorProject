@@ -29,6 +29,7 @@ public class ExperiemntDataImportServiceImpl implements ExperiemntDataImportServ
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    //// TODO: 27/03/2016 Move these string to application.properties?
     private static final String PLANT_ATTRIBUTE_COLUMN_MAPPING_STRING_PATTERN = "{{plant-a}}";
     private static final String PLANT_TAG_COLUMN_MAPPING_STRING_PATTERN = "{{plant-t}}";
     private static final String PLANT_DAY_ATTRIBUTE_COLUMN_MAPPING_STRING_PATTERN = "{{day-a}}";

@@ -2,7 +2,7 @@
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
       layout:decorator="layout">
 <head>
-    <title>DEFAULT INIT PAGE</title>
+    <title>DEFAULT ADMIN PAGE</title>
 </head>
 <body>
 
@@ -11,17 +11,21 @@
 
     <p>Do init things</p>
 
-    <!--<form action="#" th:action="@{/init/createPlants}" >-->
+    <th:block th:each="entry: ${experiemntList}">
+       <p th:text="'Experiement : ' + ${entry}"></p>
+    </th:block>
+
+    <!--<form action="#" th:action="@{/admin/createPlants}" >-->
         <!--<input type="submit" value="initialise plants" />-->
     <!--</form>-->
-<a th:href="@{/init/createPlants}" class="btn btn-default confirm-required"
+<a th:href="@{/admin/createPlants}" class="btn btn-default confirm-required"
    data-confirm-message="Plants must be deleted first if previously initialised">Init plants</a>
-<a th:href="@{/init/deletePlants}" class="btn btn-default confirm-required"
+<a th:href="@{/admin/deletePlants}" class="btn btn-default confirm-required"
    data-confirm-message="This will delete all plants, continue?">Delete plants</a>
-<a th:href="@{/init/dataImport}" class="btn btn-default">Init data</a>
-<a th:href="@{/init/resetData}" class="btn btn-default confirm-required"
+<a th:href="@{/admin/dataImport}" class="btn btn-default">Init data</a>
+<a th:href="@{/admin/resetData}" class="btn btn-default confirm-required"
    data-confirm-message="This will delete all meta data, continue?">Delete data</a>
-<a th:href="@{/init/logout}" class="btn btn-primary pull-right">Logout</a>
+<a th:href="@{/admin/logout}" class="btn btn-primary pull-right">Logout</a>
 
 </div>
 </body>

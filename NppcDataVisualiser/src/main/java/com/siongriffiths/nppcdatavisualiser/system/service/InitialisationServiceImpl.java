@@ -35,7 +35,7 @@ public class InitialisationServiceImpl implements InitialisationService {
 
     public void initSystem(){
         imageLoader.initPlantImages();
-//        setSystemInitialisedFlag(Boolean.TRUE); //// TODO: 17/03/2016 persist experiemnts so can have init flags on plants and data, this will always be false at first run otherwise
+//        setSystemInitialisedFlag(Boolean.TRUE); //// TODO: 17/03/2016 persist experiemnts so can have admin flags on plants and data, this will always be false at first run otherwise
     }
 
     public void initData(String experimentDir){
