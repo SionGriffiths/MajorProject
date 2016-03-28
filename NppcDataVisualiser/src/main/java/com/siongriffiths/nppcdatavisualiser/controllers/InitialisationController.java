@@ -47,11 +47,11 @@ public class InitialisationController extends DefaultController {
     @Value("#{'${available.experiment.codes}'.split(',')}")
     private List<String> experimentCodes;
 
-    private List<Experiment> experiemntList;
+    private List<Experiment> experimentList;
 
     @RequestMapping
     public String showInit(Model model){
-        model.addAttribute("experimentList",experiemntList);
+        model.addAttribute("experimentCodes",experimentCodes);
 
         return INIT_PAGE_PATH;
     }

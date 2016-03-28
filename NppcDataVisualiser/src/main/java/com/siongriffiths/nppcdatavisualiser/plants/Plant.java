@@ -2,6 +2,7 @@ package com.siongriffiths.nppcdatavisualiser.plants;
 
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
+import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class Plant {
     private List<PlantDay> plantDays;
     private Set<TagData> tags;
     private String barCode;
+    private Experiment experiment;
 
     //Default constructor required for mapping from orm
     public Plant(){}
@@ -94,5 +96,15 @@ public class Plant {
 
     public void setBarCode(String barCode) {
         this.barCode = barCode;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "experiment_id")
+    public Experiment getExperiment() {
+        return experiment;
+    }
+
+    public void setExperiment(Experiment experiment) {
+        this.experiment = experiment;
     }
 }

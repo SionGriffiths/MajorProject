@@ -11,7 +11,7 @@
 
     <p>Do init things</p> <a th:href="@{/admin/logout}" class="btn btn-primary pull-right">Logout</a>
 
-    <th:block th:each="entry: ${experimentList}">
+    <th:block th:each="entry: ${experimentCodes}">
         <div class="admin_experiemnt_row">
        <p th:text="'Experiement : ' + ${entry}"></p>
         <a th:href="@{/admin/createPlants}" class="btn btn-default confirm-required"

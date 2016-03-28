@@ -1,9 +1,9 @@
 package com.siongriffiths.nppcdatavisualiser.experiment;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.siongriffiths.nppcdatavisualiser.plants.Plant;
+
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created on 08/03/2016.
@@ -19,6 +19,7 @@ public class Experiment {
 
     private Boolean initialised;
 
+    private List<Plant> plants;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,5 +45,14 @@ public class Experiment {
 
     public void setInitialised(Boolean initialised) {
         this.initialised = initialised;
+    }
+
+    @OneToMany(mappedBy = "experiment",cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    public List<Plant> getPlants() {
+        return plants;
+    }
+
+    public void setPlants(List<Plant> plants) {
+        this.plants = plants;
     }
 }
