@@ -33,3 +33,8 @@
     height:500px;
     width:500px;
 }
+
+.admin_experiemnt_row{
+    padding-bottom: 15px;
+    border-top: 2px solid olivedrab ;
+}

@@ -1,5 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
+import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
 import com.siongriffiths.nppcdatavisualiser.system.service.InitialisationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,11 +45,13 @@ public class InitialisationController extends DefaultController {
 
     //http://stackoverflow.com/questions/12576156/reading-a-list-from-properties-file-and-load-with-spring-annotation-value
     @Value("#{'${available.experiment.codes}'.split(',')}")
-    private List<String> experiemntList;
+    private List<String> experimentCodes;
+
+    private List<Experiment> experiemntList;
 
     @RequestMapping
     public String showInit(Model model){
-        model.addAttribute("experiemntList",experiemntList);
+        model.addAttribute("experimentList",experiemntList);
 
         return INIT_PAGE_PATH;
     }
