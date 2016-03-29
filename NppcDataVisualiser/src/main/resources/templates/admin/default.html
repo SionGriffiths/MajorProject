@@ -14,22 +14,15 @@
     <th:block th:each="entry: ${experimentCodes}">
         <div class="admin_experiemnt_row">
        <p th:text="'Experiement : ' + ${entry}"></p>
-        <a th:href="@{/admin/createPlants}" class="btn btn-default confirm-required"
+        <a th:href="@{'/admin/createPlants/'+${entry}}" class="btn btn-default confirm-required"
            data-confirm-message="Plants must be deleted first if previously initialised">Init plants</a>
-        <a th:href="@{/admin/deletePlants}" class="btn btn-default confirm-required"
+        <a th:href="@{'/admin/deletePlants/'+${entry}}" class="btn btn-default confirm-required"
            data-confirm-message="This will delete all plants, continue?">Delete plants</a>
-        <a th:href="@{/admin/dataImport}" class="btn btn-default">Init data</a>
-        <a th:href="@{/admin/resetData}" class="btn btn-default confirm-required"
+        <a th:href="@{'/admin/dataImport/'+${entry}}" class="btn btn-default">Init data</a>
+        <a th:href="@{'/admin/resetData/'+${entry}}" class="btn btn-default confirm-required"
            data-confirm-message="This will delete all meta data, continue?">Delete data</a>
         </div>
     </th:block>
-
-    <!--<form action="#" th:action="@{/admin/createPlants}" >-->
-        <!--<input type="submit" value="initialise plants" />-->
-    <!--</form>-->
-
-
-
 </div>
 </body>
 </html>

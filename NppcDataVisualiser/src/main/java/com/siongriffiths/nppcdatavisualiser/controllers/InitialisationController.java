@@ -1,11 +1,13 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
 import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
+import com.siongriffiths.nppcdatavisualiser.experiment.service.ExperimentManager;
 import com.siongriffiths.nppcdatavisualiser.system.service.InitialisationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -36,6 +38,12 @@ public class InitialisationController extends DefaultController {
     private InitialisationService initialisationService;
 
     /**
+     * ExperimentManager provides access to experiment specific logic and persistence layer
+     */
+    @Autowired
+    private ExperimentManager experimentManager;
+
+    /**
      * Property value found in default property file.
      * Contains the root directory for experiemnt data files
      */
@@ -52,15 +60,14 @@ public class InitialisationController extends DefaultController {
     @RequestMapping
     public String showInit(Model model){
         model.addAttribute("experimentCodes",experimentCodes);
-
         return INIT_PAGE_PATH;
     }
 
-    @RequestMapping("/createPlants")
-    public String createPlants() {
-        logger.info("Plants init");
+    @RequestMapping("/createPlants/{experimentCode}")
+    public String createPlants(@PathVariable("experimentCode") String experimentCode) {
+        logger.info("Initialise experiment with code " + experimentCode);
         if(Boolean.FALSE.equals(initialisationService.getInitilisedStatus())) {
-            initialisationService.initSystem();
+            initialisationService.initExperiment(experimentCode);
         }
         return INIT_PAGE_PATH;
     }

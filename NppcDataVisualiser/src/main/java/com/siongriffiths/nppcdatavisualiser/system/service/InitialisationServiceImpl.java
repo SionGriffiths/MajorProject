@@ -3,6 +3,8 @@ package com.siongriffiths.nppcdatavisualiser.system.service;
 import com.siongriffiths.nppcdatavisualiser.data.service.ExperiemntDataImportService;
 import com.siongriffiths.nppcdatavisualiser.data.service.MetaDataManager;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
+import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
+import com.siongriffiths.nppcdatavisualiser.experiment.service.ExperimentManager;
 import com.siongriffiths.nppcdatavisualiser.imageutils.ImageLoader;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 import org.slf4j.Logger;
@@ -32,9 +34,12 @@ public class InitialisationServiceImpl implements InitialisationService {
     private TagManager tagManager;
     @Autowired
     private PlantManager plantManager;
+    @Autowired
+    private ExperimentManager experimentManager;
 
-    public void initSystem(){
-        imageLoader.initPlantImages();
+    public void initExperiment(String experimentCode){
+        Experiment experiment = experimentManager.createNewExperiment(experimentCode);
+        imageLoader.initPlantImages(experiment);
 //        setSystemInitialisedFlag(Boolean.TRUE); //// TODO: 17/03/2016 persist experiemnts so can have admin flags on plants and data, this will always be false at first run otherwise
     }
 

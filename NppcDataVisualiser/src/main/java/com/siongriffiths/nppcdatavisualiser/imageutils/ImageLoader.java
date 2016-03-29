@@ -1,5 +1,7 @@
 package com.siongriffiths.nppcdatavisualiser.imageutils;
 
+import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
+import com.siongriffiths.nppcdatavisualiser.experiment.service.ExperimentManager;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
@@ -33,15 +35,21 @@ public class ImageLoader {
     private PlantImageManager plantImageManager;
     @Autowired
     private PlantDayManager plantDayManager;
+    @Autowired
+    private ExperimentManager experimentManager;
 
     @Value("${image-repository.root.dir}")
     private String imageRepoRoot;
 
 
+    @Value("${image-repository.root.dir.suffix}")
+    private String imageRepoSuffix;
+
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public void initPlantImages() {
-        File dir = new File(imageRepoRoot);
+    public void initPlantImages(Experiment experiment) {
+        File dir = new File(imageRepoRoot+experiment.getExperimentCode()+imageRepoSuffix);
         File[] directories = dir.listFiles();
         if (directories != null) {
 
@@ -56,6 +64,7 @@ public class ImageLoader {
                 if (cameraTypeFiles != null) {
                     for(File cameraTypeFile : cameraTypeFiles){
                         String cameraType = cameraTypeFile.getName();
+
                         // TODO: 09/03/2016 change this to use a property or filter
                         if(cameraType.equalsIgnoreCase("nir")){
                             continue;
@@ -97,9 +106,14 @@ public class ImageLoader {
                 }
                 //Sort days in date order.
                 Collections.sort(plant.getPlantDays());
+                experimentManager.saveExperiment(experiment);
+                plant.setExperiment(experiment);
                 plantManager.savePlant(plant); //cascade save all the way down
                 logger.info("created plant " + plant.getBarCode());
+                experiment.addPlant(plant);
             }
+            experiment.setInitialised(true);
+            experimentManager.saveExperiment(experiment);
         }
     }
 

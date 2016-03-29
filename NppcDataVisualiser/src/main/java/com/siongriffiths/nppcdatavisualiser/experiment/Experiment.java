@@ -3,6 +3,7 @@ package com.siongriffiths.nppcdatavisualiser.experiment;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +21,15 @@ public class Experiment {
     private Boolean initialised;
 
     private List<Plant> plants;
+
+    public Experiment(){
+        plants = new ArrayList<>();
+    }
+
+    public Experiment(String experimentCode){
+        this();
+        this.experimentCode = experimentCode;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,6 +55,10 @@ public class Experiment {
 
     public void setInitialised(Boolean initialised) {
         this.initialised = initialised;
+    }
+
+    public void addPlant(Plant plant){
+        plants.add(plant);
     }
 
     @OneToMany(mappedBy = "experiment",cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)

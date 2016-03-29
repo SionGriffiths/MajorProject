@@ -15,11 +15,17 @@ import java.util.List;
  * Created on 08/03/2016.
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
+ *
+ * PlantDayManagerImpl implements all business logic and behaviour as defined in the PlantDayManager interface.
+ * This class uses the @Service spring annotation and is autowired into subsequent classes in the system using
+ * the plantDayManager identifier.
  */
-
 @Service("plantDayManager")
 public class PlantDayManagerImpl implements PlantDayManager {
 
+    /**
+     * The PlantDayDao repository used to provide persistence layer interactions for PlantDay objects
+     */
     @Autowired
     private PlantDayDao plantDayDao;
 
@@ -55,15 +61,8 @@ public class PlantDayManagerImpl implements PlantDayManager {
     }
 
     //todo investigate if saving the plant before this is faster than looping through all days
+    @Override
     public void addToOrCreatePlantDay(Date date, PlantImage plantImage, Plant plant){
-
-//        PlantDay day = findByPlantAndDate(plant,date);
-//
-//        if(day == null){
-//            createPlantDay(date,plant,plantImage);
-//        } else {
-//            associateImageToDay(plantImage,day);
-//        }
 
         List<PlantDay> dayList = plant.getPlantDays();
         boolean dayFound = false;

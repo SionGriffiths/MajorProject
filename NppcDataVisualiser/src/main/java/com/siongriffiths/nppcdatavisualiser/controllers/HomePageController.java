@@ -1,6 +1,7 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -27,12 +28,13 @@ public class HomePageController extends DefaultController {
 
     /**
      * showHome returns the default home view
-     * @return the default home view
+     * @param session
+     * @return
      */
     // adapt session handling from official spring boot samples :
     // https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-session-redis
     @RequestMapping
-    public String showHome(HttpSession session) {
+    public String showHome(HttpSession session, Model model) {
         UUID uid = (UUID) session.getAttribute("uid");
         if (uid == null) {
             uid = UUID.randomUUID();
