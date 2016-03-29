@@ -11,6 +11,7 @@ import java.util.List;
 public interface ExperimentManager {
 
     List<Experiment> getAllExperiments();
+    List<Experiment> getInitialisedExperiments();
     Experiment getExperimentByCode(String experimentCode);
     Experiment createNewExperiment(String experimentCode);
     void addPlantToExperiment(Experiment experiment, Plant plant);

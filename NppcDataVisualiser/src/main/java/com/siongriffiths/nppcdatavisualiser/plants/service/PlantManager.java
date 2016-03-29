@@ -24,6 +24,8 @@ public interface PlantManager {
 
     List<Plant> findPlantsByTag(TagData tagData);
 
+    List<Plant> findPlantsByExperimentCode(String experimentCode);
+
     Plant getPlantByID(long id);
 
     Plant getPlantByID(String id);

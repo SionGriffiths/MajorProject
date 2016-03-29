@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Created on 28/02/2016.
  *
@@ -48,13 +50,14 @@ public class PlantPageController extends DefaultController {
     private TagManager tagManager;
 
     @RequestMapping
-    public String showPlants(Model model){
-        model.addAttribute("plantList", plantManager.getAllPlants());
+    public String showPlants(Model model, HttpSession session){
+        //// TODO: 29/03/2016 NULLCHECK BROTHER
+        String experimentCode = (String)session.getAttribute("experimentCode");
+        model.addAttribute("plantList", plantManager.findPlantsByExperimentCode(experimentCode));
         model.addAttribute("plantTagInfo" ,new PlantTagInfo());
         return PLANTS_SHOW_PATH;
     }
 
-    //// TODO: 10/03/2016 sanitize inputs - look into using filter chains and sanitize eveything
     @RequestMapping(value = "{plantBarCode}",method = RequestMethod.GET)
     public String showPlantDetail(Model model, @PathVariable("plantBarCode") String barCode){
         logger.info(barCode);

@@ -18,7 +18,7 @@ import java.util.List;
 public class PlantManagerImpl implements PlantManager {
 
     @Autowired
-    PlantDao plantDao;
+    private PlantDao plantDao;
 
     @Override
     public void savePlant(Plant plant) {
@@ -48,6 +48,11 @@ public class PlantManagerImpl implements PlantManager {
     @Override
     public List<Plant> findPlantsByTag(TagData tagData) {
         return plantDao.findByTagData(tagData.getId());
+    }
+
+    @Override
+    public List<Plant> findPlantsByExperimentCode(String experimentCode) {
+        return plantDao.findByExperimentCode(experimentCode);
     }
 
     @Override

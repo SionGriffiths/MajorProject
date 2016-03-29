@@ -10,7 +10,13 @@
 <div layout:fragment="content">
 <p th:text="${session}"></p>
 
+    <h4>Select from available experiments:</h4>
+    <th:block th:each="entry: ${experimentList}">
 
+        <div class="experiment_row">
+            <p th:text="${entry.getExperimentCode()}"></p>
+        </div>
+    </th:block>
 
 </div>
 </body>

@@ -12,6 +12,7 @@ import java.util.List;
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"experiment_code"}))
 public class Experiment {
 
     private Integer id;
@@ -41,6 +42,7 @@ public class Experiment {
         this.id = id;
     }
 
+    @Column(name = "experiment_code")
     public String getExperimentCode() {
         return experimentCode;
     }
