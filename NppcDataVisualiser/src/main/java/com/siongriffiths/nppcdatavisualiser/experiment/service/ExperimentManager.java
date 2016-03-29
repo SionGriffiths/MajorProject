@@ -10,5 +10,6 @@ import java.util.List;
 public interface ExperimentManager {
 
     List<Experiment> getAllExperiments();
+    Experiment getExperimentByCode(String experimentCode);
 
 }

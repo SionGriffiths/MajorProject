@@ -58,7 +58,7 @@ public class InitialisationController extends DefaultController {
 
     @RequestMapping("/createPlants")
     public String createPlants() {
-        logger.info("Plants admin");
+        logger.info("Plants init");
         if(Boolean.FALSE.equals(initialisationService.getInitilisedStatus())) {
             initialisationService.initSystem();
         }

@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ExperimentDao extends JpaRepository<Experiment,Integer> {
 
-
+    Experiment findByExperimentCode(String experimentCode);
 
 }

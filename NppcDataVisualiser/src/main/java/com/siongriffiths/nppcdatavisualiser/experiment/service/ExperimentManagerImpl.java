@@ -19,4 +19,9 @@ public class ExperimentManagerImpl implements ExperimentManager {
     public List<Experiment> getAllExperiments() {
         return experimentDao.findAll();
     }
+
+    @Override
+    public Experiment getExperimentByCode(String experimentCode) {
+        return experimentDao.findByExperimentCode(experimentCode);
+    }
 }
