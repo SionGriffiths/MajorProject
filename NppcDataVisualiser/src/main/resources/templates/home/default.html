@@ -14,7 +14,7 @@
     <th:block th:each="entry: ${experimentList}">
 
         <div class="experiment_row">
-            <p th:text="${entry.getExperimentCode()}"></p>
+            <a th:href="'/setSessionExperiment/'+${entry.getExperimentCode()}" th:text="${entry.getExperimentCode()}"></a>
         </div>
     </th:block>
 

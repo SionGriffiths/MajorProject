@@ -4,6 +4,7 @@ import com.siongriffiths.nppcdatavisualiser.experiment.service.ExperimentManager
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -49,4 +50,9 @@ public class HomePageController extends DefaultController {
         return DEFAULT_HOME_PATH;
     }
 
+    @RequestMapping("/setSessionExperiment/{experimentCode}")
+    public String setExperiment(HttpSession session, @PathVariable("experimentCode") String experimentCode){
+        session.setAttribute("experimentCode",experimentCode);
+        return "redirect:/plants";
+    }
 }
