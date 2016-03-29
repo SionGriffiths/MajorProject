@@ -1,6 +1,8 @@
 package controllers;
 
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
+import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
+import com.siongriffiths.nppcdatavisualiser.experiment.service.ExperimentManager;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
@@ -12,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.HashMap;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -32,6 +36,8 @@ public class PlantPageControllerTest  extends AbstractTest {
     private PlantManager plantManager;
     @Autowired
     private PlantDayManager plantDayManager;
+    @Autowired
+    private ExperimentManager experimentManager;
 
 
     private MockMvc mockMvc;
@@ -51,19 +57,26 @@ public class PlantPageControllerTest  extends AbstractTest {
     @Test
     public void testPlant() throws Exception {
         String testBarCode = "55345";
+        Experiment experiment = new Experiment("TEST");
         Plant plant = new Plant();
         plant.setBarCode(testBarCode);
+        experimentManager.saveExperiment(experiment);
+        plant.setExperiment(experiment);
         plantManager.savePlant(plant);
 
-        this.mockMvc.perform(get("/plants")).andDo(print()).andExpect(status().isOk())
+        //http://stackoverflow.com/questions/26341400/mvc-controller-test-with-session-attribute/26341909#26341909
+        HashMap<String, Object> sessionattr = new HashMap<String, Object>();
+sessionattr.put("experimentCode",experiment.getExperimentCode());
+
+        this.mockMvc.perform(get("/plants").sessionAttrs(sessionattr)).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString(testBarCode)));
 
         String plantUrl = "/plants/"+testBarCode;
-        this.mockMvc.perform(get(plantUrl)).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get(plantUrl).sessionAttrs(sessionattr)).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("This is the detail page for "+testBarCode)));
 
         String notPlantUrl = "/plants/123456";
-        this.mockMvc.perform(get(notPlantUrl)).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get(notPlantUrl).sessionAttrs(sessionattr)).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("Plant not Found")));
 
     }
@@ -84,7 +97,7 @@ public class PlantPageControllerTest  extends AbstractTest {
                 .param("plantDayID",id))
                 .andDo(print())
                 .andExpect(status().isOk())
-        .andExpect(content().string(containsString(tag)));
+                .andExpect(content().string(containsString(tag)));
 
 
     }
