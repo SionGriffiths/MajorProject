@@ -41,6 +41,18 @@ public class PlantManagerImpl implements PlantManager {
     }
 
     @Override
+    public Plant createOrGetPlantByBarcode(String barCode) {
+        Plant plant = getPlantByBarcode(barCode);
+
+        if(plant == null){
+            return createNewPlant(barCode);
+        } else {
+            return plant;
+        }
+    }
+
+
+    @Override
     public void tagPlant(TagData tag, Plant plant) {
         plant.addTag(tag);
     }
@@ -66,5 +78,9 @@ public class PlantManagerImpl implements PlantManager {
         return getPlantByID(parsedId);
     }
 
+
+    private Plant createNewPlant(String barCode) {
+        return new Plant(barCode);
+    }
 
 }

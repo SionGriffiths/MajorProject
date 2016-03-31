@@ -30,11 +30,11 @@ public class TagPageController extends DefaultController{
 
 
     @Autowired
-    TagManager tagManager;
+    private TagManager tagManager;
     @Autowired
-    PlantDayManager plantDayManager;
+    private PlantDayManager plantDayManager;
     @Autowired
-    PlantManager plantManager;
+    private PlantManager plantManager;
 
     @RequestMapping
     public String showTags(Model model){
@@ -45,7 +45,6 @@ public class TagPageController extends DefaultController{
 
     @RequestMapping(value = "{tagContent}",method = RequestMethod.GET)
     public String displayTagResult(Model model, @PathVariable("tagContent") String tagContent){
-        logger.info(tagContent);
 
         String viewPath;
 

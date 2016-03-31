@@ -44,8 +44,6 @@ public class InitialisationController extends DefaultController {
     private ExperimentManager experimentManager;
 
 
-
-
     //http://stackoverflow.com/questions/12576156/reading-a-list-from-properties-file-and-load-with-spring-annotation-value
     @Value("#{'${available.experiment.codes}'.split(',')}")
     private List<String> experimentCodes;
@@ -54,13 +52,14 @@ public class InitialisationController extends DefaultController {
 
     @RequestMapping
     public String showInit(Model model){
-        populateModel(model);
+        populateExperimentCodesIntoModel(model);
         return INIT_PAGE_PATH;
     }
 
     @RequestMapping("/createPlants/{experimentCode}")
-    public String createPlants(@PathVariable("experimentCode") String experimentCode) {
+    public String createPlants(@PathVariable("experimentCode") String experimentCode, Model model) {
         logger.info("Initialise experiment with code " + experimentCode);
+        populateExperimentCodesIntoModel(model);
         if(Boolean.FALSE.equals(initialisationService.getInitilisedStatus())) {
             initialisationService.initExperiment(experimentCode);
         }
@@ -69,7 +68,7 @@ public class InitialisationController extends DefaultController {
 
     @RequestMapping("/deletePlants")
     public String deletePlants(@PathVariable("experimentCode") String experimentCode, Model model){
-        populateModel(model);
+        populateExperimentCodesIntoModel(model);
         initialisationService.deleteExperiementData();
         return INIT_PAGE_PATH;
     }
@@ -77,18 +76,18 @@ public class InitialisationController extends DefaultController {
     @RequestMapping("/dataImport/{experimentCode}")
     public String importMetaData(@PathVariable("experimentCode") String experimentCode, Model model){
         initialisationService.initData(experimentCode);
-        populateModel(model);
+        populateExperimentCodesIntoModel(model);
         return INIT_PAGE_PATH;
     }
 
-    @RequestMapping("/resetData")
+    @RequestMapping("/resetData/{experimentCode}")
     public String resetData(@PathVariable("experimentCode") String experimentCode, Model model){
-        populateModel(model);
+        populateExperimentCodesIntoModel(model);
         initialisationService.resetData();
         return INIT_PAGE_PATH;
     }
 
-    private void populateModel(Model model){
+    private void populateExperimentCodesIntoModel(Model model){
         model.addAttribute("experimentCodes",experimentCodes);
     }
 }

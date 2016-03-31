@@ -113,7 +113,7 @@ public class ExperiemntDataImportServiceImpl implements ExperiemntDataImportServ
 
     private void enrichPlantTags(List<Integer> plantTagIndex, String[] header, String[] line, Plant plant){
         for(Integer i : plantTagIndex){
-            if(line[i] != null || !line[i].equals("")){
+            if(line[i] != null && !line[i].equals("")){
                 TagData tag = tagManager.createOrGetTag(line[i]);
                 plantManager.tagPlant(tag,plant);
                 tagManager.saveTagData(tag);

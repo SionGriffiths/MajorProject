@@ -14,6 +14,7 @@ public interface ExperimentManager {
     List<Experiment> getInitialisedExperiments();
     Experiment getExperimentByCode(String experimentCode);
     Experiment createNewExperiment(String experimentCode);
+    Experiment getOrCreateNewExperiment(String experimentCode);
     void addPlantToExperiment(Experiment experiment, Plant plant);
     void saveExperiment(Experiment experiment);
 }

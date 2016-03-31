@@ -12,5 +12,5 @@ public interface PlantImageManager {
 
     void savePlantImage(PlantImage plantImage);
     PlantImage getPlantImageByID(long id);
-
+    PlantImage getOrCreatePlantImageByPath(String path);
 }

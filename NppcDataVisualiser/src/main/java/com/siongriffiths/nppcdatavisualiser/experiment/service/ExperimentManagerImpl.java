@@ -40,6 +40,16 @@ public class ExperimentManagerImpl implements ExperimentManager {
     }
 
     @Override
+    public Experiment getOrCreateNewExperiment(String experimentCode) {
+        Experiment experiment = getExperimentByCode(experimentCode);
+        if(experiment == null){
+            return createNewExperiment(experimentCode);
+        } else {
+            return experiment;
+        }
+    }
+
+    @Override
     public void addPlantToExperiment(Experiment experiment, Plant plant) {
         experiment.addPlant(plant);
     }

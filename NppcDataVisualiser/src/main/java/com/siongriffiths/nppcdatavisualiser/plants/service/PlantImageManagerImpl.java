@@ -1,6 +1,7 @@
 package com.siongriffiths.nppcdatavisualiser.plants.service;
 
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
+import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
 import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantImageDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,4 +29,17 @@ public class PlantImageManagerImpl implements PlantImageManager {
     public PlantImage getPlantImageByID(long id) {
        return plantImageDao.findOne(id);
     }
+
+    @Override
+    public PlantImage getOrCreatePlantImageByPath(String path) {
+        PlantImage image = plantImageDao.findByFilePath(path);
+
+         if (image == null){
+             return new PlantImage(path);
+         } else {
+             return image;
+         }
+    }
+
+
 }

@@ -27,7 +27,7 @@ import java.util.Date;
  */
 
 @Component //Component scanning will find this and treat class as bean
-public class ImageLoader {
+public class PlantLoader {
 
     @Autowired
     private PlantManager plantManager;
@@ -55,9 +55,9 @@ public class ImageLoader {
 
             for (File plantDir : directories) {
 
-                //create new plant with barcode = dirname
-                Plant plant = new Plant(plantDir.getName());
+                String barCode = plantDir.getName();
 
+                Plant plant = plantManager.createOrGetPlantByBarcode(barCode);
 
                 File[] cameraTypeFiles = plantDir.listFiles();
 
@@ -73,24 +73,20 @@ public class ImageLoader {
                         File[] viewTypeFiles = cameraTypeFile.listFiles();
                         if(viewTypeFiles != null){
                             for(File viewTypeFile : viewTypeFiles){
-//                                String viewType = viewTypeFile.getName();
 
                                 File[] angleOptionFiles = viewTypeFile.listFiles();
                                 if(angleOptionFiles != null){
                                     for(File angleOptionFile : angleOptionFiles){
-//                                        String angleOption = angleOptionFile.getName();
 
                                         File[] plantImageFiles = angleOptionFile.listFiles();
                                         if(plantImageFiles != null){
 
                                             for(File plantImageFile : plantImageFiles){
                                                 String path = normaliseFilePath(plantImageFile.getPath());
-                                                path = removeSurplusDirectoryGibberish(path);
+                                                path = removeExcessDirectoryPath(path);
                                                 Date date = extractDateFromImageName(plantImageFile.getName());
-
-                                                PlantImage plantImage = new PlantImage();
+                                                PlantImage plantImage = plantImageManager.getOrCreatePlantImageByPath(path);
                                                 plantImage.setFilePath(path);
-
                                                 plantDayManager.addToOrCreatePlantDay(date,plantImage,plant);
 
 
@@ -106,7 +102,7 @@ public class ImageLoader {
                 }
                 //Sort days in date order.
                 Collections.sort(plant.getPlantDays());
-                experimentManager.saveExperiment(experiment);
+                experimentManager.saveExperiment(experiment); //save experiment since we cannot save plant with transient reference
                 plant.setExperiment(experiment);
                 plantManager.savePlant(plant); //cascade save all the way down
                 logger.info("created plant " + plant.getBarCode());
@@ -123,7 +119,7 @@ public class ImageLoader {
         return FilenameUtils.separatorsToUnix(pathToNormalise);
     }
 
-    private String removeSurplusDirectoryGibberish(String path){
+    private String removeExcessDirectoryPath(String path){
         return path.replace(imageRepoRoot,"");
     }
 

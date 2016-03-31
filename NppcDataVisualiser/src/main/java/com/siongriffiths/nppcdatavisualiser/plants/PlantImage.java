@@ -18,12 +18,9 @@ import java.util.Set;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"filePath"}))
 public class PlantImage {
 
-
     private long id;
 
-
     private String filePath;
-
 
     private PlantDay plantDay;
 

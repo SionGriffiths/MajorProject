@@ -13,4 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository("plantImageDao")
 public interface PlantImageDao extends JpaRepository<PlantImage,Long>{
 
+    PlantImage findByFilePath(String filePath);
+
 }
