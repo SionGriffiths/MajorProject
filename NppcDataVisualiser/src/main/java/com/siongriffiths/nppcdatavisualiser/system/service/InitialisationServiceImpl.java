@@ -10,6 +10,7 @@ import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,14 +38,21 @@ public class InitialisationServiceImpl implements InitialisationService {
     @Autowired
     private ExperimentManager experimentManager;
 
+    /**
+     * Property value found in default property file.
+     * Contains the root directory for experiemnt data files
+     */
+    @Value("${experiment.data.root.dir}")
+    private String dataRoot;
+
     public void initExperiment(String experimentCode){
         Experiment experiment = experimentManager.createNewExperiment(experimentCode);
         imageLoader.initPlantImages(experiment);
 //        setSystemInitialisedFlag(Boolean.TRUE); //// TODO: 17/03/2016 persist experiemnts so can have admin flags on plants and data, this will always be false at first run otherwise
     }
 
-    public void initData(String experimentDir){
-        experiemntDataImportService.parseAnnotatedExperiemntDataCSVFile(experimentDir+"/annotated.csv");
+    public void initData(String experimentCode){
+        experiemntDataImportService.parseAnnotatedExperiemntDataCSVFile(dataRoot + experimentCode+"/annotated.csv");
     }
 
     @Override

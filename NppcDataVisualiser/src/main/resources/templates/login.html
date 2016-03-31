@@ -1,0 +1,37 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>LOGIN</title>
+</head>
+<body>
+
+<!--<h1 layout:fragment="header">Login</h1>-->
+<div layout:fragment="content">
+
+
+    <!--<h2>Login with Username and Password</h2>-->
+    <!--<form name="form" th:action="@{/login}" action="/login" method="POST">-->
+            <!--<input type="text" name="username" value="" placeholder="Username" />-->
+            <!--<input type="password" name="password" placeholder="Password" />-->
+        <!--<input type="submit" id="login" value="Login" class="btn btn-primary" />-->
+    <!--</form>-->
+    <!--http://bootsnipp.com/snippets/0l1PR-->
+
+    <div class = "container">
+        <div class="login_wrapper wrapper">
+            <p th:if="${param.error}" class="alert alert-error">There was an error, please try again</p>
+            <form th:action="@{/login}" action="/login" method="POST" name="Login_Form" class="form-signin login_form">
+                <h3 class="form-signin-heading">Administrator Sign-in</h3>
+                <hr class="colorgraph" />
+                <br />
+                <input type="text" class="form-control" name="username" placeholder="Username" required="" autofocus="" />
+                <input type="password" class="form-control" name="password" placeholder="Password" required=""/>
+
+                <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="Submit">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

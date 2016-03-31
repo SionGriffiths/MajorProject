@@ -38,3 +38,8 @@
     padding-bottom: 15px;
     border-top: 2px solid olivedrab ;
 }
+
+.login_form{
+    width: 320px;
+    margin: 0 auto;
+}

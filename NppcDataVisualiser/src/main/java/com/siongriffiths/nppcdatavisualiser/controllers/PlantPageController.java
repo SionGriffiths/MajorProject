@@ -51,7 +51,6 @@ public class PlantPageController extends DefaultController {
 
     @RequestMapping
     public String showPlants(Model model, HttpSession session){
-        //// TODO: 29/03/2016 NULLCHECK BROTHER
         String experimentCode = (String)session.getAttribute("experimentCode");
         model.addAttribute("plantList", plantManager.findPlantsByExperimentCode(experimentCode));
         model.addAttribute("plantTagInfo" ,new PlantTagInfo());

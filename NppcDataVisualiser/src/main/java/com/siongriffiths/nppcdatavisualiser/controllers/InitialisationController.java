@@ -43,12 +43,7 @@ public class InitialisationController extends DefaultController {
     @Autowired
     private ExperimentManager experimentManager;
 
-    /**
-     * Property value found in default property file.
-     * Contains the root directory for experiemnt data files
-     */
-    @Value("${experiment.data.root.dir}")
-    private String dataRoot;
+
 
 
     //http://stackoverflow.com/questions/12576156/reading-a-list-from-properties-file-and-load-with-spring-annotation-value
@@ -59,7 +54,7 @@ public class InitialisationController extends DefaultController {
 
     @RequestMapping
     public String showInit(Model model){
-        model.addAttribute("experimentCodes",experimentCodes);
+        populateModel(model);
         return INIT_PAGE_PATH;
     }
 
@@ -73,20 +68,27 @@ public class InitialisationController extends DefaultController {
     }
 
     @RequestMapping("/deletePlants")
-    public String deletePlants(){
+    public String deletePlants(@PathVariable("experimentCode") String experimentCode, Model model){
+        populateModel(model);
         initialisationService.deleteExperiementData();
         return INIT_PAGE_PATH;
     }
 
-    @RequestMapping("/dataImport")
-    public String importMetaData(){
-        initialisationService.initData(dataRoot+"O7");
+    @RequestMapping("/dataImport/{experimentCode}")
+    public String importMetaData(@PathVariable("experimentCode") String experimentCode, Model model){
+        initialisationService.initData(experimentCode);
+        populateModel(model);
         return INIT_PAGE_PATH;
     }
 
     @RequestMapping("/resetData")
-    public String resetData(){
+    public String resetData(@PathVariable("experimentCode") String experimentCode, Model model){
+        populateModel(model);
         initialisationService.resetData();
         return INIT_PAGE_PATH;
+    }
+
+    private void populateModel(Model model){
+        model.addAttribute("experimentCodes",experimentCodes);
     }
 }
