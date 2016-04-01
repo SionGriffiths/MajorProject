@@ -100,7 +100,7 @@ public class PlantLoader {
                         }
                     }
                 }
-                //Sort days in date order.
+                //Sort days in date order. Some instances where this is not the case otehrwise..
                 Collections.sort(plant.getPlantDays());
                 experimentManager.saveExperiment(experiment); //save experiment since we cannot save plant with transient reference
                 plant.setExperiment(experiment);

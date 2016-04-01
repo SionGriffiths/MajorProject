@@ -4,7 +4,9 @@ import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
@@ -63,8 +65,8 @@ public class PlantManagerImpl implements PlantManager {
     }
 
     @Override
-    public List<Plant> findPlantsByExperimentCode(String experimentCode) {
-        return plantDao.findByExperimentCode(experimentCode);
+    public List<Plant> findPlantsByExperimentCode(String experimentCode, Pageable pageable) {
+        return plantDao.findByExperimentCode(experimentCode, pageable);
     }
 
     @Override

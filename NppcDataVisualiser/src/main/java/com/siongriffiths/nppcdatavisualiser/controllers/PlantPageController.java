@@ -12,7 +12,10 @@ import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantTagInfo;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantImageManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created on 28/02/2016.
@@ -79,16 +83,16 @@ public class PlantPageController extends DefaultController {
     @RequestMapping
     public String showPlants(Model model, HttpSession session){
         String experimentCode = (String)session.getAttribute("experimentCode");
-        model.addAttribute("plantList", plantManager.findPlantsByExperimentCode(experimentCode));
+        model.addAttribute("plantList", plantManager.findPlantsByExperimentCode(experimentCode, new PageRequest(0,10)));
         model.addAttribute("plantTagInfo" ,new PlantTagInfo());
         return PLANTS_SHOW_PATH;
     }
 
     /**
-     * SHows a page detailing an individual plant and associated time serried data and images
-     * @param model
-     * @param barCode
-     * @return
+     * Shows a page detailing an individual plant and associated time serried data and images
+     * @param model the page model object
+     * @param barCode the barcode identifying a plant
+     * @return view path for the plants detail page
      */
     @RequestMapping(value = "{plantBarCode}",method = RequestMethod.GET)
     public String showPlantDetail(Model model, @PathVariable("plantBarCode") String barCode){
@@ -100,12 +104,14 @@ public class PlantPageController extends DefaultController {
         model.addAttribute("plantDayAttributeInfo", new PlantDayAttributeInfo());
 
         Plant targetPlant  = plantManager.getPlantByBarcode(barCode);
+        List<PlantDay> plantDays = plantDayManager.getPlantDaysByPlant(targetPlant, new PageRequest(0,10));
 
         if(targetPlant == null){
             model.addAttribute("barcode", barCode);
             viewPath = PLANT_NOT_FOUND_PATH;
         }else {
             model.addAttribute("plant", targetPlant);
+            model.addAttribute("dayList", plantDays);
             viewPath = PLANT_DETAIL_PATH;
         }
 
@@ -113,6 +119,12 @@ public class PlantPageController extends DefaultController {
     }
 
 
+    /**
+     * Adds a key value attribute pair to a PlantDay and returns the page fragment containing the updated attributes
+     * @param plantDayAttributeInfo form backing control object representing a form in the front end
+     * @param model the page model object
+     * @return view fragment path for the attributes section in the plant detail page
+     */
     @RequestMapping(value = "/addDayAttribute", method = RequestMethod.POST)
     public String addAttribute(@ModelAttribute PlantDayAttributeInfo plantDayAttributeInfo, Model model) {
         model.addAttribute("plantDayAttributeInfo", new PlantDayAttributeInfo());
@@ -125,6 +137,12 @@ public class PlantPageController extends DefaultController {
     }
 
 
+    /**
+     * Add a tag to a PlantDay
+     * @param plantDayTagInfo form backing control object representing a form in the front end
+     * @param model the page model object
+     * @return view fragment path for the tags section in the plant detail page
+     */
     @RequestMapping(value = "/addDayTag", method = RequestMethod.POST)
     public String tagPlantDay(@ModelAttribute PlantDayTagInfo plantDayTagInfo, Model model){
         model.addAttribute("plantTagInfo" ,new PlantDayTagInfo());
@@ -138,6 +156,12 @@ public class PlantPageController extends DefaultController {
         return PLANT_DAY_TAG_FRAGMENT;
     }
 
+    /**
+     * Adds a key value attribute pair to a Plant and returns the page fragment containing the updated attributes
+     * @param plantTagInfo form backing control object representing a form in the front end
+     * @param model the page model object
+     * @return view fragment path for the attributes section in the plant  page
+     */
     @RequestMapping(value = "/addPlantTag", method = RequestMethod.POST)
     public String tagPlantDay(@ModelAttribute PlantTagInfo plantTagInfo, Model model){
         model.addAttribute("plantTagInfo" ,new PlantTagInfo());
@@ -150,5 +174,7 @@ public class PlantPageController extends DefaultController {
         model.addAttribute("plant", plant);
         return PLANT_TAG_FRAGMENT;
     }
+
+    //// TODO: 01/04/2016 Attributes for plant pls?
 
 }
