@@ -7,6 +7,16 @@
 
 <body>
 
+<div th:fragment="paginationFragment">
+
+    <p th:text="'current page is ' + ${currentPage}" />
+
+    <a th:href="'?page='+${currentPage-1}+'&amp;size='+${currentSize}" th:if="${currentPage > 1}">Previous</a>
+    <a th:href="'?page='+${currentPage+1}+'&amp;size='+${currentSize}" th:if="${lastPage > currentPage }">Next</a>
+
+
+
+</div>
 
 <div th:fragment="dayTagFragment">
     <span th:each="plantDayTag,status : ${plantDay.getTags()}">

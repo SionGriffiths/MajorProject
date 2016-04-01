@@ -51,7 +51,7 @@ public class PlantPageController extends DefaultController {
     private static final String PLANT_ATTRIB_FRAGMENT =  "plants/plantFragments :: plantAttribFragment";
     private static final String PLANT_TAG_FRAGMENT =  "plants/plantFragments :: plantTagFragment";
 
-    private static final int DEFAULT_PAGINATION_START_PAGE = 0;
+    private static final int DEFAULT_PAGINATION_START_PAGE = 1;
     private static final int DEFAULT_PAGINATION_RESULTS = 10;
 
     /**
@@ -89,18 +89,43 @@ public class PlantPageController extends DefaultController {
         return showPlants(model,session, DEFAULT_PAGINATION_START_PAGE, DEFAULT_PAGINATION_RESULTS);
     }
 
-    @RequestMapping(params = { "page", "size" }, method = RequestMethod.GET)
-    public String showForPage(@RequestParam( "page" ) int page, @RequestParam( "size" ) int size,
-                              Model model, HttpSession session){
+    @RequestMapping(params = {"page", "size" }, method = RequestMethod.GET)
+    public String showForPageAndSize(@RequestParam( "page" ) int page, @RequestParam( "size" ) int size,
+                                     Model model, HttpSession session){
         return showPlants(model,session,page,size );
     }
 
+    @RequestMapping(params = {"page"}, method = RequestMethod.GET)
+    public String showForPage(@RequestParam( "page" ) int page,
+                              Model model, HttpSession session){
+        return showPlants(model,session,page,DEFAULT_PAGINATION_RESULTS );
+    }
 
 
     private String showPlants(Model model, HttpSession session, int pageNum, int numPerPage){
         String experimentCode = (String)session.getAttribute("experimentCode");
+
+        if(pageNum < 1){
+            pageNum = 1;
+        }
+        if(numPerPage < 1){
+            numPerPage = 1;
+        }
+
+        pageNum -= 1; //pages are zero indexed in spring, front end should be from 1
+
+
         Page<Plant> page = plantManager.findPlantsByExperimentCode(experimentCode, new PageRequest(pageNum,numPerPage));
+
+        int currentPageIndex = page.getNumber()+1;
+
         logger.info("There's " + page.getTotalPages() + " pages available");
+        model.addAttribute("currentPage", currentPageIndex);
+        model.addAttribute("currentSize", numPerPage);
+        model.addAttribute("nextPage", currentPageIndex+1);
+        model.addAttribute("prevPage", currentPageIndex-1);
+        model.addAttribute("lastPage", page.getTotalPages());
+
         model.addAttribute("plantList", page );
         model.addAttribute("plantTagInfo" ,new PlantTagInfo());
         return PLANTS_SHOW_PATH;

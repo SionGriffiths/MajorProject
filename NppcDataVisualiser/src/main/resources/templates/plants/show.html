@@ -9,6 +9,9 @@
 
 <h1 layout:fragment="header">Plants</h1>
 <div layout:fragment="content">
+
+  <div th:replace="plants/plantFragments :: paginationFragment"></div>
+
     <p th:text="'There are ' + ${plantList.getTotalElements()} + ' plants in this experiemnt :'" ></p>
     <div th:each="plant,status : ${plantList}" class="row plant_row">
         <div class="col-xs-6">
