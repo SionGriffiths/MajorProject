@@ -1,5 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
+import com.siongriffiths.nppcdatavisualiser.constants.NppcVisConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.boot.autoconfigure.web.ErrorController;
@@ -46,6 +47,15 @@ public class ErrorPageController extends DefaultController implements ErrorContr
     public String showError(HttpServletRequest aRequest){
         Map<String, Object> body = getErrorAttributes(aRequest,
                 getTraceParameter(aRequest));
+        if(body.containsKey("status")){
+            int status = (Integer)body.get("status");
+
+            if(status == 404){
+                return NppcVisConstants.ERROR_PATH_404;
+            }
+        }
+
+
         return ERROR_PATH_DEFAULT;
     }
 

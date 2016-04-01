@@ -1,7 +1,9 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
+import com.siongriffiths.nppcdatavisualiser.constants.NppcVisConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +33,14 @@ public class DefaultController {
     public void handleException(
             Exception exception, HttpServletRequest request) {
         logger.error("- Exception: ", exception);
+    }
+
+
+
+
+    @ExceptionHandler(TypeMismatchException.class)
+    public String handleBadParameters() {
+        return NppcVisConstants.ERROR_PATH_404;
     }
 
 }

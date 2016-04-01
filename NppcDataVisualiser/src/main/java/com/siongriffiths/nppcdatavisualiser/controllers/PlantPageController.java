@@ -1,6 +1,7 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
 
+import com.siongriffiths.nppcdatavisualiser.constants.NppcVisConstants;
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
@@ -13,17 +14,16 @@ import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantImageManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -50,6 +50,9 @@ public class PlantPageController extends DefaultController {
     private static final String PLANT_DAY_ATTRIB_FRAGMENT =  "plants/plantFragments :: dayAttribFragment";
     private static final String PLANT_ATTRIB_FRAGMENT =  "plants/plantFragments :: plantAttribFragment";
     private static final String PLANT_TAG_FRAGMENT =  "plants/plantFragments :: plantTagFragment";
+
+    private static final int DEFAULT_PAGINATION_START_PAGE = 0;
+    private static final int DEFAULT_PAGINATION_RESULTS = 10;
 
     /**
      * PlantManager, a service class providing access to business logic and persistence for Plant objects
@@ -82,9 +85,21 @@ public class PlantPageController extends DefaultController {
      * @return view path for the default plants page
      */
     @RequestMapping
-    public String showPlants(Model model, HttpSession session){
+    public String show(Model model, HttpSession session){
+        return showPlants(model,session, DEFAULT_PAGINATION_START_PAGE, DEFAULT_PAGINATION_RESULTS);
+    }
+
+    @RequestMapping(params = { "page", "size" }, method = RequestMethod.GET)
+    public String showForPage(@RequestParam( "page" ) int page, @RequestParam( "size" ) int size,
+                              Model model, HttpSession session){
+        return showPlants(model,session,page,size );
+    }
+
+
+
+    private String showPlants(Model model, HttpSession session, int pageNum, int numPerPage){
         String experimentCode = (String)session.getAttribute("experimentCode");
-        Page<Plant> page = plantManager.findPlantsByExperimentCode(experimentCode, new PageRequest(0,10));
+        Page<Plant> page = plantManager.findPlantsByExperimentCode(experimentCode, new PageRequest(pageNum,numPerPage));
         logger.info("There's " + page.getTotalPages() + " pages available");
         model.addAttribute("plantList", page );
         model.addAttribute("plantTagInfo" ,new PlantTagInfo());
