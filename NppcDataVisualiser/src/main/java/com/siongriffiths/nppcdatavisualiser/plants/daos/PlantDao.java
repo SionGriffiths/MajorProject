@@ -2,6 +2,7 @@ package com.siongriffiths.nppcdatavisualiser.plants.daos;
 
 import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,7 +26,7 @@ public interface PlantDao extends JpaRepository<Plant,Long> {
     List<Plant> findByExperiment(Experiment experiment);
 
     @Query("select p from Plant p join p.experiment e where e.experimentCode = :experimentCode ")
-    List<Plant> findByExperimentCode(@Param("experimentCode") String experimentCode, Pageable pageable);
+    Page<Plant> findByExperimentCode(@Param("experimentCode") String experimentCode, Pageable pageable);
 
     Plant findByBarCode(String barCode);
 

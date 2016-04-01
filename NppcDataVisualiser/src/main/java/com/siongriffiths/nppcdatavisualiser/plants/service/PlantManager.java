@@ -2,6 +2,7 @@ package com.siongriffiths.nppcdatavisualiser.plants.service;
 
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 
@@ -28,7 +29,7 @@ public interface PlantManager {
 
     List<Plant> findPlantsByTag(TagData tagData);
 
-    List<Plant> findPlantsByExperimentCode(String experimentCode, Pageable pageable);
+    Page<Plant> findPlantsByExperimentCode(String experimentCode, Pageable pageable);
 
     Plant getPlantByID(long id);
 

@@ -15,6 +15,7 @@ import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -83,7 +84,9 @@ public class PlantPageController extends DefaultController {
     @RequestMapping
     public String showPlants(Model model, HttpSession session){
         String experimentCode = (String)session.getAttribute("experimentCode");
-        model.addAttribute("plantList", plantManager.findPlantsByExperimentCode(experimentCode, new PageRequest(0,10)));
+        Page<Plant> page = plantManager.findPlantsByExperimentCode(experimentCode, new PageRequest(0,10));
+        logger.info("There's " + page.getTotalPages() + " pages available");
+        model.addAttribute("plantList", page );
         model.addAttribute("plantTagInfo" ,new PlantTagInfo());
         return PLANTS_SHOW_PATH;
     }
