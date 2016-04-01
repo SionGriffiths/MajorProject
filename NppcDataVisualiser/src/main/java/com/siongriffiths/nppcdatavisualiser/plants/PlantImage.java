@@ -40,7 +40,7 @@ public class PlantImage {
         this.id = id;
     }
 
-       @Column
+    @Column
     public String getFilePath() {
         return filePath;
     }

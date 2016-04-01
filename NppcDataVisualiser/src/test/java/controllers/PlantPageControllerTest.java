@@ -107,7 +107,7 @@ sessionattr.put("experimentCode",experiment.getExperimentCode());
         PlantDay day = new PlantDay();
         Plant plant = new Plant();
         day.setPlant(plant);
-        day.setPlantDayMetaData(new Metadata());
+        day.setMetadata(new Metadata());
         plantManager.savePlant(plant);
         plantDayManager.savePlantDay(day);
 

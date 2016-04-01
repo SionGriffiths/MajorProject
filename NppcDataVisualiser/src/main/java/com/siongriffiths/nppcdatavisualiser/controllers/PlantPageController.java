@@ -26,12 +26,18 @@ import javax.servlet.http.HttpSession;
  * Created on 28/02/2016.
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
+ *
+ * PlantPageController is an MVC controller that processes all requests to the root url /plants
+ * PlantPageController provides all views associated with the plants in the system including individual detail pages
  */
 @Controller
 @RequestMapping("/plants")
 public class PlantPageController extends DefaultController {
 
 
+    /**
+     * View paths used by this controller
+     */
     private static final String PLANTS_SHOW_PATH = "plants/show";
     private static final String PLANT_NOT_FOUND_PATH = "plants/notfound";
     private static final String PLANT_DETAIL_PATH = "plants/plantdetail";
@@ -40,15 +46,36 @@ public class PlantPageController extends DefaultController {
     private static final String PLANT_ATTRIB_FRAGMENT =  "plants/plantFragments :: plantAttribFragment";
     private static final String PLANT_TAG_FRAGMENT =  "plants/plantFragments :: plantTagFragment";
 
+    /**
+     * PlantManager, a service class providing access to business logic and persistence for Plant objects
+     */
     @Autowired
     private PlantManager plantManager;
+
+    /**
+     * PlantImageManager, a service class providing access to business logic and persistence for PlantImage objects
+     */
     @Autowired
     private PlantImageManager plantImageManager;
+
+    /**
+     * PlantDayManager, a service class providing access to business logic and persistence for PlantDay objects
+     */
     @Autowired
     private PlantDayManager plantDayManager;
+
+    /**
+     * TagManager, a service class providing access to business logic and persistence for TagData objects
+     */
     @Autowired
     private TagManager tagManager;
 
+    /**
+     * Shows the default plant page. Displays a list of all plants in the currently selected experiment
+     * @param model the page model object
+     * @param session the HttpSession object containing an experiment code
+     * @return view path for the default plants page
+     */
     @RequestMapping
     public String showPlants(Model model, HttpSession session){
         String experimentCode = (String)session.getAttribute("experimentCode");
@@ -57,6 +84,12 @@ public class PlantPageController extends DefaultController {
         return PLANTS_SHOW_PATH;
     }
 
+    /**
+     * SHows a page detailing an individual plant and associated time serried data and images
+     * @param model
+     * @param barCode
+     * @return
+     */
     @RequestMapping(value = "{plantBarCode}",method = RequestMethod.GET)
     public String showPlantDetail(Model model, @PathVariable("plantBarCode") String barCode){
         logger.info(barCode);
@@ -84,7 +117,7 @@ public class PlantPageController extends DefaultController {
     public String addAttribute(@ModelAttribute PlantDayAttributeInfo plantDayAttributeInfo, Model model) {
         model.addAttribute("plantDayAttributeInfo", new PlantDayAttributeInfo());
         PlantDay day = plantDayManager.getPlantDayByID(plantDayAttributeInfo.getPlantDayID());
-        Metadata plantDayData = day.getPlantDayMetaData();
+        Metadata plantDayData = day.getMetadata();
         plantDayData.addDataAttribute(plantDayAttributeInfo.getAttribName(),plantDayAttributeInfo.getAttribVal());
         plantDayManager.savePlantDay(day);
         model.addAttribute("plantDay", day);

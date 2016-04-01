@@ -150,7 +150,7 @@ public class ExperiemntDataImportServiceImpl implements ExperiemntDataImportServ
                 if (day != null) {
                     String[] splitHeader = headerContent.split(IN_HEADER_KEY_VALUE_PAIR_DELIMITER);
                     if (splitHeader.length >= 2) {
-                        Metadata data = day.getPlantDayMetaData();
+                        Metadata data = day.getMetadata();
                         data.addDataAttribute(splitHeader[0], splitHeader[1]);
                         plantDayManager.savePlantDay(day);
                     }

@@ -33,9 +33,9 @@ public class GraphingManagerImpl implements GraphingManager {
 
         if(plant != null) {
             for (PlantDay day : plant.getPlantDays()) {
-                if (day.getPlantDayMetaData().getDataAttributes().get(attrib1) != null) {
+                if (day.getMetadata().getDataAttributes().get(attrib1) != null) {
                     attrib1List.add(day.getDate().toString());
-                    attrib2List.add(day.getPlantDayMetaData().getDataAttributes().get(attrib1));
+                    attrib2List.add(day.getMetadata().getDataAttributes().get(attrib1));
                 }
             }
         }

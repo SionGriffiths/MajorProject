@@ -2,6 +2,7 @@ package com.siongriffiths.nppcdatavisualiser.controllers;
 
 import com.siongriffiths.nppcdatavisualiser.experiment.service.ExperimentManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ public class HomePageController extends DefaultController {
      * View paths used by this controller
      */
     private static final String DEFAULT_HOME_PATH = "home/default";
+    private static final String PLANT_PAGE_REDIRECT = "redirect:/plants";
 
     /**
      * showHome returns the default home view
@@ -50,9 +52,15 @@ public class HomePageController extends DefaultController {
         return DEFAULT_HOME_PATH;
     }
 
+    /**
+     * Sets the currently selected experiment in the session
+     * @param session the HttpSession
+     * @param experimentCode The code identifying the experiment
+     * @return
+     */
     @RequestMapping("/setSessionExperiment/{experimentCode}")
     public String setExperiment(HttpSession session, @PathVariable("experimentCode") String experimentCode){
         session.setAttribute("experimentCode",experimentCode);
-        return "redirect:/plants";
+        return PLANT_PAGE_REDIRECT;
     }
 }

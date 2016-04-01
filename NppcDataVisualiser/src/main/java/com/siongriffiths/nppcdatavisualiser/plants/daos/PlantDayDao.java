@@ -23,7 +23,7 @@ public interface PlantDayDao extends JpaRepository<PlantDay, Long> {
     @Query("select p from PlantDay p join p.tags tag where tag.id = :tagId ")
     List<PlantDay> findByTagData(@Param("tagId") long id);
 
-    PlantDay findByPlantDayMetaData(Metadata plantDayMetaData);
+    PlantDay findByMetadata(Metadata Metadata);
 
     PlantDay findByPlantAndDate(Plant plant, Date date);
 }

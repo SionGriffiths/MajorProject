@@ -23,7 +23,7 @@
 
 
 <div th:fragment="dayAttribFragment">
-    <div th:if="${plantDay.getPlantDayMetaData() != null}">
+    <div th:if="${plantDay.getMetadata() != null}">
         <table class="table">
             <thead>
             <tr>
@@ -32,7 +32,7 @@
             </tr>
             </thead>
             <tbody>
-            <th:block th:each="entry: ${plantDay.getPlantDayMetaData().getDataAttributes()}">
+            <th:block th:each="entry: ${plantDay.getMetadata().getDataAttributes()}">
                 <tr>
                     <td th:text="${entry.key}"></td>
                     <td th:text="${entry.value}"></td>

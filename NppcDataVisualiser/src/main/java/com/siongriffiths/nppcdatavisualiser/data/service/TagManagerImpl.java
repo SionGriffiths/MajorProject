@@ -2,11 +2,13 @@ package com.siongriffiths.nppcdatavisualiser.data.service;
 
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.data.doas.TagDataDao;
+import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created on 08/03/2016.
@@ -39,6 +41,11 @@ public class TagManagerImpl implements TagManager {
     @Override
     public List<TagData> getAllTags() {
         return tagDataDao.findAll();
+    }
+
+    @Override
+    public Set<TagData> getByExperimentForPlants(Experiment experiment) {
+        return tagDataDao.findByExperimentForPlant(experiment);
     }
 
     @Override

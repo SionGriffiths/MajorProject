@@ -70,6 +70,7 @@ public class InitialisationServiceImpl implements InitialisationService {
         this.systemInitialisedFlag = systemInitialisedFlag;
     }
 
+    // TODO: 01/04/2016 use experiment code for all things in this damn class
     public void deleteExperiementData(){
         plantManager.deleteAllPlants();
     }

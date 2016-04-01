@@ -61,7 +61,6 @@ public class Plant {
         this.plantMetaData = plantMetaData;
     }
 
-    //Accessor is annotated to avoid eager fetch on object creation
     @OneToMany(mappedBy = "plant",cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     public List<PlantDay> getPlantDays() {
         return plantDays;
@@ -71,8 +70,6 @@ public class Plant {
         this.plantDays = plantDays;
     }
 
-
-    //// TODO: 17/03/2016 check casscade required on all entities.
     @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name="plant_tag",
             joinColumns=@JoinColumn(name="plant_id"),

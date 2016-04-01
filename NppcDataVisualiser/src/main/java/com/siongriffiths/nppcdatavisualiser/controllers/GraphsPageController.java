@@ -136,7 +136,7 @@ public class GraphsPageController extends DefaultController{
     private Set<String> getDayAttributeListForPlant(Plant plant){
         Set<String> attribKeySet = new HashSet<>();
         for(PlantDay day : plant.getPlantDays()){
-            attribKeySet.addAll(day.getPlantDayMetaData().getDataAttributes().keySet());
+            attribKeySet.addAll(day.getMetadata().getDataAttributes().keySet());
         }
         return attribKeySet;
     }

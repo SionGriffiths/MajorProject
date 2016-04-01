@@ -43,21 +43,32 @@ public class InitialisationController extends DefaultController {
     @Autowired
     private ExperimentManager experimentManager;
 
-
-    //http://stackoverflow.com/questions/12576156/reading-a-list-from-properties-file-and-load-with-spring-annotation-value
+    /**
+     *  The list of experiment codes available to the system, defined in the application.properties file.
+     *  Adapted from http://stackoverflow.com/questions/12576156/reading-a-list-from-properties-file-and-load-with-spring-annotation-value
+     */
     @Value("#{'${available.experiment.codes}'.split(',')}")
     private List<String> experimentCodes;
 
-    private List<Experiment> experimentList;
-
+    /**
+     * Shows the admin page
+     * @param model the page model object
+     * @return view path to the default admin view
+     */
     @RequestMapping
     public String showInit(Model model){
         populateExperimentCodesIntoModel(model);
         return INIT_PAGE_PATH;
     }
 
+    /**
+     * Initialises an experiment. Creates, populates and persists model objects for the experiment
+     * @param experimentCode the code for the experiment to initialise
+     * @param model the page model object
+     * @return view path to the default admin view
+     */
     @RequestMapping("/createPlants/{experimentCode}")
-    public String createPlants(@PathVariable("experimentCode") String experimentCode, Model model) {
+    public String initialiseExperiment(@PathVariable("experimentCode") String experimentCode, Model model) {
         logger.info("Initialise experiment with code " + experimentCode);
         populateExperimentCodesIntoModel(model);
         if(Boolean.FALSE.equals(initialisationService.getInitilisedStatus())) {
@@ -66,13 +77,25 @@ public class InitialisationController extends DefaultController {
         return INIT_PAGE_PATH;
     }
 
-    @RequestMapping("/deletePlants")
+    /**
+     * Deletes the model objects associated with an experiment
+     * @param experimentCode the code for the experiment
+     * @param model the page model object
+     * @return view path to the default admin view
+     */
+    @RequestMapping("/deletePlants/{experimentCode}")
     public String deletePlants(@PathVariable("experimentCode") String experimentCode, Model model){
         populateExperimentCodesIntoModel(model);
         initialisationService.deleteExperiementData();
         return INIT_PAGE_PATH;
     }
 
+    /**
+     * Imports data from file to enrich experiment. Uses a convention over configuration approach to file locations
+     * @param experimentCode the code for the experiment
+     * @param model the page model object
+     * @return view path to the default admin view
+     */
     @RequestMapping("/dataImport/{experimentCode}")
     public String importMetaData(@PathVariable("experimentCode") String experimentCode, Model model){
         initialisationService.initData(experimentCode);
@@ -80,6 +103,12 @@ public class InitialisationController extends DefaultController {
         return INIT_PAGE_PATH;
     }
 
+    /**
+     * Deletes the enrichment data associated with an experiment
+     * @param experimentCode the code for the experiment
+     * @param model the page model object
+     * @return view path to the default admin view
+     */
     @RequestMapping("/resetData/{experimentCode}")
     public String resetData(@PathVariable("experimentCode") String experimentCode, Model model){
         populateExperimentCodesIntoModel(model);
@@ -87,6 +116,10 @@ public class InitialisationController extends DefaultController {
         return INIT_PAGE_PATH;
     }
 
+    /**
+     * Populates the experiment codes available to the system into the page model object
+     * @param model the page model object
+     */
     private void populateExperimentCodesIntoModel(Model model){
         model.addAttribute("experimentCodes",experimentCodes);
     }

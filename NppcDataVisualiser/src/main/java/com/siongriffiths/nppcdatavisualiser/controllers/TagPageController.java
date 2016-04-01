@@ -2,6 +2,8 @@ package com.siongriffiths.nppcdatavisualiser.controllers;
 
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
+import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
+import com.siongriffiths.nppcdatavisualiser.experiment.service.ExperimentManager;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
@@ -13,12 +15,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
  * Created on 13/03/2016.
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
+ *
+ *
  */
 @Controller
 @RequestMapping("/tags")
@@ -35,10 +40,16 @@ public class TagPageController extends DefaultController{
     private PlantDayManager plantDayManager;
     @Autowired
     private PlantManager plantManager;
+    @Autowired
+    private ExperimentManager experimentManager;
+
 
     @RequestMapping
-    public String showTags(Model model){
-        model.addAttribute("tags", tagManager.getAllTags());
+    public String showTags(Model model, HttpSession session){
+//        model.addAttribute("tags", tagManager.getAllTags());
+        String experimentCode = (String)session.getAttribute("experimentCode");
+        Experiment experiment = experimentManager.getExperimentByCode(experimentCode);
+        model.addAttribute("tags", tagManager.getByExperimentForPlants(experiment));
 
         return TAGS_SHOW_PATH;
     }

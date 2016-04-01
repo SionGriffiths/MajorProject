@@ -85,7 +85,7 @@ public class PlantDayManagerImpl implements PlantDayManager {
 
     @Override
     public void addAttributeToDay(PlantDay day, String key, String value) {
-        day.getPlantDayMetaData().addDataAttribute(key, value);
+        day.getMetadata().addDataAttribute(key, value);
         savePlantDay(day);
     }
 
