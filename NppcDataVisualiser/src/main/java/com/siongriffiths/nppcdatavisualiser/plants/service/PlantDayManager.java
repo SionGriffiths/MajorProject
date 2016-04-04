@@ -4,6 +4,7 @@ import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
@@ -79,5 +80,5 @@ public interface PlantDayManager {
      */
     void addAttributeToDay(PlantDay day,String key, String value);
 
-    List<PlantDay> getPlantDaysByPlant(Plant targetPlant, Pageable pageable);
+    Page<PlantDay> getPlantDaysByPlant(Plant targetPlant, Pageable pageable);
 }

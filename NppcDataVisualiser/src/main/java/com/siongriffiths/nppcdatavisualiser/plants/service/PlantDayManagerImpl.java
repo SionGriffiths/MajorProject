@@ -6,6 +6,7 @@ import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
 import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantDayDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -92,7 +93,7 @@ public class PlantDayManagerImpl implements PlantDayManager {
     }
 
     @Override
-    public List<PlantDay> getPlantDaysByPlant(Plant plant, Pageable pageable) {
+    public Page<PlantDay> getPlantDaysByPlant(Plant plant, Pageable pageable) {
         return plantDayDao.findByPlant(plant, pageable);
     }
 

@@ -3,6 +3,7 @@ package com.siongriffiths.nppcdatavisualiser.plants.daos;
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,5 +29,5 @@ public interface PlantDayDao extends JpaRepository<PlantDay, Long> {
 
     PlantDay findByPlantAndDate(Plant plant, Date date);
 
-    List<PlantDay> findByPlant(Plant plant, Pageable pageable);
+    Page<PlantDay> findByPlant(Plant plant, Pageable pageable);
 }

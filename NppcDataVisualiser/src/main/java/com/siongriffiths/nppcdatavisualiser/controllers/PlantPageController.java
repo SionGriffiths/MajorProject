@@ -29,7 +29,8 @@ import java.util.List;
  * @author Siôn Griffiths / sig2@aber.ac.uk
  *
  * PlantPageController is an MVC controller that processes all requests to the root url /plants
- * PlantPageController provides all views associated with the plants in the system including individual detail pages
+ * PlantPageController provides all views associated with the plants in the system including individual
+ * plant detail pages
  */
 @Controller
 @RequestMapping("/plants")
@@ -60,12 +61,6 @@ public class PlantPageController extends DefaultController {
     private PlantManager plantManager;
 
     /**
-     * PlantImageManager, a service class providing access to business logic and persistence for PlantImage objects
-     */
-    @Autowired
-    private PlantImageManager plantImageManager;
-
-    /**
      * PlantDayManager, a service class providing access to business logic and persistence for PlantDay objects
      */
     @Autowired
@@ -88,18 +83,17 @@ public class PlantPageController extends DefaultController {
         return showPlants(model,session, DEFAULT_PAGINATION_START_PAGE, DEFAULT_PAGINATION_RESULTS);
     }
 
-    @RequestMapping(params = {"page", "size" }, method = RequestMethod.GET)
-    public String showForPageAndSize(@RequestParam( "page" ) int page, @RequestParam( "size" ) int size,
-                                     Model model, HttpSession session){
-        return showPlants(model,session,page,size );
-    }
-
     @RequestMapping(params = {"page"}, method = RequestMethod.GET)
     public String showForPage(@RequestParam( "page" ) int page,
                               Model model, HttpSession session){
         return showPlants(model,session,page,DEFAULT_PAGINATION_RESULTS );
     }
 
+    @RequestMapping(params = {"page", "size" }, method = RequestMethod.GET)
+    public String showForPageAndSize(@RequestParam( "page" ) int page, @RequestParam( "size" ) int size,
+                                     Model model, HttpSession session){
+        return showPlants(model,session,page,size );
+    }
 
     private String showPlants(Model model, HttpSession session, int pageNum, int numPerPage){
         String experimentCode = (String)session.getAttribute("experimentCode");
@@ -130,36 +124,79 @@ public class PlantPageController extends DefaultController {
         return PLANTS_SHOW_PATH;
     }
 
+    @RequestMapping(value = "{plantBarCode}",method = RequestMethod.GET)
+    public String showPlantDetailForPage(Model model, @PathVariable("plantBarCode") String barCode){
+
+        return showPlantDetail(model,barCode,DEFAULT_PAGINATION_START_PAGE, DEFAULT_PAGINATION_RESULTS);
+
+    }
+
+    @RequestMapping(value = "{plantBarCode}", params = {"page"}, method = RequestMethod.GET)
+    public String showPlantDetailForPage(Model model, @PathVariable("plantBarCode") String barCode,
+                                         @RequestParam( "page" ) int page){
+
+        return showPlantDetail(model,barCode,page,DEFAULT_PAGINATION_RESULTS);
+
+    }
+
+    @RequestMapping(value = "{plantBarCode}", params = {"page", "size"}, method = RequestMethod.GET)
+    public String showPlantDetailForPageAndSize(Model model, @PathVariable("plantBarCode") String barCode,
+                                                @RequestParam( "page" ) int page,
+                                                @RequestParam( "size" ) int size){
+
+        return showPlantDetail(model,barCode,page,size);
+
+    }
+
     /**
      * Shows a page detailing an individual plant and associated time serried data and images
      * @param model the page model object
      * @param barCode the barcode identifying a plant
      * @return view path for the plants detail page
      */
-    @RequestMapping(value = "{plantBarCode}",method = RequestMethod.GET)
-    public String showPlantDetail(Model model, @PathVariable("plantBarCode") String barCode){
+
+    private String showPlantDetail(Model model,  String barCode, int pageNum, int numPerPage){
         logger.info(barCode);
 
         String viewPath;
-
-        model.addAttribute("plantTagInfo" ,new PlantDayTagInfo());
-        model.addAttribute("plantDayAttributeInfo", new PlantDayAttributeInfo());
-
         Plant targetPlant  = plantManager.getPlantByBarcode(barCode);
-        List<PlantDay> plantDays = plantDayManager.getPlantDaysByPlant(targetPlant, new PageRequest(0,10));
+
 
         if(targetPlant == null){
             model.addAttribute("barcode", barCode);
             viewPath = PLANT_NOT_FOUND_PATH;
         }else {
+
+            if(pageNum < 1){
+                pageNum = 1;
+            }
+            if(numPerPage < 1){
+                numPerPage = 1;
+            }
+
+            pageNum -= 1; //pages are zero indexed in spring, front end pages should be indexed from 1
+
+
+            model.addAttribute("plantTagInfo" ,new PlantDayTagInfo());
+            model.addAttribute("plantDayAttributeInfo", new PlantDayAttributeInfo());
+
+            Page<PlantDay> page = plantDayManager.getPlantDaysByPlant(targetPlant, new PageRequest(pageNum,numPerPage));
+            int currentPageIndex = page.getNumber()+1;
+
+            model.addAttribute("currentPage", currentPageIndex);
+            model.addAttribute("currentSize", numPerPage);
+            model.addAttribute("nextPage", currentPageIndex+1);
+            model.addAttribute("prevPage", currentPageIndex-1);
+            model.addAttribute("lastPage", page.getTotalPages());
+            model.addAttribute("totalElements", page.getTotalElements());
+
             model.addAttribute("plant", targetPlant);
-            model.addAttribute("dayList", plantDays);
+            model.addAttribute("dayList", page);
             viewPath = PLANT_DETAIL_PATH;
         }
 
         return viewPath;
     }
-
 
     /**
      * Adds a key value attribute pair to a PlantDay and returns the page fragment containing the updated attributes
@@ -215,19 +252,6 @@ public class PlantPageController extends DefaultController {
         plantManager.savePlant(plant);
         model.addAttribute("plant", plant);
         return PLANT_TAG_FRAGMENT;
-    }
-
-
-    private int getPageSizeFromSession(HttpSession session){
-
-        int pageSize = DEFAULT_PAGINATION_RESULTS;
-
-        if(session.getAttribute("pageSize") != null){
-            pageSize = (Integer)session.getAttribute("pageSize");
-        }
-
-        return pageSize;
-
     }
 
     //// TODO: 01/04/2016 Attributes for plant pls?
