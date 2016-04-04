@@ -1,7 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
 
-import com.siongriffiths.nppcdatavisualiser.constants.NppcVisConstants;
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
@@ -14,16 +13,13 @@ import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantImageManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 
-import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -51,6 +47,9 @@ public class PlantPageController extends DefaultController {
     private static final String PLANT_ATTRIB_FRAGMENT =  "plants/plantFragments :: plantAttribFragment";
     private static final String PLANT_TAG_FRAGMENT =  "plants/plantFragments :: plantTagFragment";
 
+    /**
+     * Pagination constants
+     */
     private static final int DEFAULT_PAGINATION_START_PAGE = 1;
     private static final int DEFAULT_PAGINATION_RESULTS = 10;
 
@@ -112,22 +111,22 @@ public class PlantPageController extends DefaultController {
             numPerPage = 1;
         }
 
-        pageNum -= 1; //pages are zero indexed in spring, front end should be from 1
+        pageNum -= 1; //pages are zero indexed in spring, front end pages should be indexed from 1
 
 
         Page<Plant> page = plantManager.findPlantsByExperimentCode(experimentCode, new PageRequest(pageNum,numPerPage));
 
         int currentPageIndex = page.getNumber()+1;
 
-        logger.info("There's " + page.getTotalPages() + " pages available");
         model.addAttribute("currentPage", currentPageIndex);
         model.addAttribute("currentSize", numPerPage);
         model.addAttribute("nextPage", currentPageIndex+1);
         model.addAttribute("prevPage", currentPageIndex-1);
         model.addAttribute("lastPage", page.getTotalPages());
-
+        model.addAttribute("totalElements", page.getTotalElements());
         model.addAttribute("plantList", page );
         model.addAttribute("plantTagInfo" ,new PlantTagInfo());
+
         return PLANTS_SHOW_PATH;
     }
 
@@ -216,6 +215,19 @@ public class PlantPageController extends DefaultController {
         plantManager.savePlant(plant);
         model.addAttribute("plant", plant);
         return PLANT_TAG_FRAGMENT;
+    }
+
+
+    private int getPageSizeFromSession(HttpSession session){
+
+        int pageSize = DEFAULT_PAGINATION_RESULTS;
+
+        if(session.getAttribute("pageSize") != null){
+            pageSize = (Integer)session.getAttribute("pageSize");
+        }
+
+        return pageSize;
+
     }
 
     //// TODO: 01/04/2016 Attributes for plant pls?

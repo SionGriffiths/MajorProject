@@ -7,13 +7,25 @@
 
 <body>
 
-<div th:fragment="paginationFragment">
+<div th:fragment="paginationFragment" class="row">
 
     <p th:text="'current page is ' + ${currentPage}" />
 
-    <a th:href="'?page='+${currentPage-1}+'&amp;size='+${currentSize}" th:if="${currentPage > 1}">Previous</a>
-    <a th:href="'?page='+${currentPage+1}+'&amp;size='+${currentSize}" th:if="${lastPage > currentPage }">Next</a>
+    <ul class="pagination_pages list-inline">
+        <li><a th:href="'?page='+${currentPage-1}+'&amp;size='+${currentSize}" th:if="${currentPage > 1}">Previous</a></li>
+        <li><a th:href="'?page=1'+'&amp;size='+${currentSize}">First</a></li>
+        <li><a th:href="'?page='+${lastPage}+'&amp;size='+${currentSize}">Last</a></li>
+        <li><a th:href="'?page='+${currentPage+1}+'&amp;size='+${currentSize}" th:if="${lastPage > currentPage }">Next</a></li>
+    </ul>
 
+    <ul class="pagination_sizes list-inline">
+        <li><a th:href="'?page=1&amp;size=10'">10</a></li>
+        <li><a th:href="'?page=1&amp;size=25'">25</a></li>
+        <li><a th:href="'?page=1&amp;size=50'">50</a></li>
+        <li><a th:href="'?page=1&amp;size=100'">100</a></li>
+        <li><a th:href="'?page=1&amp;size='+${totalElements}">All</a></li>
+
+    </ul>
 
 
 </div>
