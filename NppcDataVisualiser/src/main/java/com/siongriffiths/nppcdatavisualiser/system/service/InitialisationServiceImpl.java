@@ -4,6 +4,7 @@ import com.siongriffiths.nppcdatavisualiser.data.service.ExperiemntDataImportSer
 import com.siongriffiths.nppcdatavisualiser.data.service.MetaDataManager;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
 import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
+import com.siongriffiths.nppcdatavisualiser.experiment.ExperimentStatus;
 import com.siongriffiths.nppcdatavisualiser.experiment.service.ExperimentManager;
 import com.siongriffiths.nppcdatavisualiser.imageutils.PlantLoader;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
@@ -47,31 +48,23 @@ public class InitialisationServiceImpl implements InitialisationService {
 
     public void initExperiment(String experimentCode){
         Experiment experiment = experimentManager.getOrCreateNewExperiment(experimentCode) ;
+        experiment.setStatus(ExperimentStatus.INITIALISING);
         plantLoader.initPlantImages(experiment);
-//        setSystemInitialisedFlag(Boolean.TRUE); //// TODO: 17/03/2016 persist experiemnts so can have admin flags on plants and data, this will always be false at first run otherwise
-    }
+   }
 
     public void initData(String experimentCode){
         experiemntDataImportService.parseAnnotatedExperiemntDataCSVFile(dataRoot + experimentCode+"/annotated.csv");
     }
 
     @Override
-    public void resetData() {
-        metaDataManager.resetAll();
+    public void resetData(String experimentCode) {
+        Experiment experiment = experimentManager.getOrCreateNewExperiment(experimentCode) ;
+        metaDataManager.resetByExperiment(experiment);
 //        tagManager.resetAll();
+        // TODO: 04/04/2016 Reset tags!
     }
 
-    @Override
-    public Boolean getInitilisedStatus() {
-        return systemInitialisedFlag;
-    }
-
-    public void setSystemInitialisedFlag(Boolean systemInitialisedFlag) {
-        this.systemInitialisedFlag = systemInitialisedFlag;
-    }
-
-    // TODO: 01/04/2016 use experiment code for all things in this damn class
-    public void deleteExperiementData(){
+    public void deleteExperiementData(String experimentCode){
         plantManager.deleteAllPlants();
     }
 }

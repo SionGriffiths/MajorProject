@@ -125,7 +125,7 @@ public class ExperiemntDataImportServiceImpl implements ExperiemntDataImportServ
     private void enrichPlantAttribs(List<Integer> plantAttribIndex, String[] header, String[] line, Plant plant){
         for(Integer i : plantAttribIndex){
             if(line[i] != null || !line[i].equals("")){
-                Metadata data = plant.getPlantMetaData();
+                Metadata data = plant.getMetadata();
                 data.addDataAttribute(header[i], line[i]);
                 plantManager.savePlant(plant);
             }

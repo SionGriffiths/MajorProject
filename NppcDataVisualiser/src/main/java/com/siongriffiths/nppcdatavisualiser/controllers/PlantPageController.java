@@ -10,7 +10,6 @@ import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantDayAttrib
 import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantDayTagInfo;
 import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantTagInfo;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
-import com.siongriffiths.nppcdatavisualiser.plants.service.PlantImageManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * Created on 28/02/2016.

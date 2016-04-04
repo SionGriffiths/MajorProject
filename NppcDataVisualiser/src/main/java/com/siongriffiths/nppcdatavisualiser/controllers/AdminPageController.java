@@ -1,6 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.controllers;
 
-import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
+import com.siongriffiths.nppcdatavisualiser.experiment.ExperimentStatus;
 import com.siongriffiths.nppcdatavisualiser.experiment.service.ExperimentManager;
 import com.siongriffiths.nppcdatavisualiser.system.service.InitialisationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created on 27/02/2016.
@@ -23,7 +25,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/admin")
-public class InitialisationController extends DefaultController {
+public class AdminPageController extends DefaultController {
 
     /**
      * View paths used by this controller
@@ -50,6 +52,7 @@ public class InitialisationController extends DefaultController {
     @Value("#{'${available.experiment.codes}'.split(',')}")
     private List<String> experimentCodes;
 
+
     /**
      * Shows the admin page
      * @param model the page model object
@@ -70,10 +73,10 @@ public class InitialisationController extends DefaultController {
     @RequestMapping("/createPlants/{experimentCode}")
     public String initialiseExperiment(@PathVariable("experimentCode") String experimentCode, Model model) {
         logger.info("Initialise experiment with code " + experimentCode);
+
         populateExperimentCodesIntoModel(model);
-        if(Boolean.FALSE.equals(initialisationService.getInitilisedStatus())) {
-            initialisationService.initExperiment(experimentCode);
-        }
+        initialisationService.initExperiment(experimentCode);
+
         return INIT_PAGE_PATH;
     }
 
@@ -86,7 +89,7 @@ public class InitialisationController extends DefaultController {
     @RequestMapping("/deletePlants/{experimentCode}")
     public String deletePlants(@PathVariable("experimentCode") String experimentCode, Model model){
         populateExperimentCodesIntoModel(model);
-        initialisationService.deleteExperiementData();
+        initialisationService.deleteExperiementData(experimentCode);
         return INIT_PAGE_PATH;
     }
 
@@ -112,7 +115,7 @@ public class InitialisationController extends DefaultController {
     @RequestMapping("/resetData/{experimentCode}")
     public String resetData(@PathVariable("experimentCode") String experimentCode, Model model){
         populateExperimentCodesIntoModel(model);
-        initialisationService.resetData();
+        initialisationService.resetData(experimentCode);
         return INIT_PAGE_PATH;
     }
 
@@ -121,6 +124,10 @@ public class InitialisationController extends DefaultController {
      * @param model the page model object
      */
     private void populateExperimentCodesIntoModel(Model model){
-        model.addAttribute("experimentCodes",experimentCodes);
+        Map<String, ExperimentStatus> statusMap = new HashMap<>();
+        for(String code : experimentCodes){
+            statusMap.put(code,experimentManager.getExperimentStatus(code));
+        }
+        model.addAttribute("statusMap" , statusMap);
     }
 }

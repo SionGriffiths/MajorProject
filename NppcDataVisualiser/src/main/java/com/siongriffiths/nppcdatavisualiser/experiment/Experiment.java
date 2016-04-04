@@ -19,9 +19,9 @@ public class Experiment {
 
     private String experimentCode;
 
-    private Boolean initialised;
-
     private List<Plant> plants;
+
+    private ExperimentStatus status;
 
     public Experiment(){
         plants = new ArrayList<>();
@@ -51,14 +51,6 @@ public class Experiment {
         this.experimentCode = experimentCode;
     }
 
-    public Boolean getInitialised() {
-        return initialised;
-    }
-
-    public void setInitialised(Boolean initialised) {
-        this.initialised = initialised;
-    }
-
     public void addPlant(Plant plant){
         plants.add(plant);
     }
@@ -71,4 +63,14 @@ public class Experiment {
     public void setPlants(List<Plant> plants) {
         this.plants = plants;
     }
+
+    @Enumerated(EnumType.STRING)
+    public ExperimentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ExperimentStatus status) {
+        this.status = status;
+    }
+
 }

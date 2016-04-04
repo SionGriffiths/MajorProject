@@ -71,7 +71,7 @@
 </div>
 
 <div th:fragment="plantAttribFragment">
-    <div th:if="${plant.getPlantMetaData() != null}">
+    <div th:if="${plant.getMetadata() != null}">
         <table class="table">
             <thead>
             <tr>
@@ -80,7 +80,7 @@
             </tr>
             </thead>
             <tbody>
-            <th:block th:each="entry: ${plant.getPlantMetaData().getDataAttributes()}">
+            <th:block th:each="entry: ${plant.getMetadata().getDataAttributes()}">
                 <tr>
                     <td th:text="${entry.key}"></td>
                     <td th:text="${entry.value}"></td>

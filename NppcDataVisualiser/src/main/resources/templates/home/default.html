@@ -10,14 +10,22 @@
 <div layout:fragment="content">
 
 
+    <th:block th:if="${experimentList.size() > 0}">
     <h4>Select from available experiments:</h4>
-    <!--todo if 0 experiments show a message-->
+
     <th:block th:each="entry: ${experimentList}">
 
         <div class="experiment_row">
             <a th:href="'/setSessionExperiment/'+${entry.getExperimentCode()}" th:text="${entry.getExperimentCode()}"></a>
         </div>
     </th:block>
+    </th:block>
+
+    <div th:if="${experimentList.size() == 0}">
+
+        <p> Experiment list empty, please contact the administrator</p>
+
+    </div>
 
 </div>
 </body>

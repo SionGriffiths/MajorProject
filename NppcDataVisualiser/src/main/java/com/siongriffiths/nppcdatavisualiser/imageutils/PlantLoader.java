@@ -1,6 +1,7 @@
 package com.siongriffiths.nppcdatavisualiser.imageutils;
 
 import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
+import com.siongriffiths.nppcdatavisualiser.experiment.ExperimentStatus;
 import com.siongriffiths.nppcdatavisualiser.experiment.service.ExperimentManager;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
@@ -108,7 +109,7 @@ public class PlantLoader {
                 logger.info("created plant " + plant.getBarCode());
                 experiment.addPlant(plant);
             }
-            experiment.setInitialised(true);
+            experiment.setStatus(ExperimentStatus.INITIALISED);
             experimentManager.saveExperiment(experiment);
         }
     }

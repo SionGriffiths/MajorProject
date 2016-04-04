@@ -40,3 +40,7 @@ a.disabled{
     cursor: default;
     color: #8c8c8c;
 }
+
+.admin_status_text{
+    margin-left: 15px;
+}

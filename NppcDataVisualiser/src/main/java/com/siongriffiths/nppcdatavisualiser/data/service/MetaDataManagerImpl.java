@@ -2,11 +2,13 @@ package com.siongriffiths.nppcdatavisualiser.data.service;
 
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 import com.siongriffiths.nppcdatavisualiser.data.doas.MetaDataDao;
+import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
 import org.hibernate.metamodel.domain.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.ManyToMany;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,6 +30,13 @@ public class MetaDataManagerImpl implements MetaDataManager {
     }
 
     @Override
+    public List<Metadata> findByExperiment(Experiment experiment) {
+        List<Metadata> dataList = metaDataDao.findByExperimentForPlant(experiment);
+        dataList.addAll(metaDataDao.findByExperimentForPlantDay(experiment));
+        return dataList;
+    }
+
+    @Override
     public void resetAll() {
 
         for(Metadata data : findAll()){
@@ -36,6 +45,15 @@ public class MetaDataManagerImpl implements MetaDataManager {
         }
 
     }
+
+    @Override
+    public void resetByExperiment(Experiment experiment) {
+        for(Metadata data : findByExperiment(experiment)){
+            data.setDataAttributes(new HashMap<String, String>());
+            metaDataDao.save(data);
+        }
+    }
+
 
     @Override
     public void saveMetaData(Metadata data) {

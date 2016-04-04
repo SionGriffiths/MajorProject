@@ -16,6 +16,7 @@ public interface TagManager {
     TagData getTagByContent(String content);
     List<TagData> getAllTags();
     Set<TagData> getByExperimentForPlants(Experiment experiment);
+    Set<TagData> getByExperimentForPlantDays(Experiment experiment);
     TagData createOrGetTag(String content);
     void saveTagData(TagData tagData);
     void resetAll();

@@ -21,10 +21,10 @@ public interface TagDataDao extends JpaRepository<TagData,Long>{
 
     TagData findByTagContent(String content);
 
-
-
-
     @Query("select t from Plant p join p.tags t where p.experiment = :experiment ")
     Set<TagData> findByExperimentForPlant(@Param("experiment")Experiment experiment);
+
+    @Query("select t from PlantDay pd join pd.tags t where pd.plant.experiment = :experiment ")
+    Set<TagData> findByExperimentForPlantDay(@Param("experiment")Experiment experiment);
 
 }

@@ -1,6 +1,7 @@
 package com.siongriffiths.nppcdatavisualiser.experiment.service;
 
 import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
+import com.siongriffiths.nppcdatavisualiser.experiment.ExperimentStatus;
 import com.siongriffiths.nppcdatavisualiser.experiment.daos.ExperimentDao;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class ExperimentManagerImpl implements ExperimentManager {
 
     @Override
     public List<Experiment> getInitialisedExperiments() {
-      return experimentDao.findByInitialised(true);
+      return experimentDao.findByStatus(ExperimentStatus.INITIALISED);
     }
 
 
@@ -36,7 +37,9 @@ public class ExperimentManagerImpl implements ExperimentManager {
 
     @Override
     public Experiment createNewExperiment(String experimentCode) {
-        return new Experiment(experimentCode);
+        Experiment experiment = new Experiment(experimentCode);
+        experiment.setStatus(ExperimentStatus.NOT_INITIALISED);
+        return experiment;
     }
 
     @Override
@@ -47,6 +50,18 @@ public class ExperimentManagerImpl implements ExperimentManager {
         } else {
             return experiment;
         }
+    }
+
+    @Override
+    public ExperimentStatus getExperimentStatus(String experimentCode) {
+        ExperimentStatus status = ExperimentStatus.NOT_INITIALISED;
+        Experiment experiment = getExperimentByCode(experimentCode);
+
+        if(experiment != null){
+            status = experiment.getStatus();
+        }
+
+        return status;
     }
 
     @Override

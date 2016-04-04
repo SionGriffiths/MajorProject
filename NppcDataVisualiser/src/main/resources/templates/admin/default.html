@@ -9,20 +9,23 @@
 <h1 layout:fragment="header">Init Page</h1>
 <div layout:fragment="content">
 
-    <p>Do init things</p> <a th:href="@{/admin/logout}" class="btn btn-primary pull-right">Logout</a>
+    <a th:href="@{/admin/logout}" class="btn btn-primary pull-right">Logout</a>
 
-    <th:block th:each="entry: ${experimentCodes}">
-        <div class="admin_experiemnt_row">
-       <p th:text="'Experiement : ' + ${entry}"></p>
-        <a th:href="@{'/admin/createPlants/'+${entry}}" class="btn btn-default confirm-required"
-           data-confirm-message="Plants must be deleted first if previously initialised">Init plants</a>
-        <a th:href="@{'/admin/deletePlants/'+${entry}}" class="btn btn-default confirm-required"
-           data-confirm-message="This will delete all plants, continue?">Delete plants</a>
-        <a th:href="@{'/admin/dataImport/'+${entry}}" class="btn btn-default">Init data</a>
-        <a th:href="@{'/admin/resetData/'+${entry}}" class="btn btn-default confirm-required"
-           data-confirm-message="This will delete all meta data, continue?">Delete data</a>
+    <div class="row" th:each="entry: ${statusMap}">
+        <div class="admin_experiemnt_row row">
+            <span class="col-xs-3" th:text="'Experiement : ' + ${entry.key}"></span>
+            <span class="col-xs-3" th:text="'Status : ' + ${entry.value}"></span>
+
+                <a th:href="@{'/admin/createPlants/'+${entry.key}}" class="btn btn-default confirm-required"
+                   data-confirm-message="Are you sure you want to initialise this experiment?">Initialise</a>
+                <a th:href="@{'/admin/deletePlants/'+${entry.key}}" class="btn btn-default confirm-required"
+                   data-confirm-message="This will delete all plants in the experiment, continue?">Delete plants</a>
+                <a th:href="@{'/admin/dataImport/'+${entry.key}}" class="btn btn-default">Init data</a>
+                <a th:href="@{'/admin/resetData/'+${entry.key}}" class="btn btn-default confirm-required"
+                   data-confirm-message="This will delete all meta data in the experiment, continue?">Delete data</a>
+
         </div>
-    </th:block>
+    </div>
 
 </div>
 </body>

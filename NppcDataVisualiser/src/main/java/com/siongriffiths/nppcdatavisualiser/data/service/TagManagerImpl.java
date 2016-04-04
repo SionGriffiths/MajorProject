@@ -49,6 +49,11 @@ public class TagManagerImpl implements TagManager {
     }
 
     @Override
+    public Set<TagData> getByExperimentForPlantDays(Experiment experiment) {
+        return tagDataDao.findByExperimentForPlantDay(experiment);
+    }
+
+    @Override
     public TagData createOrGetTag(String content) {
 
         TagData queryTag = tagDataDao.findByTagContent(content);

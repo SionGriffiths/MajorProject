@@ -55,8 +55,8 @@ public class GraphingManagerImpl implements GraphingManager {
         List <String> attrib2List = new ArrayList<>();
 
         for(Plant plant : plantManager.getAllPlants()){
-            String xValue = plant.getPlantMetaData().getDataAttributes().get(attribX);
-            String yValue = plant.getPlantMetaData().getDataAttributes().get(attribY);
+            String xValue = plant.getMetadata().getDataAttributes().get(attribX);
+            String yValue = plant.getMetadata().getDataAttributes().get(attribY);
 
             if(xValue != null){
                 attrib1List.add(xValue);

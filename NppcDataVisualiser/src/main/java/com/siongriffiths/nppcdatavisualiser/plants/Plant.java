@@ -21,7 +21,7 @@ import java.util.Set;
 public class Plant {
 
     private long id;
-    private Metadata plantMetaData;
+    private Metadata metadata;
     private List<PlantDay> plantDays;
     private Set<TagData> tags;
     private String barCode;
@@ -32,7 +32,7 @@ public class Plant {
 
     public Plant(String barCode){
         this.barCode = barCode;
-        plantMetaData = new Metadata();
+        metadata = new Metadata();
         plantDays = new ArrayList<>();
         tags = new HashSet<>();
     }
@@ -53,12 +53,12 @@ public class Plant {
 
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name="plant_meta_data_id")
-    public Metadata getPlantMetaData() {
-        return plantMetaData;
+    public Metadata getMetadata() {
+        return metadata;
     }
 
-    public void setPlantMetaData(Metadata plantMetaData) {
-        this.plantMetaData = plantMetaData;
+    public void setMetadata(Metadata metadata) {
+        this.metadata = metadata;
     }
 
     @OneToMany(mappedBy = "plant",cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)

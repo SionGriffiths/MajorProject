@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created on 13/03/2016.
@@ -46,11 +47,11 @@ public class TagPageController extends DefaultController{
 
     @RequestMapping
     public String showTags(Model model, HttpSession session){
-//        model.addAttribute("tags", tagManager.getAllTags());
         String experimentCode = (String)session.getAttribute("experimentCode");
         Experiment experiment = experimentManager.getExperimentByCode(experimentCode);
-        model.addAttribute("tags", tagManager.getByExperimentForPlants(experiment));
-
+        Set<TagData> tags = tagManager.getByExperimentForPlants(experiment);
+        tags.addAll(tagManager.getByExperimentForPlantDays(experiment));
+        model.addAttribute("tags", tags);
         return TAGS_SHOW_PATH;
     }
 

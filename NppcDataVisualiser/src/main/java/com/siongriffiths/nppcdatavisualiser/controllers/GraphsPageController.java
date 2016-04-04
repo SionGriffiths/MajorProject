@@ -149,7 +149,7 @@ public class GraphsPageController extends DefaultController{
     private Set<String> getAttributeListForAllPlants(List<Plant> plantList){
         Set<String> attribKeySet = new HashSet<>();
         for(Plant plant : plantList){
-            attribKeySet.addAll(plant.getPlantMetaData().getDataAttributes().keySet());
+            attribKeySet.addAll(plant.getMetadata().getDataAttributes().keySet());
         }
         return attribKeySet;
     }

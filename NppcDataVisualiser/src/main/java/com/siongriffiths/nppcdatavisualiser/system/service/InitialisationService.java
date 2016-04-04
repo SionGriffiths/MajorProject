@@ -9,7 +9,6 @@ public interface InitialisationService {
 
     void initExperiment(String experimentCode);
     void initData(String experiemntCode);
-    void resetData();
-    Boolean getInitilisedStatus();
-    void deleteExperiementData();
+    void resetData(String experiemntCode);
+    void deleteExperiementData(String experiemntCode);
 }
