@@ -1,26 +1,13 @@
 package com.siongriffiths.nppcdatavisualiser.data.utils;
 
 import com.opencsv.CSVReader;
-import com.siongriffiths.nppcdatavisualiser.data.Metadata;
-import com.siongriffiths.nppcdatavisualiser.data.TagData;
-import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
-import com.siongriffiths.nppcdatavisualiser.plants.Plant;
-import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
-import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
-import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

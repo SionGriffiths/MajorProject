@@ -34,3 +34,9 @@
     width: 320px;
     margin: 0 auto;
 }
+
+a.disabled{
+    pointer-events: none;
+    cursor: default;
+    color: #8c8c8c;
+}
