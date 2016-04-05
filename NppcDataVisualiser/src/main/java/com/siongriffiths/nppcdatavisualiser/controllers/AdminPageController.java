@@ -21,7 +21,7 @@ import java.util.Map;
  *
  * InitialisationController is an MVC controller that processes all requests to the '/admin' url.
  * InitialisationController provides access to administrative tasks such as loading plants from the data store
- * and handling experiemnt data import
+ * and handling experiment data import
  */
 @Controller
 @RequestMapping("/admin")

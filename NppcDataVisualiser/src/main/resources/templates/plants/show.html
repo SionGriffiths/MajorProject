@@ -12,7 +12,7 @@
 
   <div th:replace="plants/plantFragments :: paginationFragment"></div>
 
-    <p th:text="'There are ' + ${plantList.getTotalElements()} + ' plants in this experiemnt :'" ></p>
+    <p th:text="'There are ' + ${plantList.getTotalElements()} + ' plants in this experiment :'" ></p>
     <div th:each="plant,status : ${plantList}" class="row plant_row">
         <div class="col-xs-6">
 

@@ -25,7 +25,7 @@ import java.util.List;
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
 @Service("experimentDataImportService")
-public class ExperiemntDataImportServiceImpl implements ExperiemntDataImportService {
+public class ExperimentDataImportServiceImpl implements ExperimentDataImportService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -52,7 +52,7 @@ public class ExperiemntDataImportServiceImpl implements ExperiemntDataImportServ
 
 
 
-    public void parseAnnotatedExperiemntDataCSVFile(String filePath){
+    public void parseAnnotatedExperimentDataCSVFile(String filePath){
         List<String[]> parsedFile = experimentCSVReader.doParse(filePath);
 
         if(parsedFile != null) {

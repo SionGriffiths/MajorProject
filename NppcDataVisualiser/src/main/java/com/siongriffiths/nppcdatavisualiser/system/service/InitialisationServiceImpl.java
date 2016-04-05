@@ -1,6 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.system.service;
 
-import com.siongriffiths.nppcdatavisualiser.data.service.ExperiemntDataImportService;
+import com.siongriffiths.nppcdatavisualiser.data.service.ExperimentDataImportService;
 import com.siongriffiths.nppcdatavisualiser.data.service.MetaDataManager;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
 import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
@@ -29,7 +29,7 @@ public class InitialisationServiceImpl implements InitialisationService {
     @Autowired
     private PlantLoader plantLoader;
     @Autowired
-    private ExperiemntDataImportService experiemntDataImportService;
+    private ExperimentDataImportService experimentDataImportService;
     @Autowired
     private MetaDataManager metaDataManager;
     @Autowired
@@ -41,7 +41,7 @@ public class InitialisationServiceImpl implements InitialisationService {
 
     /**
      * Property value found in default property file.
-     * Contains the root directory for experiemnt data files
+     * Contains the root directory for experiment data files
      */
     @Value("${experiment.data.root.dir}")
     private String dataRoot;
@@ -53,7 +53,7 @@ public class InitialisationServiceImpl implements InitialisationService {
    }
 
     public void initData(String experimentCode){
-        experiemntDataImportService.parseAnnotatedExperiemntDataCSVFile(dataRoot + experimentCode+"/annotated.csv");
+        experimentDataImportService.parseAnnotatedExperimentDataCSVFile(dataRoot + experimentCode+"/annotated.csv");
     }
 
     @Override

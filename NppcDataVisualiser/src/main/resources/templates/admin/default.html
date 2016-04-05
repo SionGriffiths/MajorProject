@@ -12,7 +12,7 @@
     <a th:href="@{/admin/logout}" class="btn btn-primary pull-right">Logout</a>
 
     <div class="row" th:each="entry: ${statusMap}">
-        <div class="admin_experiemnt_row row">
+        <div class="admin_experiment_row row">
             <span class="col-xs-3" th:text="'Experiement : ' + ${entry.key}"></span>
             <span class="col-xs-3" th:text="'Status : ' + ${entry.value}"></span>
 

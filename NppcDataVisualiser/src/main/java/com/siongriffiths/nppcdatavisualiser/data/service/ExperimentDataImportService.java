@@ -5,9 +5,9 @@ package com.siongriffiths.nppcdatavisualiser.data.service;
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
-public interface ExperiemntDataImportService {
+public interface ExperimentDataImportService {
 
     void processHeaderColumns(String[] header);
-    void parseAnnotatedExperiemntDataCSVFile(String filePath);
+    void parseAnnotatedExperimentDataCSVFile(String filePath);
 
 }
