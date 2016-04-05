@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Repository;
 
 
@@ -30,5 +31,9 @@ public interface PlantDao extends JpaRepository<Plant,Long> {
 
     Plant findByBarCode(String barCode);
 
+//    @Query("delete from Plant p where p.experiment = :experiment")
+//    void deleteByExperiment(@Param("experiment") Experiment experiment);
+
+    void deleteByExperiment(Experiment experiment);
 
 }

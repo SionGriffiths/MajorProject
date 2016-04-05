@@ -1,12 +1,14 @@
 package com.siongriffiths.nppcdatavisualiser.plants.service;
 
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
+import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 
 import java.util.List;
+import java.util.concurrent.Exchanger;
 
 /**
  * Created on 28/02/2016.
@@ -18,6 +20,8 @@ public interface PlantManager {
     void savePlant(Plant plant);
 
     void deleteAllPlants();
+
+    void deleteByExperiment(Experiment experiment);
 
     List<Plant> getAllPlants();
 
@@ -31,8 +35,11 @@ public interface PlantManager {
 
     Page<Plant> findPlantsByExperimentCode(String experimentCode, Pageable pageable);
 
+    List<Plant> findPlantsByExperiment(Experiment experiment);
+
     Plant getPlantByID(long id);
 
     Plant getPlantByID(String id);
 
+    void resetTagsForExperiment(Experiment experiment);
 }

@@ -41,7 +41,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
 
         for(Metadata data : findAll()){
             data.setDataAttributes(new HashMap<String, String>());
-            metaDataDao.save(data);
+            saveMetaData(data);
         }
 
     }
@@ -50,7 +50,7 @@ public class MetaDataManagerImpl implements MetaDataManager {
     public void resetByExperiment(Experiment experiment) {
         for(Metadata data : findByExperiment(experiment)){
             data.setDataAttributes(new HashMap<String, String>());
-            metaDataDao.save(data);
+            saveMetaData(data);
         }
     }
 

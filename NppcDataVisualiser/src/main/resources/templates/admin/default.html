@@ -16,12 +16,21 @@
             <span class="col-xs-3" th:text="'Experiement : ' + ${entry.key}"></span>
             <span class="col-xs-3" th:text="'Status : ' + ${entry.value}"></span>
 
+
+
                 <a th:href="@{'/admin/createPlants/'+${entry.key}}" class="btn btn-default confirm-required"
-                   data-confirm-message="Are you sure you want to initialise this experiment?">Initialise</a>
+                   th:classappend="${entry.value.toString().equals('INITIALISING')}? 'disabled' : ''"
+                   th:text="${entry.value.toString().equals('INITIALISED')}? 'Update' : 'Initialise'"
+                   data-confirm-message="Are you sure you want to initialise this experiment?"></a>
+
                 <a th:href="@{'/admin/deletePlants/'+${entry.key}}" class="btn btn-default confirm-required"
+                   th:classappend="${entry.value.toString().equals('INITIALISED')}? '' : 'disabled'"
                    data-confirm-message="This will delete all plants in the experiment, continue?">Delete plants</a>
+
                 <a th:href="@{'/admin/dataImport/'+${entry.key}}" class="btn btn-default">Init data</a>
+
                 <a th:href="@{'/admin/resetData/'+${entry.key}}" class="btn btn-default confirm-required"
+                   th:classappend="${entry.value.toString().equals('NOT_INITIALISED')}? 'disabled' : ''"
                    data-confirm-message="This will delete all meta data in the experiment, continue?">Delete data</a>
 
         </div>

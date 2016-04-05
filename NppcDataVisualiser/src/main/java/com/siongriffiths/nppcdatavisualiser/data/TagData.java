@@ -1,13 +1,9 @@
 package com.siongriffiths.nppcdatavisualiser.data;
 
-import com.siongriffiths.nppcdatavisualiser.plants.Plant;
-import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
-import org.hibernate.annotations.*;
-import org.hibernate.annotations.CascadeType;
-
-import javax.persistence.*;
 import javax.persistence.Entity;
-import java.util.Set;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * Created on 07/03/2016.

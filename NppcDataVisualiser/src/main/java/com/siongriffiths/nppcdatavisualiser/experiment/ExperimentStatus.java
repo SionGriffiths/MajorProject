@@ -5,6 +5,6 @@ package com.siongriffiths.nppcdatavisualiser.experiment;
  */
 public enum ExperimentStatus {
 
-    READY, INITIALISED, INITIALISING, NOT_INITIALISED, ERROR
+    READY, INITIALISED, INITIALISING, NOT_INITIALISED, ERROR, DELETING
 
 }

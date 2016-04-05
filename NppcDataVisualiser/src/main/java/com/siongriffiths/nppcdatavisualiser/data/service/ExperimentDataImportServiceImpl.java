@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -114,7 +115,8 @@ public class ExperimentDataImportServiceImpl implements ExperimentDataImportServ
     private void enrichPlantTags(List<Integer> plantTagIndex, String[] header, String[] line, Plant plant){
         for(Integer i : plantTagIndex){
             if(line[i] != null && !line[i].equals("")){
-                TagData tag = tagManager.createOrGetTag(line[i]);
+                String escaped = StringUtils.replace(line[i],".","-");
+                TagData tag = tagManager.createOrGetTag(escaped);
                 plantManager.tagPlant(tag,plant);
                 tagManager.saveTagData(tag);
                 plantManager.savePlant(plant);

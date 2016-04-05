@@ -1,6 +1,7 @@
 package com.siongriffiths.nppcdatavisualiser.plants.service;
 
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
+import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.daos.PlantDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -31,6 +33,11 @@ public class PlantManagerImpl implements PlantManager {
     @Override
     public void deleteAllPlants() {
         plantDao.deleteAll();
+    }
+
+    @Override
+    public void deleteByExperiment(Experiment experiment) {
+        plantDao.deleteByExperiment(experiment);
     }
 
     @Override
@@ -71,6 +78,11 @@ public class PlantManagerImpl implements PlantManager {
     }
 
     @Override
+    public List<Plant> findPlantsByExperiment(Experiment experiment) {
+        return plantDao.findByExperiment(experiment);
+    }
+
+    @Override
     public Plant getPlantByID(long id) {
         return plantDao.findOne(id);
     }
@@ -79,6 +91,16 @@ public class PlantManagerImpl implements PlantManager {
     public Plant getPlantByID(String id) {
         long parsedId = Long.parseLong(id);
         return getPlantByID(parsedId);
+    }
+
+    @Override
+    public void resetTagsForExperiment(Experiment experiment) {
+        for(Plant p : findPlantsByExperiment(experiment)){
+            if(p.getTags().size() > 0) {
+                p.setTags(new HashSet<TagData>());
+                savePlant(p);
+            }
+        }
     }
 
 

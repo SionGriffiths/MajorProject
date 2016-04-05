@@ -20,4 +20,5 @@ public interface TagManager {
     TagData createOrGetTag(String content);
     void saveTagData(TagData tagData);
     void resetAll();
+    void resetForExperiment(Experiment experiment);
 }

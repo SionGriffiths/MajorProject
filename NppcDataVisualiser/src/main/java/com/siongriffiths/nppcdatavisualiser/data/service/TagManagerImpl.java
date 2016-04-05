@@ -34,6 +34,11 @@ public class TagManagerImpl implements TagManager {
     }
 
     @Override
+    public void resetForExperiment(Experiment experiment) {
+
+    }
+
+    @Override
     public TagData getTagByContent(String content) {
         return tagDataDao.findByTagContent(content);
     }

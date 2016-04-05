@@ -65,6 +65,12 @@ public class ExperimentManagerImpl implements ExperimentManager {
     }
 
     @Override
+    public void updateStatus(Experiment experiment, ExperimentStatus status) {
+        experiment.setStatus(status);
+        experimentDao.save(experiment);
+    }
+
+    @Override
     public void addPlantToExperiment(Experiment experiment, Plant plant) {
         experiment.addPlant(plant);
     }
