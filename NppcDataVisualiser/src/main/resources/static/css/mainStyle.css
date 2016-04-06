@@ -18,15 +18,15 @@
     padding-bottom: 15px;
     border-top: 2px solid olivedrab ;
     border-bottom: 2px solid olivedrab ;
-
 }
 
 .home_experiment_row:hover{
-
     background-color: #c0c0c0;
-
 }
 
+.home_experiment_link_div{
+    margin-bottom: 5px;
+}
 .attribs_div{
     width: 100%;
 }

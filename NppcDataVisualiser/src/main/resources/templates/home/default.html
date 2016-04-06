@@ -13,15 +13,14 @@
     <th:block th:if="${experimentList.size() > 0}">
         <h4>Select from available experiments:</h4>
 
-        <th:block th:each="entry: ${experimentList}">
+        <div class="home_experiment_link_div" th:each="entry: ${experimentList}">
             <a th:href="'/setSessionExperiment/'+${entry.getExperimentCode()}">
                 <div class="home_experiment_row">
-
                     <h3 th:text="${entry.getExperimentCode()}"></h3>
                 </div>
             </a>
 
-        </th:block>
+        </div>
     </th:block>
 
     <div th:if="${experimentList.size() == 0}">
