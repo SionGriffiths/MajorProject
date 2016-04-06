@@ -41,6 +41,17 @@
             <div  th:id="'plant_attribs'+${plant.getId()}" th:class="'plant_attribs  attribs_div container'">
                 <div th:replace="plants/plantFragments :: plantAttribFragment"   ></div>
             </div>
+
+            <form th:action="@{plants/addPlantAttribute}" th:object="${plantAttributeInfo}" class="plant_attrib_form">
+                <div class="form-group">
+                    <input type="hidden" name="plantID" th:value="${plant.getId()}" />
+                    <input  type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control"
+                            name="attribName" placeholder="Add attribute name" />
+                    <input  type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control"
+                            name="attribVal" placeholder="Add attribute value" />
+                    <input type="submit" value="Add Attribute" />
+                </div>
+            </form>
         </div>
     </div>
 </div>

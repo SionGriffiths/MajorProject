@@ -6,6 +6,7 @@ import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
+import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantAttributeInfo;
 import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantDayAttributeInfo;
 import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantDayTagInfo;
 import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantTagInfo;
@@ -96,6 +97,8 @@ public class PlantPageController extends DefaultController {
     private String showPlants(Model model, HttpSession session, int pageNum, int numPerPage){
         String experimentCode = (String)session.getAttribute("experimentCode");
 
+        model.addAttribute("plantAttributeInfo", new PlantAttributeInfo());
+
         if(pageNum < 1){
             pageNum = 1;
         }
@@ -178,6 +181,7 @@ public class PlantPageController extends DefaultController {
             model.addAttribute("plantTagInfo" ,new PlantDayTagInfo());
             model.addAttribute("plantDayAttributeInfo", new PlantDayAttributeInfo());
 
+
             Page<PlantDay> page = plantDayManager.getPlantDaysByPlant(targetPlant, new PageRequest(pageNum,numPerPage));
             int currentPageIndex = page.getNumber()+1;
 
@@ -211,6 +215,17 @@ public class PlantPageController extends DefaultController {
         plantDayManager.savePlantDay(day);
         model.addAttribute("plantDay", day);
         return PLANT_DAY_ATTRIB_FRAGMENT;
+    }
+
+    @RequestMapping(value = "/addPlantAttribute", method = RequestMethod.POST)
+    public String addAttribute(@ModelAttribute PlantAttributeInfo plantAttributeInfo, Model model) {
+        model.addAttribute("plantAttributeInfo", new PlantAttributeInfo());
+        Plant plant = plantManager.getPlantByID(plantAttributeInfo.getPlantID());
+        Metadata plantData = plant.getMetadata();
+        plantData.addDataAttribute(plantAttributeInfo.getAttribName(),plantAttributeInfo.getAttribVal());
+        plantManager.savePlant(plant);
+        model.addAttribute("plant", plant);
+        return PLANT_ATTRIB_FRAGMENT;
     }
 
 
