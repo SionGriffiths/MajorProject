@@ -34,7 +34,7 @@ public class InitPageControllerTest extends AbstractControllerTest {
     @Test
     public void testShowHome() throws Exception {
         this.mockMvc.perform(get("/admin")).andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("<title>DEFAULT ADMIN")));
+                .andExpect(content().string(containsString("<title>Admin")));
     }
 
 }

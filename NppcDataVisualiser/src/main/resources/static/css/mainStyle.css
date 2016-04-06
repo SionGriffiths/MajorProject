@@ -9,11 +9,23 @@
 }
 
 
-.plant_row{
+.plant_row ,.admin_experiment_row{
     padding-bottom: 15px;
     border-top: 2px solid olivedrab ;
 }
 
+.home_experiment_row{
+    padding-bottom: 15px;
+    border-top: 2px solid olivedrab ;
+    border-bottom: 2px solid olivedrab ;
+
+}
+
+.home_experiment_row:hover{
+
+    background-color: #c0c0c0;
+
+}
 
 .attribs_div{
     width: 100%;
@@ -25,11 +37,6 @@
     width:500px;
 }
 
-.admin_experiment_row{
-    padding-bottom: 15px;
-    border-top: 2px solid olivedrab ;
-}
-
 .login_form{
     width: 320px;
     margin: 0 auto;
@@ -39,8 +46,4 @@ a.disabled{
     pointer-events: none;
     cursor: default;
     color: #8c8c8c;
-}
-
-.admin_status_text{
-    margin-left: 15px;
 }

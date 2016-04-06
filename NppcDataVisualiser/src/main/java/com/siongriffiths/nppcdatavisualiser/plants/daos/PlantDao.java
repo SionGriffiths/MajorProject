@@ -26,13 +26,14 @@ public interface PlantDao extends JpaRepository<Plant,Long> {
 
     List<Plant> findByExperiment(Experiment experiment);
 
+    @Query("select p from Plant p where size(p.tags) > 0 and p.experiment = :experiment")
+    List<Plant> findPlantsWithTagsByExperiment(@Param("experiment")Experiment experiment);
+
     @Query("select p from Plant p join p.experiment e where e.experimentCode = :experimentCode ")
     Page<Plant> findByExperimentCode(@Param("experimentCode") String experimentCode, Pageable pageable);
 
-    Plant findByBarCode(String barCode);
 
-//    @Query("delete from Plant p where p.experiment = :experiment")
-//    void deleteByExperiment(@Param("experiment") Experiment experiment);
+    Plant findByBarCode(String barCode);
 
     void deleteByExperiment(Experiment experiment);
 

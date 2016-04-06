@@ -35,9 +35,6 @@ public class DefaultController {
         logger.error("- Exception: ", exception);
     }
 
-
-
-
     @ExceptionHandler(TypeMismatchException.class)
     public String handleBadParameters() {
         return NppcVisConstants.ERROR_PATH_404;

@@ -1,6 +1,7 @@
 package com.siongriffiths.nppcdatavisualiser.plants.service;
 
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
+import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -62,7 +64,11 @@ public class PlantDayManagerImpl implements PlantDayManager {
         return plantDayDao.findByPlantAndDate(plant, date);
     }
 
-    //todo investigate if saving the plant before this is faster than looping through all days
+    @Override
+    public List<PlantDay> findPlantDaysByExperiment(Experiment experiment) {
+        return plantDayDao.findByExperiment(experiment);
+    }
+
     @Override
     public void addToOrCreatePlantDay(Date date, PlantImage plantImage, Plant plant){
 
@@ -95,6 +101,20 @@ public class PlantDayManagerImpl implements PlantDayManager {
     public Page<PlantDay> getPlantDaysByPlant(Plant plant, Pageable pageable) {
         return plantDayDao.findByPlant(plant, pageable);
     }
+
+    @Override
+    public void resetTagsForExperiment(Experiment experiment) {
+        for(PlantDay day : findPlantDaysWithTagsByExperiment(experiment)){
+            day.setTags(new HashSet<TagData>());
+            savePlantDay(day);
+        }
+    }
+
+    @Override
+    public List<PlantDay> findPlantDaysWithTagsByExperiment(Experiment experiment) {
+        return plantDayDao.findPlantDaysWithTagsByExperiment(experiment);
+    }
+
 
     private void associateImageToDay(PlantImage image, PlantDay day){
         day.addPlantImage(image);

@@ -1,14 +1,8 @@
 package controllers;
 
-import com.siongriffiths.nppcdatavisualiser.Application;
-import defaults.AbstractTest;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -41,7 +35,7 @@ public class HomePageControllerWebTest extends AbstractControllerTest {
     @Test
     public void testShowHome() throws Exception {
         this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("<title>DEFAULT HOME")));
+                .andExpect(content().string(containsString("<title>Home")));
     }
 
 }

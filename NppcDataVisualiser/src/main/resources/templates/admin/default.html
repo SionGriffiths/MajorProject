@@ -2,40 +2,46 @@
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
       layout:decorator="layout">
 <head>
-    <title>DEFAULT ADMIN PAGE</title>
+    <script src="/js/adminPage.js"></script>
+    <title>Admin</title>
 </head>
 <body>
 
 <h1 layout:fragment="header">Init Page</h1>
 <div layout:fragment="content">
 
-    <a th:href="@{/admin/logout}" class="btn btn-primary pull-right">Logout</a>
+    <div class="clearfix">
+        <a th:href="@{/admin/logout}" class="btn btn-primary pull-right">Admin Logout</a>
+    </div>
 
     <div class="row" th:each="entry: ${statusMap}">
         <div class="admin_experiment_row row">
+
             <span class="col-xs-3" th:text="'Experiement : ' + ${entry.key}"></span>
             <span class="col-xs-3" th:text="'Status : ' + ${entry.value}"></span>
 
-
-
-                <a th:href="@{'/admin/createPlants/'+${entry.key}}" class="btn btn-default confirm-required"
+            <div class="col-xs-6">
+                <a th:href="@{'/admin/createPlants/'+${entry.key}}" class="btn btn-default confirm-required admin_action_button"
                    th:classappend="${entry.value.toString().equals('INITIALISING')}? 'disabled' : ''"
                    th:text="${entry.value.toString().equals('INITIALISED')}? 'Update' : 'Initialise'"
                    data-confirm-message="Are you sure you want to initialise this experiment?"></a>
 
-                <a th:href="@{'/admin/deletePlants/'+${entry.key}}" class="btn btn-default confirm-required"
+                <a th:href="@{'/admin/deletePlants/'+${entry.key}}" class="btn btn-default admin_action_button confirm-required"
                    th:classappend="${entry.value.toString().equals('INITIALISED')}? '' : 'disabled'"
                    data-confirm-message="This will delete all plants in the experiment, continue?">Delete plants</a>
 
-                <a th:href="@{'/admin/dataImport/'+${entry.key}}" class="btn btn-default">Init data</a>
+                <a th:href="@{'/admin/dataImport/'+${entry.key}}" class="btn admin_action_button btn-default"
+                   th:classappend="${entry.value.toString().equals('INITIALISED')}? '' : 'disabled'">Init data</a>
 
-                <a th:href="@{'/admin/resetData/'+${entry.key}}" class="btn btn-default confirm-required"
+                <a th:href="@{'/admin/resetData/'+${entry.key}}" class="btn btn-default admin_action_button confirm-required"
                    th:classappend="${entry.value.toString().equals('NOT_INITIALISED')}? 'disabled' : ''"
                    data-confirm-message="This will delete all meta data in the experiment, continue?">Delete data</a>
 
-        </div>
-    </div>
 
+            </div>
+        </div>
+
+    </div>
 </div>
 </body>
 </html>

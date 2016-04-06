@@ -50,66 +50,14 @@ public class PlantLoader {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public void initPlantImages(Experiment experiment) {
-        File dir = new File(imageRepoRoot+experiment.getExperimentCode()+imageRepoSuffix);
-        File[] directories = dir.listFiles();
-        if (directories != null) {
-
-            for (File plantDir : directories) {
-
-                String barCode = plantDir.getName();
-
-                Plant plant = plantManager.createOrGetPlantByBarcode(barCode);
-
-                File[] cameraTypeFiles = plantDir.listFiles();
-
-                if (cameraTypeFiles != null) {
-                    for(File cameraTypeFile : cameraTypeFiles){
-                        String cameraType = cameraTypeFile.getName();
-
-                        // TODO: 09/03/2016 change this to use a property or filter
-                        if(cameraType.equalsIgnoreCase("nir")){
-                            continue;
-                        }
-
-                        File[] viewTypeFiles = cameraTypeFile.listFiles();
-                        if(viewTypeFiles != null){
-                            for(File viewTypeFile : viewTypeFiles){
-
-                                File[] angleOptionFiles = viewTypeFile.listFiles();
-                                if(angleOptionFiles != null){
-                                    for(File angleOptionFile : angleOptionFiles){
-
-                                        File[] plantImageFiles = angleOptionFile.listFiles();
-                                        if(plantImageFiles != null){
-
-                                            for(File plantImageFile : plantImageFiles){
-                                                String path = normaliseFilePath(plantImageFile.getPath());
-                                                path = removeExcessDirectoryPath(path);
-                                                Date date = extractDateFromImageName(plantImageFile.getName());
-                                                PlantImage plantImage = plantImageManager.getOrCreatePlantImageByPath(path);
-                                                plantImage.setFilePath(path);
-                                                plantDayManager.addToOrCreatePlantDay(date,plantImage,plant);
-
-
-
-                                                // TODO: 09/03/2016 A less naive method of doing this would be lovely
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                //Sort days in date order. Some instances where this is not the case otehrwise..
-                Collections.sort(plant.getPlantDays());
-                experimentManager.saveExperiment(experiment); //save experiment since we cannot save plant with transient reference
-                plant.setExperiment(experiment);
-                plantManager.savePlant(plant); //cascade save all the way down
-                logger.info("created plant " + plant.getBarCode());
-                experiment.addPlant(plant);
+        File dir = new File(imageRepoRoot + experiment.getExperimentCode() + imageRepoSuffix);
+        if (dir.exists()) {
+            File[] directories = dir.listFiles();
+            if (directories != null) {
+                processDirectory(directories,experiment);
             }
-            experiment.setStatus(ExperimentStatus.INITIALISED);
+        } else {
+            experiment.setStatus(ExperimentStatus.NOT_INITIALISED);
             experimentManager.saveExperiment(experiment);
         }
     }
@@ -137,4 +85,67 @@ public class PlantLoader {
         }
         return date;
     }
+
+    private void processDirectory(File[] directories, Experiment experiment){
+        for (File plantDir : directories) {
+
+            String barCode = plantDir.getName();
+
+            Plant plant = plantManager.createOrGetPlantByBarcode(barCode);
+
+            File[] cameraTypeFiles = plantDir.listFiles();
+
+            if (cameraTypeFiles != null) {
+                for(File cameraTypeFile : cameraTypeFiles){
+                    String cameraType = cameraTypeFile.getName();
+
+                    // TODO: 09/03/2016 change this to use a property or filter
+                    if(cameraType.equalsIgnoreCase("nir")){
+                        continue;
+                    }
+
+                    File[] viewTypeFiles = cameraTypeFile.listFiles();
+                    if(viewTypeFiles != null){
+                        for(File viewTypeFile : viewTypeFiles){
+
+                            File[] angleOptionFiles = viewTypeFile.listFiles();
+                            if(angleOptionFiles != null){
+                                for(File angleOptionFile : angleOptionFiles){
+
+                                    File[] plantImageFiles = angleOptionFile.listFiles();
+                                    if(plantImageFiles != null){
+
+                                        for(File plantImageFile : plantImageFiles){
+                                            String path = normaliseFilePath(plantImageFile.getPath());
+                                            path = removeExcessDirectoryPath(path);
+                                            Date date = extractDateFromImageName(plantImageFile.getName());
+                                            PlantImage plantImage = plantImageManager.getOrCreatePlantImageByPath(path);
+                                            plantImage.setFilePath(path);
+                                            plantDayManager.addToOrCreatePlantDay(date,plantImage,plant);
+
+
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //Sort days in date order. Some instances where this is not the case otehrwise..
+            Collections.sort(plant.getPlantDays());
+            experimentManager.saveExperiment(experiment); //save experiment since we cannot save plant with transient reference
+            plant.setExperiment(experiment);
+            plantManager.savePlant(plant); //cascade save all the way down
+            logger.info("created plant " + plant.getBarCode());
+            experiment.addPlant(plant);
+        }
+        experiment.setStatus(ExperimentStatus.INITIALISED);
+        experimentManager.saveExperiment(experiment);
+    }
 }
+
+
+
+

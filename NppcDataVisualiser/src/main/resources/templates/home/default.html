@@ -2,23 +2,26 @@
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
       layout:decorator="layout">
 <head>
-    <title>DEFAULT HOME PAGE</title>
+    <title>Home</title>
 </head>
 <body>
 
-<h1 layout:fragment="header">Home Page</h1>
+<h1 layout:fragment="header">Nppc Experiment Visualiser</h1>
 <div layout:fragment="content">
 
 
     <th:block th:if="${experimentList.size() > 0}">
-    <h4>Select from available experiments:</h4>
+        <h4>Select from available experiments:</h4>
 
-    <th:block th:each="entry: ${experimentList}">
+        <th:block th:each="entry: ${experimentList}">
+            <a th:href="'/setSessionExperiment/'+${entry.getExperimentCode()}">
+                <div class="home_experiment_row">
 
-        <div class="experiment_row">
-            <a th:href="'/setSessionExperiment/'+${entry.getExperimentCode()}" th:text="${entry.getExperimentCode()}"></a>
-        </div>
-    </th:block>
+                    <h3 th:text="${entry.getExperimentCode()}"></h3>
+                </div>
+            </a>
+
+        </th:block>
     </th:block>
 
     <div th:if="${experimentList.size() == 0}">

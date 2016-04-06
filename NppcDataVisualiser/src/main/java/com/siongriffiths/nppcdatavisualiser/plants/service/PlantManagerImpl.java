@@ -47,7 +47,7 @@ public class PlantManagerImpl implements PlantManager {
 
     @Override
     public Plant getPlantByBarcode(String barCode) {
-       return plantDao.findByBarCode(barCode);
+        return plantDao.findByBarCode(barCode);
     }
 
     @Override
@@ -95,12 +95,15 @@ public class PlantManagerImpl implements PlantManager {
 
     @Override
     public void resetTagsForExperiment(Experiment experiment) {
-        for(Plant p : findPlantsByExperiment(experiment)){
-            if(p.getTags().size() > 0) {
-                p.setTags(new HashSet<TagData>());
-                savePlant(p);
-            }
+        for(Plant p : findPlantsWithTagsByExperiment(experiment)){
+            p.setTags(new HashSet<TagData>());
+            savePlant(p);
         }
+    }
+
+    @Override
+    public List<Plant> findPlantsWithTagsByExperiment(Experiment experiment) {
+        return plantDao.findPlantsWithTagsByExperiment(experiment);
     }
 
 

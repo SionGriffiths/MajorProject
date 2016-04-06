@@ -42,4 +42,6 @@ public interface PlantManager {
     Plant getPlantByID(String id);
 
     void resetTagsForExperiment(Experiment experiment);
+
+    List<Plant> findPlantsWithTagsByExperiment(Experiment experiment);
 }

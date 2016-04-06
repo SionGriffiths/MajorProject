@@ -1,6 +1,7 @@
 package com.siongriffiths.nppcdatavisualiser.plants.service;
 
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
+import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
@@ -63,6 +64,9 @@ public interface PlantDayManager {
      */
     PlantDay findByPlantAndDate(Plant plant, Date date);
 
+
+    List<PlantDay> findPlantDaysByExperiment(Experiment experiment);
+
     /**
      * Given a Date, Plant object and a PlantImage object, this method will either create a new PlantDay with the
      * parameter data or retrieve the PlantDay corresponding with the Plant and Date and add the passed in PlantImage to that day
@@ -81,4 +85,8 @@ public interface PlantDayManager {
     void addAttributeToDay(PlantDay day,String key, String value);
 
     Page<PlantDay> getPlantDaysByPlant(Plant targetPlant, Pageable pageable);
+
+    List<PlantDay> findPlantDaysWithTagsByExperiment(Experiment experiment);
+
+    void resetTagsForExperiment(Experiment experiment);
 }

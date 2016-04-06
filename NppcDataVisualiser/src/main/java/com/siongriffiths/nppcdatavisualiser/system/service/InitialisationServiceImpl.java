@@ -63,8 +63,6 @@ public class InitialisationServiceImpl implements InitialisationService {
     public void resetData(String experimentCode) {
         metaDataManager.resetByExperiment(getExperimentForCode(experimentCode));
         resetTagsForExperiment(getExperimentForCode(experimentCode));
-//        tagManager.resetAll();
-        // TODO: 04/04/2016 Reset tags!
     }
 
     public void deleteExperiementData(String experimentCode){
@@ -80,7 +78,7 @@ public class InitialisationServiceImpl implements InitialisationService {
 
     private void resetTagsForExperiment(Experiment experiment){
         plantManager.resetTagsForExperiment(experiment);
-//        plantDayManager.resetTagsForExperiment(experiment);
+        plantDayManager.resetTagsForExperiment(experiment);
     }
 }
 
