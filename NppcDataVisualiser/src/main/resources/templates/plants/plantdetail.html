@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="col-xs-6">
+        <div class="col-xs-6 plant_day_input_column">
             <div  th:id="'plant_day_tags'+${plantDay.getId()}" th:class="'plant_day_tags container'">
                 <div th:replace="plants/plantFragments :: dayTagFragment"   ></div>
             </div>
@@ -62,9 +62,9 @@
             <form th:action="@{addDayAttribute}" th:object="${plantDayAttributeInfo}" class="plant_day_attrib_form">
                 <div class="form-group">
                     <input type="hidden" name="plantDayID" th:value="${plantDay.getId()}" />
-                    <input  type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control"
+                    <input  type="text" required="required" pattern="[A-Za-z0-9\-\/ ]{1,20}" class="form-control attrib_key_edit"
                             name="attribName" placeholder="Add attribute name" />
-                    <input  type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control"
+                    <input  type="text" required="required" pattern="[A-Za-z0-9\-\/ ]{1,20}" class="form-control attrib_val_edit"
                             name="attribVal" placeholder="Add attribute value" />
                     <input type="submit" value="Add Attribute" />
                 </div>

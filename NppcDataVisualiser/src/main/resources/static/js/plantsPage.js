@@ -9,11 +9,9 @@ $( document ).ready(function() {
             type: 'post',
             data: $form.serialize(),
             success: function(response) {
-                console.log(response);
                 $("#plant_tags"+$plantId).html(response);
             },
             error: function(response) {
-                console.log(response);
                 $("#plant_tags"+$plantId).html(response);
             }
         });
@@ -34,7 +32,6 @@ $( document ).ready(function() {
                 $.getScript("/js/plantsPage.js");
             },
             error: function(response) {
-                console.log(response);
                 $("#plant_attribs"+$plantId).html(response);
             }
         });
@@ -44,7 +41,6 @@ $( document ).ready(function() {
         var $item = $(this).closest("tr");
         var $keyText = $item.find(".attrib_key").text();
         var $valText = $item.find(".attrib_val").text();
-        console.log($valText);
         var $keyInput = $item.closest('.plant_input_column').find(".attrib_key_edit");
         var $valInput = $item.closest('.plant_input_column').find(".attrib_val_edit");
         $keyInput.val($keyText);
