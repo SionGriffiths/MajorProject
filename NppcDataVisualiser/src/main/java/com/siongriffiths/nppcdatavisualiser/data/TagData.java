@@ -1,9 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created on 07/03/2016.
@@ -11,6 +8,7 @@ import javax.persistence.Id;
  * @author Siôn Griffiths / sig2@aber.ac.uk
  */
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"tag_content"}))
 public class TagData {
 
     private long id;
@@ -20,6 +18,7 @@ public class TagData {
     public TagData(){
         new TagData("");
     }
+
 
     public TagData(String content){
         tagContent = content;
@@ -35,6 +34,7 @@ public class TagData {
         this.id = id;
     }
 
+    @Column(name = "tag_content")
     public String getTagContent() {
         return tagContent;
     }

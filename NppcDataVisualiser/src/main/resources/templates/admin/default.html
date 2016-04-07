@@ -30,13 +30,13 @@
                    th:classappend="${entry.value.toString().equals('INITIALISED')}? '' : 'disabled'"
                    data-confirm-message="This will delete all plants in the experiment, continue?">Delete plants</a>
 
-                <a th:href="@{'/admin/dataImport/'+${entry.key}}" class="btn admin_action_button btn-default"
-                   th:classappend="${entry.value.toString().equals('INITIALISED')}? '' : 'disabled'">Init data</a>
+                <a th:href="@{'/admin/dataImport/'+${entry.key}}" class="btn admin_action_button btn-default confirm-required"
+                   th:classappend="${entry.value.toString().equals('INITIALISED')}? '' : 'disabled'"
+                   data-confirm-message="This will overwrite any changes made to previously imported data, continue?">Init data</a>
 
                 <a th:href="@{'/admin/resetData/'+${entry.key}}" class="btn btn-default admin_action_button confirm-required"
                    th:classappend="${entry.value.toString().equals('NOT_INITIALISED')}? 'disabled' : ''"
-                   data-confirm-message="This will delete all meta data in the experiment, continue?">Delete data</a>
-
+                   data-confirm-message="This will delete all meta data and tags in the experiment, continue?">Delete data</a>
 
             </div>
         </div>

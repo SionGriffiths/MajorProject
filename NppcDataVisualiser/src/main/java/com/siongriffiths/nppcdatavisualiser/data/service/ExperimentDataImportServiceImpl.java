@@ -51,8 +51,6 @@ public class ExperimentDataImportServiceImpl implements ExperimentDataImportServ
     private List<Integer> plantDayATypeColumnIndicies;
     private int barcodeColumn;
 
-
-
     public void parseAnnotatedExperimentDataCSVFile(String filePath){
         List<String[]> parsedFile = experimentCSVReader.doParse(filePath);
 
@@ -70,7 +68,6 @@ public class ExperimentDataImportServiceImpl implements ExperimentDataImportServ
         }
 
     }
-
 
     public void processHeaderColumns(String[] header){
 
@@ -115,7 +112,7 @@ public class ExperimentDataImportServiceImpl implements ExperimentDataImportServ
     private void enrichPlantTags(List<Integer> plantTagIndex, String[] header, String[] line, Plant plant){
         for(Integer i : plantTagIndex){
             if(line[i] != null && !line[i].equals("")){
-                String escaped = StringUtils.replace(line[i],".","-");
+                String escaped = StringUtils.replace(line[i],"."," ");
                 TagData tag = tagManager.createOrGetTag(escaped);
                 plantManager.tagPlant(tag,plant);
                 tagManager.saveTagData(tag);

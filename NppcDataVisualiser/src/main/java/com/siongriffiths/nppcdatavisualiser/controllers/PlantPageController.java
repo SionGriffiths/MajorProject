@@ -207,7 +207,7 @@ public class PlantPageController extends DefaultController {
      * @return view fragment path for the attributes section in the plant detail page
      */
     @RequestMapping(value = "/addDayAttribute", method = RequestMethod.POST)
-    public String addAttribute(@ModelAttribute PlantDayAttributeInfo plantDayAttributeInfo, Model model) {
+    public String addDayAttribute(@ModelAttribute PlantDayAttributeInfo plantDayAttributeInfo, Model model) {
         model.addAttribute("plantDayAttributeInfo", new PlantDayAttributeInfo());
         PlantDay day = plantDayManager.getPlantDayByID(plantDayAttributeInfo.getPlantDayID());
         Metadata plantDayData = day.getMetadata();
@@ -218,7 +218,7 @@ public class PlantPageController extends DefaultController {
     }
 
     @RequestMapping(value = "/addPlantAttribute", method = RequestMethod.POST)
-    public String addAttribute(@ModelAttribute PlantAttributeInfo plantAttributeInfo, Model model) {
+    public String addPlantAttribute(@ModelAttribute PlantAttributeInfo plantAttributeInfo, Model model) {
         model.addAttribute("plantAttributeInfo", new PlantAttributeInfo());
         Plant plant = plantManager.getPlantByID(plantAttributeInfo.getPlantID());
         Metadata plantData = plant.getMetadata();
@@ -267,6 +267,5 @@ public class PlantPageController extends DefaultController {
         return PLANT_TAG_FRAGMENT;
     }
 
-    //// TODO: 01/04/2016 Attributes for plant pls?
 
 }

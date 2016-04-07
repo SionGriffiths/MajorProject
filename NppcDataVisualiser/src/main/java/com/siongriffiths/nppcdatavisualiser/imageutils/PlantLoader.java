@@ -20,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created on 27/02/2016.
@@ -42,9 +43,11 @@ public class PlantLoader {
     @Value("${image-repository.root.dir}")
     private String imageRepoRoot;
 
-
     @Value("${image-repository.root.dir.suffix}")
     private String imageRepoSuffix;
+
+    @Value("#{'${ignored.image.modalities}'.split(',')}")
+    private Set<String> ignoredImageModalities;
 
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -99,8 +102,7 @@ public class PlantLoader {
                 for(File cameraTypeFile : cameraTypeFiles){
                     String cameraType = cameraTypeFile.getName();
 
-                    // TODO: 09/03/2016 change this to use a property or filter
-                    if(cameraType.equalsIgnoreCase("nir")){
+                    if(ignoredImageModalities.contains(cameraType.toLowerCase()) || ignoredImageModalities.contains(cameraType.toUpperCase())){
                         continue;
                     }
 

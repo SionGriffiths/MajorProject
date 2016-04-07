@@ -22,7 +22,7 @@
 
         </div>
 
-        <div class="col-xs-6">
+        <div class="col-xs-6 plant_input_column">
             <div  th:id="'plant_tags'+${plant.getId()}" th:class="'plant_tags container'">
                 <div th:replace="plants/plantFragments :: plantTagFragment"   ></div>
             </div>
@@ -42,15 +42,15 @@
                 <div th:replace="plants/plantFragments :: plantAttribFragment"   ></div>
             </div>
 
-            <form th:action="@{plants/addPlantAttribute}" th:object="${plantAttributeInfo}" class="plant_attrib_form">
-                <div class="form-group">
+            <form th:action="@{plants/addPlantAttribute}" th:object="${plantAttributeInfo}" class="plant_attrib_form form-horizontal">
+                <!--<div class="form-group">-->
                     <input type="hidden" name="plantID" th:value="${plant.getId()}" />
-                    <input  type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control"
+                    <input  type="text" required="required" pattern="[A-Za-z0-9\-\/ ]{1,20}" class=" attrib_key_edit"
                             name="attribName" placeholder="Add attribute name" />
-                    <input  type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control"
+                    <input  type="text" required="required" pattern="[A-Za-z0-9\-\/ ]{1,20}" class=" attrib_val_edit"
                             name="attribVal" placeholder="Add attribute value" />
                     <input type="submit" value="Add Attribute" />
-                </div>
+                <!--</div>-->
             </form>
         </div>
     </div>
