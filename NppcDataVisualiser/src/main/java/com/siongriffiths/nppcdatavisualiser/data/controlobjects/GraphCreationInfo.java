@@ -4,6 +4,8 @@ package com.siongriffiths.nppcdatavisualiser.data.controlobjects;
  * Created on 21/03/2016.
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
+ *
+ * GraphCreationInfo is a  simple form backing bean used in the graph view
  */
 public class GraphCreationInfo {
 
