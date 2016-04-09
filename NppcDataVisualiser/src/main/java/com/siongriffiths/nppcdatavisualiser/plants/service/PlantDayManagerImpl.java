@@ -60,6 +60,11 @@ public class PlantDayManagerImpl implements PlantDayManager {
     }
 
     @Override
+    public List<PlantDay> findByTagDataForExperiment(TagData tagData, Experiment experiment) {
+        return plantDayDao.findByTagDataForExperiment(tagData.getId(),experiment);
+    }
+
+    @Override
     public PlantDay findByPlantAndDate(Plant plant, Date date) {
         return plantDayDao.findByPlantAndDate(plant, date);
     }

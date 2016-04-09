@@ -36,8 +36,8 @@ public class HomePageController extends DefaultController {
 
     /**
      * showHome returns the default home view
-     * @param session
-     * @return
+     * @param session the HttpSession
+     * @return the dafault view path for the home page
      */
     // adapt session handling from official spring boot samples :
     // https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-session-redis

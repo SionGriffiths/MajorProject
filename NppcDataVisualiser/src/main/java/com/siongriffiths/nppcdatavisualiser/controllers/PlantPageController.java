@@ -48,7 +48,7 @@ public class PlantPageController extends DefaultController {
     private static final String PLANT_TAG_FRAGMENT =  "plants/plantFragments :: plantTagFragment";
 
     /**
-     * Pagination constants
+     * Plant Page Pagination constants
      */
     private static final int DEFAULT_PAGINATION_START_PAGE = 1;
     private static final int DEFAULT_PAGINATION_RESULTS = 10;
@@ -72,28 +72,52 @@ public class PlantPageController extends DefaultController {
     private TagManager tagManager;
 
     /**
-     * Shows the default plant page. Displays a list of all plants in the currently selected experiment
+     * Shows the default plant page. Displays a paginated list of all plants in the currently selected experiment
      * @param model the page model object
      * @param session the HttpSession object containing an experiment code
-     * @return view path for the default plants page
+     * @return view path for the default plants page with default pagination options
      */
     @RequestMapping
     public String show(Model model, HttpSession session){
         return showPlants(model,session, DEFAULT_PAGINATION_START_PAGE, DEFAULT_PAGINATION_RESULTS);
     }
 
+
+    /**
+     * Shows the default plant page. Displays a paginated list of all plants in the currently selected experiment
+     * @param page requested page number for pagination
+     * @param model the page model object
+     * @param session the HttpSession object containing an experiment code
+     * @return view path for the default plants page with specified page and default page size
+     */
     @RequestMapping(params = {"page"}, method = RequestMethod.GET)
     public String showForPage(@RequestParam( "page" ) int page,
                               Model model, HttpSession session){
         return showPlants(model,session,page,DEFAULT_PAGINATION_RESULTS );
     }
 
+    /**
+     * Shows the default plant page. Displays a paginated list of all plants in the currently selected experiment
+     * @param size requested page size
+     * @param page requested page number for pagination
+     * @param model the page model object
+     * @param session the HttpSession object containing an experiment code
+     * @return view path for the default plants page with specified page and requested page size
+     */
     @RequestMapping(params = {"page", "size" }, method = RequestMethod.GET)
     public String showForPageAndSize(@RequestParam( "page" ) int page, @RequestParam( "size" ) int size,
                                      Model model, HttpSession session){
         return showPlants(model,session,page,size );
     }
 
+    /**
+     * Builds the plant page model for given pagination parameters
+     * @param model the page Model object
+     * @param session the HttpSession object
+     * @param pageNum requested pagination pagenumber
+     * @param numPerPage requested pagination page size
+     * @return default view path for plants
+     */
     private String showPlants(Model model, HttpSession session, int pageNum, int numPerPage){
         String experimentCode = (String)session.getAttribute("experimentCode");
 
@@ -125,6 +149,13 @@ public class PlantPageController extends DefaultController {
         return PLANTS_SHOW_PATH;
     }
 
+    /**
+    * Shows a page detailing an individual plant and associated time serried data and images with
+    * default pagination options
+    * @param model the page model object
+    * @param barCode the barcode identifying a plant
+    * @return view path for the plants detail page
+    */
     @RequestMapping(value = "{plantBarCode}",method = RequestMethod.GET)
     public String showPlantDetailForPage(Model model, @PathVariable("plantBarCode") String barCode){
 
@@ -132,6 +163,14 @@ public class PlantPageController extends DefaultController {
 
     }
 
+    /**
+     * Shows a page detailing an individual plant and associated time serried data and images with
+     * requested page number for pagination
+     * @param model the page model object
+     * @page requested pagination page number
+     * @param barCode the barcode identifying a plant
+     * @return view path for the plants detail page
+     */
     @RequestMapping(value = "{plantBarCode}", params = {"page"}, method = RequestMethod.GET)
     public String showPlantDetailForPage(Model model, @PathVariable("plantBarCode") String barCode,
                                          @RequestParam( "page" ) int page){
@@ -140,6 +179,15 @@ public class PlantPageController extends DefaultController {
 
     }
 
+    /**
+     * Shows a page detailing an individual plant and associated time serried data and images with
+     * requested page number and page size for pagination
+     * @param model the page model object
+     * @page requested pagination page number
+     * @size requested pagination page size
+     * @param barCode the barcode identifying a plant
+     * @return view path for the plants detail page
+     */
     @RequestMapping(value = "{plantBarCode}", params = {"page", "size"}, method = RequestMethod.GET)
     public String showPlantDetailForPageAndSize(Model model, @PathVariable("plantBarCode") String barCode,
                                                 @RequestParam( "page" ) int page,
@@ -150,12 +198,13 @@ public class PlantPageController extends DefaultController {
     }
 
     /**
-     * Shows a page detailing an individual plant and associated time serried data and images
-     * @param model the page model object
+     * Builds the plant detail page model for given pagination parameters
+     * @param model the page Model object
      * @param barCode the barcode identifying a plant
-     * @return view path for the plants detail page
+     * @param pageNum requested pagination pagenumber
+     * @param numPerPage requested pagination page size
+     * @return default view path for plants
      */
-
     private String showPlantDetail(Model model,  String barCode, int pageNum, int numPerPage){
         logger.info(barCode);
 
@@ -217,6 +266,12 @@ public class PlantPageController extends DefaultController {
         return PLANT_DAY_ATTRIB_FRAGMENT;
     }
 
+    /**
+     * Adds a key value attribute pair to a Plant and returns the page fragment containing the updated attributes
+     * @param plantAttributeInfo form backing control object representing a form in the front end
+     * @param model the page model object
+     * @return view fragment path for the attributes section in the plants page
+     */
     @RequestMapping(value = "/addPlantAttribute", method = RequestMethod.POST)
     public String addPlantAttribute(@ModelAttribute PlantAttributeInfo plantAttributeInfo, Model model) {
         model.addAttribute("plantAttributeInfo", new PlantAttributeInfo());

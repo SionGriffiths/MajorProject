@@ -20,7 +20,6 @@ public interface MetaDataDao extends JpaRepository<Metadata, Integer>{
     @Query("SELECT m FROM Metadata m JOIN m.dataAttributes d WHERE KEY(d) = :key")
     List<Metadata> findByDataAttributeKey(@Param("key") String key);
 
-
     @Query("select metadata from Plant p where p.experiment = :experiment ")
     List<Metadata> findByExperimentForPlant(@Param("experiment")Experiment experimentCode);
 

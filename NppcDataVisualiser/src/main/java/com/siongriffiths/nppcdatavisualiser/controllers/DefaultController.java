@@ -35,6 +35,11 @@ public class DefaultController {
         logger.error("- Exception: ", exception);
     }
 
+    /**
+     * Handles TypeMismatchException thrown in system controllers when users attempt to
+     * pass mistyped parameters in URLs
+     * @return String representing the 404 not found error view
+     */
     @ExceptionHandler(TypeMismatchException.class)
     public String handleBadParameters() {
         return NppcVisConstants.ERROR_PATH_404;

@@ -73,6 +73,11 @@ public class PlantManagerImpl implements PlantManager {
     }
 
     @Override
+    public List<Plant> findPlantsByTagForExperiment(TagData tagData, Experiment experiment) {
+        return plantDao.findByTagDataForExperiment(tagData.getId(),experiment);
+    }
+
+    @Override
     public Page<Plant> findPlantsByExperimentCode(String experimentCode, Pageable pageable) {
         return plantDao.findByExperimentCode(experimentCode, pageable);
     }

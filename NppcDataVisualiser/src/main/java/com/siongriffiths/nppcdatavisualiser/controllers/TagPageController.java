@@ -24,27 +24,52 @@ import java.util.Set;
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
  *
- *
+ * TagPageController is an MVC controller class that manages the tag page and associated view.
+ * It provides access to services and business processes related to tags within the system
  */
 @Controller
 @RequestMapping("/tags")
 public class TagPageController extends DefaultController{
 
+    /**
+     * View paths used by this controller
+     */
     private static final String TAGS_SHOW_PATH = "tags/show";
     private static final String TAGS_RESULT_PATH = "tags/result";
     private static final String TAG_NOT_FOUND_PATH = "tags/notfound";
 
 
-    @Autowired
-    private TagManager tagManager;
-    @Autowired
-    private PlantDayManager plantDayManager;
+    /**
+     * PlantManager, a service class providing access to business logic and persistence for Plant objects
+     */
     @Autowired
     private PlantManager plantManager;
+
+    /**
+     * PlantDayManager, a service class providing access to business logic and persistence for PlantDay objects
+     */
+    @Autowired
+    private PlantDayManager plantDayManager;
+
+    /**
+     * TagManager, a service class providing access to business logic and persistence for TagData objects
+     */
+    @Autowired
+    private TagManager tagManager;
+
+    /**
+     * ExperimentManager, a service class providing access to business logic and persistence for Experiment objects
+     */
     @Autowired
     private ExperimentManager experimentManager;
 
 
+    /**
+     * SHows the tags associated with the Experiment currently stored in teh HTTP session
+     * @param model the page Model object
+     * @param session the HttpSession object
+     * @return view path for the tags list page
+     */
     @RequestMapping
     public String showTags(Model model, HttpSession session){
         String experimentCode = (String)session.getAttribute("experimentCode");
@@ -55,19 +80,28 @@ public class TagPageController extends DefaultController{
         return TAGS_SHOW_PATH;
     }
 
+    /**
+     * Displays a list of plants and plantDays objects associated with a particular tag within
+     * the currently selected experiment
+     * @param model the page Model object
+     * @param session the HttpSession object
+     * @param tagContent the tag content
+     * @return either a view path to tag results or not found if tag not associated with any plants or days
+     */
     @RequestMapping(value = "{tagContent}",method = RequestMethod.GET)
-    public String displayTagResult(Model model, @PathVariable("tagContent") String tagContent){
+    public String displayTagResult(Model model, @PathVariable("tagContent") String tagContent, HttpSession session){
 
         String viewPath;
-
         TagData tag = tagManager.getTagByContent(tagContent);
+        String experimentCode = (String)session.getAttribute("experimentCode");
+        Experiment experiment = experimentManager.getExperimentByCode(experimentCode);
 
         if(tag == null){
             model.addAttribute("content", tagContent);
             viewPath = TAG_NOT_FOUND_PATH;
         }else {
-            List<PlantDay> taggedDays = plantDayManager.findPlantDaysByTag(tag);
-            List<Plant> taggedPlants = plantManager.findPlantsByTag(tag);
+            List<PlantDay> taggedDays = plantDayManager.findByTagDataForExperiment(tag,experiment);
+            List<Plant> taggedPlants = plantManager.findPlantsByTagForExperiment(tag,experiment);
             model.addAttribute("tag",tag);
             model.addAttribute("taggedDays",taggedDays);
             model.addAttribute("taggedPlants",taggedPlants);

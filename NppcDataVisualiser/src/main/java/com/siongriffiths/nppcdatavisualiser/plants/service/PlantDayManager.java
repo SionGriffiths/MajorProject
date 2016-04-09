@@ -56,6 +56,8 @@ public interface PlantDayManager {
      */
     List<PlantDay> findPlantDaysByTag(TagData tagData);
 
+    List<PlantDay> findByTagDataForExperiment(TagData tagData, Experiment experiment);
+
     /**
      * Retrieves a PlantDay from the persistence layer by its parent Plant and date
      * @param plant The parent Plant of the PlantDay

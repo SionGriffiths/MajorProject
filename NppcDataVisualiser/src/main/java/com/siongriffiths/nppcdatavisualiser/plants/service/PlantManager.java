@@ -33,6 +33,8 @@ public interface PlantManager {
 
     List<Plant> findPlantsByTag(TagData tagData);
 
+    List<Plant> findPlantsByTagForExperiment(TagData tagData, Experiment experiment);
+
     Page<Plant> findPlantsByExperimentCode(String experimentCode, Pageable pageable);
 
     List<Plant> findPlantsByExperiment(Experiment experiment);

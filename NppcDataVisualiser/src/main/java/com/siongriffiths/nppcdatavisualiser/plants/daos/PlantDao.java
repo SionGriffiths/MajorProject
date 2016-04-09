@@ -24,6 +24,9 @@ public interface PlantDao extends JpaRepository<Plant,Long> {
     @Query("select p from Plant p join p.tags tag where tag.id = :tagId ")
     List<Plant> findByTagData(@Param("tagId") long id);
 
+    @Query("select p from Plant p join p.tags tag where tag.id = :tagId and p.experiment = :experiment")
+    List<Plant> findByTagDataForExperiment(@Param("tagId") long id, @Param("experiment") Experiment experiment);
+
     List<Plant> findByExperiment(Experiment experiment);
 
     @Query("select p from Plant p where size(p.tags) > 0 and p.experiment = :experiment")
