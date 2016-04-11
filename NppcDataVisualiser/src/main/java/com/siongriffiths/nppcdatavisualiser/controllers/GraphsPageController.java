@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -35,19 +36,20 @@ public class GraphsPageController extends DefaultController{
      */
     private static final String GRAPHS_SHOW_PATH = "graphs/show";
     private static final String GRAPHS_BY_PLANT_PATH = "graphs/forPlant";
+    private static final String GRAPHS_NO_DATA = "graphs/noData";
     private static final String PLANT_NOT_FOUND_PATH = "plants/notfound";
 
     /**
      * The PlantManager service, provides access to plant data and related methods.
      */
     @Autowired
-    PlantManager plantManager;
+    private PlantManager plantManager;
 
     /**
      * The GraphingManager service, produces graph data.
      */
     @Autowired
-    GraphingManager graphingManager;
+    private GraphingManager graphingManager;
 
     /**
      * Method provides the default graph page view for the controller level url path mapping of /graphs.
@@ -56,11 +58,18 @@ public class GraphsPageController extends DefaultController{
      * @return default graph page view path as String
      */
     @RequestMapping
-    public String showGraphsPage(Model model){
+    public String showGraphsPage(Model model,HttpSession session){
 
-        model.addAttribute("graphCreationInfo", new GraphCreationInfo());
-        model.addAttribute("availableAttribs", getAttributeListForAllPlants(plantManager.getAllPlants()));
-        return GRAPHS_SHOW_PATH;
+        String experimentCode = (String)session.getAttribute("experimentCode");
+        Set<String> attribs = getAttributeListForAllPlants(plantManager.findPlantsByExperimentCode(experimentCode));
+
+        if(attribs.size() < 1){
+            return GRAPHS_NO_DATA;
+        } else {
+            model.addAttribute("graphCreationInfo", new GraphCreationInfo());
+            model.addAttribute("availableAttribs", attribs);
+            return GRAPHS_SHOW_PATH;
+        }
     }
 
     /**
@@ -98,13 +107,15 @@ public class GraphsPageController extends DefaultController{
      */
     @ResponseBody
     @RequestMapping(value="/create", method= RequestMethod.POST)
-    public Map<String,List<String>> getGraphData(Model model, GraphCreationInfo graphInfo){
+    public Map<String,List<String>> getGraphData(Model model, GraphCreationInfo graphInfo, HttpSession session){
+
+        String experimentCode = (String)session.getAttribute("experimentCode");
 
 
         String attribX = graphInfo.getxAxisAttribute();
         String attribY = graphInfo.getyAxisAttribute();
         model.addAttribute("graphCreationInfo", new GraphCreationInfo());
-        return graphingManager.getGraphData(attribX,attribY);
+        return graphingManager.getGraphData(attribX,attribY,experimentCode);
     }
 
     /**
@@ -119,8 +130,8 @@ public class GraphsPageController extends DefaultController{
     @RequestMapping(value = "/byPlant/{plantBarCode}/fromData/{attrib1}/{attrib2}"
             ,method = RequestMethod.GET)
     public Map<String,List<String>> getGraphDataForPlant(@PathVariable("plantBarCode") String barCode,
-                                                 @PathVariable("attrib1") String attrib1,
-                                                 @PathVariable("attrib2") String attrib2){
+                                                         @PathVariable("attrib1") String attrib1,
+                                                         @PathVariable("attrib2") String attrib2){
 
         Plant targetPlant  = plantManager.getPlantByBarcode(barCode);
 

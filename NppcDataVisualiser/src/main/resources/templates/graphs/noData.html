@@ -1,0 +1,18 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>No Data</title>
+</head>
+<body>
+
+<h1 layout:fragment="header">No data</h1>
+<div layout:fragment="content">
+
+    <h4 th:text="'No graphable data is available for experiment ' + ${session.experimentCode}" ></h4>
+    <p>Please contact an administrator regarding import of experiment data.</p>
+    <a href="#" class="back_button btn btn-default">Go back</a>
+
+</div>
+</body>
+</html>

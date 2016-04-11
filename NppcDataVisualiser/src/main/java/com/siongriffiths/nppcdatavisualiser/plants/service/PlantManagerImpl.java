@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-
 import java.util.HashSet;
 import java.util.List;
 
@@ -80,6 +79,11 @@ public class PlantManagerImpl implements PlantManager {
     @Override
     public Page<Plant> findPlantsByExperimentCode(String experimentCode, Pageable pageable) {
         return plantDao.findByExperimentCode(experimentCode, pageable);
+    }
+
+    @Override
+    public List<Plant> findPlantsByExperimentCode(String experimentCode) {
+        return plantDao.findByExperimentCode(experimentCode);
     }
 
     @Override

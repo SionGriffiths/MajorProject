@@ -6,9 +6,7 @@ import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-
 import java.util.List;
-import java.util.concurrent.Exchanger;
 
 /**
  * Created on 28/02/2016.
@@ -36,6 +34,8 @@ public interface PlantManager {
     List<Plant> findPlantsByTagForExperiment(TagData tagData, Experiment experiment);
 
     Page<Plant> findPlantsByExperimentCode(String experimentCode, Pageable pageable);
+
+    List<Plant> findPlantsByExperimentCode(String experimentCode);
 
     List<Plant> findPlantsByExperiment(Experiment experiment);
 

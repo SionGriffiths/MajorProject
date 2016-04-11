@@ -24,18 +24,26 @@ import java.util.List;
  * Created on 16/03/2016.
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
+ *
+ * ExperimentDataImportServiceImpl implements methods defined in ExperimentDataImportService
  */
 @Service("experimentDataImportService")
 public class ExperimentDataImportServiceImpl implements ExperimentDataImportService {
 
+    /**
+     * Logger instance for this class
+     */
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    //// TODO: 27/03/2016 Move these string to application.properties?
+    /**
+     * String constants for csv column annotations
+     */
     private static final String PLANT_ATTRIBUTE_COLUMN_MAPPING_STRING_PATTERN = "{{plant-a}}";
     private static final String PLANT_TAG_COLUMN_MAPPING_STRING_PATTERN = "{{plant-t}}";
     private static final String PLANT_DAY_ATTRIBUTE_COLUMN_MAPPING_STRING_PATTERN = "{{day-a}}";
     private static final String PLANT_BARCODE_COLUMN_MAPPING_STRING_PATTERN = "{{bc}}";
     private static final String IN_HEADER_KEY_VALUE_PAIR_DELIMITER = "~~";
+
 
     @Autowired
     private PlantManager plantManager;

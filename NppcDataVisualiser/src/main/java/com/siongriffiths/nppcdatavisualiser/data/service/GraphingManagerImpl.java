@@ -47,14 +47,14 @@ public class GraphingManagerImpl implements GraphingManager {
     }
 
     @Override
-    public Map<String, List<String>> getGraphData(String attribX, String attribY) {
+    public Map<String, List<String>> getGraphData(String attribX, String attribY, String experimentCode) {
 
         Map <String, List<String>> graphDataMap = new HashMap<>();
 
         List <String> attrib1List = new ArrayList<>();
         List <String> attrib2List = new ArrayList<>();
 
-        for(Plant plant : plantManager.getAllPlants()){
+        for(Plant plant : plantManager.findPlantsByExperimentCode(experimentCode)){
             String xValue = plant.getMetadata().getDataAttributes().get(attribX);
             String yValue = plant.getMetadata().getDataAttributes().get(attribY);
 

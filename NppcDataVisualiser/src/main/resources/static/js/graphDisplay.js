@@ -8,6 +8,9 @@ $( document ).ready(function() {
         var $targetElement = $('div[id="' + $attrib + '"]');
         var $url = $barCode + '/fromData/' + $attrib + '/date';
         var graphtype = '';
+        var mode ='lines+markers';
+        var xFormat = "";
+        var yFormat = ":04,2f";
         $.ajax({
             url:$url,
             type: 'get',
@@ -15,7 +18,7 @@ $( document ).ready(function() {
                 console.log(response);
                 $targetElement.addClass('graphDiv');
                 var div = $targetElement[0];
-                makePlotlyGraph(response,div,graphtype,'date',$attrib);
+                makePlotlyGraph(response,div,graphtype, mode, 'date',$attrib,xFormat,yFormat);
             },
             error: function(response) {
 
@@ -31,9 +34,12 @@ $( document ).ready(function() {
 
         var $form = $(this);
         var type = 'scatter';
+        var mode = 'markers';
         var $targetElement = $("#mainGraph");
         var yLabel = $("#simpleY").val();
         var xLabel = $("#simpleX").val();
+        var xFormat = ":04,2f";
+        var yFormat = ":04,2f";
         $.ajax({
             url: $form.attr('action'),
             type: 'post',
@@ -42,7 +48,7 @@ $( document ).ready(function() {
                 console.log(response);
                 $targetElement.addClass('graphDiv');
                 var div = $targetElement[0];
-                makePlotlyGraph(response,div,type, xLabel, yLabel);
+                makePlotlyGraph(response,div,type, mode, xLabel, yLabel,xFormat,yFormat);
             },
             error: function(response) {
 
@@ -52,10 +58,14 @@ $( document ).ready(function() {
 
     });
 
-    function makePlotlyGraph(responseData,div,graphType, xLabel, yLabel){
+    function makePlotlyGraph(responseData,div,graphType, modeOptions, xLabel, yLabel, xFormat, yFormat){
 
         if(graphType == null || graphType == ""){
             graphType = 'scatter';
+        }
+
+        if(modeOptions == null || modeOptions == "" ){
+            modeOptions = 'markers';
         }
 
         var data = [
@@ -63,7 +73,7 @@ $( document ).ready(function() {
                 x: responseData.x,
                 y: responseData.y,
                 type: graphType,
-                mode: 'markers'
+                mode: modeOptions
             }
         ];
 
@@ -74,11 +84,14 @@ $( document ).ready(function() {
                 t: 10
             },
             xaxis: {
-                title: xLabel
+                title: xLabel,
+                tickformat : xFormat
             },
             yaxis: {
-                title: yLabel
+                title: yLabel,
+                tickformat : yFormat
             }
+
         };
 
         Plotly.newPlot(div,data,layout,{showLink: false});

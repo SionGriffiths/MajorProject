@@ -7,9 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Repository;
-
 
 import java.util.List;
 
@@ -35,6 +33,8 @@ public interface PlantDao extends JpaRepository<Plant,Long> {
     @Query("select p from Plant p join p.experiment e where e.experimentCode = :experimentCode ")
     Page<Plant> findByExperimentCode(@Param("experimentCode") String experimentCode, Pageable pageable);
 
+    @Query("select p from Plant p join p.experiment e where e.experimentCode = :experimentCode ")
+    List<Plant> findByExperimentCode(@Param("experimentCode") String experimentCode);
 
     Plant findByBarCode(String barCode);
 
