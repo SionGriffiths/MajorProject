@@ -73,6 +73,12 @@ public class ExperimentDataImportServiceImpl implements ExperimentDataImportServ
     private List<Integer> plantDayATypeColumnIndicies;
     private int barcodeColumn;
 
+
+    /**
+     * Parses a CSV file annotated with the system specific annotations to enable data routing on a column
+     * by column basis
+     * @param filePath the path to the annotated file
+     */
     public void parseAnnotatedExperimentDataCSVFile(String filePath){
         List<String[]> parsedFile = experimentCSVReader.doParse(filePath);
 
@@ -91,6 +97,10 @@ public class ExperimentDataImportServiceImpl implements ExperimentDataImportServ
 
     }
 
+    /**
+     * Processes the tokenised header columns of a CSV formatted file containing experiment data
+     * @param header A String array of the tokenised header columns
+     */
     public void processHeaderColumns(String[] header){
 
         for(int i = 0; i < header.length; i++){
@@ -110,6 +120,11 @@ public class ExperimentDataImportServiceImpl implements ExperimentDataImportServ
         }
     }
 
+    /**
+     * Process the content of a CSV data file
+     * @param csvFile The tokenised csv columns as a list of string arrays
+     * @param header The header columns for the csv file
+     */
     private void processCsvFile(List<String[]> csvFile, String[] header){
         for(String[] line : csvFile) {
             enrichPlantRecord(barcodeColumn, plantATypeColumnIndicies,
@@ -117,6 +132,15 @@ public class ExperimentDataImportServiceImpl implements ExperimentDataImportServ
         }
     }
 
+    /**
+     * Route a line from csv column data to the correcponding plant or plantDay attribute
+     * @param barCodeIndex index corresponding to plant barcode in the line array
+     * @param plantAttribIndex list of indices corresponding to plant attribute columns in the line array
+     * @param plantTagIndex list of indices corresponding to plant tags columns in the line array
+     * @param dayAttribIndex list of indices corresponding to plantDay attribute columns in the line array
+     * @param header csv file header columns
+     * @param line a line of the csv file
+     */
     private void enrichPlantRecord(int barCodeIndex, List<Integer> plantAttribIndex,
                                    List<Integer> plantTagIndex, List<Integer> dayAttribIndex, String[] header, String[] line) {
         String barCode = line[barCodeIndex];
@@ -131,6 +155,13 @@ public class ExperimentDataImportServiceImpl implements ExperimentDataImportServ
         }
     }
 
+    /**
+     * Route data from csv columns to plant tags
+     * @param plantTagIndex list of indices corresponding to plant tags columns in the line array
+     * @param header csv file header columns
+     * @param line a line of the csv file
+     * @param plant the Plant instance
+     */
     private void enrichPlantTags(List<Integer> plantTagIndex, String[] header, String[] line, Plant plant){
         for(Integer i : plantTagIndex){
             if(line[i] != null && !line[i].equals("")){
@@ -143,6 +174,13 @@ public class ExperimentDataImportServiceImpl implements ExperimentDataImportServ
         }
     }
 
+    /**
+     * Route data from csv columns to plant attributes
+     * @param plantAttribIndex list of indices corresponding to plant attribute columns in the line array
+     * @param header csv file header columns
+     * @param line a line of the csv file
+     * @param plant the Plant instance
+     */
     private void enrichPlantAttribs(List<Integer> plantAttribIndex, String[] header, String[] line, Plant plant){
         for(Integer i : plantAttribIndex){
             if(line[i] != null || !line[i].equals("")){
@@ -153,6 +191,13 @@ public class ExperimentDataImportServiceImpl implements ExperimentDataImportServ
         }
     }
 
+    /**
+     * Route data from csv to plantDay attributes
+     * @param dayAttribIndex list of indices corresponding to plantDay attribute columns in the line array
+     * @param header csv file header columns
+     * @param line a line of the csv file
+     * @param plant the Plant instance
+     */
     private void enrichPlantDayAttribs(List<Integer> dayAttribIndex, String[] header, String[] line, Plant plant) {
         for (Integer i : dayAttribIndex) {
             if (line[i] != null && !line[i].equals("")) {

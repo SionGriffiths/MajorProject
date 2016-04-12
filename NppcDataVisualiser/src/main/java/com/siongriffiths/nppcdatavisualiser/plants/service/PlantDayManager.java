@@ -6,7 +6,6 @@ import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantImage;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
@@ -18,7 +17,7 @@ import java.util.List;
  * @author Siôn Griffiths / sig2@aber.ac.uk
  *
  * The PlantDayManager interface defines the public business processes for managing PlantDay objects
- * and their interactions within the system. *
+ * and their interactions within the system.
  */
 public interface PlantDayManager {
 
