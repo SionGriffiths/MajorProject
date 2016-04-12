@@ -98,20 +98,45 @@ $( document ).ready(function() {
             yaxis: {
                 title: yLabel,
                 tickformat : yFormat
-            }
+            },
+            hovermode:'closest'
 
         };
 
         Plotly.newPlot(div,data,layout,{showLink: false});
 
+        var closestX ='';
+        var closestY ='';
 
-        // div.on('plotly_click', function(data){
-        //     var pts = '';
-        //     for(var i=0; i < data.points.length; i++){
-        //         pts = 'x = '+data.points[i].x +'\ny = '+
-        //             data.points[i].y + '\n\n';
-        //     }
-        //     alert('Closest point clicked:\n\n'+pts);
-        // });
+        div.on('plotly_click', function(data){
+            var pts = '';
+            for(var i=0; i < data.points.length; i++){
+                pts = 'x = '+data.points[i].x +'\ny = '+
+                    data.points[i].y + '\n\n';
+                closestX = data.points[i].x;
+                closestY = data.points[i].y;
+            }
+            ajaxPlantQuery(xLabel, closestX, yLabel, closestY);
+        });
+    }
+
+    function ajaxPlantQuery(xLabel, closestX, yLabel, closestY){
+        // xLabel = encodeURIComponent(xLabel);
+        // closestX = encodeURIComponent(closestX);
+        // yLabel = encodeURIComponent(yLabel);
+        // closestY = encodeURIComponent(closestY);
+        var path = "graphs/graphClickQuery?keyX="+xLabel+"&keyY="+yLabel+"&valX="+closestX+"&valY="+closestY;
+        console.log(path);
+        $.ajax({
+            url: path ,
+            type: 'get',
+            // data: $form.serialize(),
+            success: function(response) {
+                $("#graph_result_div").html(response);
+            },
+            error: function(response) {
+
+            }
+        });
     }
 });

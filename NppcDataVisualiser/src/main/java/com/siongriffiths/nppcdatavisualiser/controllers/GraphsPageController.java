@@ -37,6 +37,7 @@ public class GraphsPageController extends DefaultController{
     private static final String GRAPHS_SHOW_PATH = "graphs/show";
     private static final String GRAPHS_BY_PLANT_PATH = "graphs/forPlant";
     private static final String GRAPHS_NO_DATA = "graphs/noData";
+    private static final String GRAPH_CLICK_RESULT_FRAGMENT = "graphs/graphPageFragments :: graphClickResult";
     private static final String PLANT_NOT_FOUND_PATH = "plants/notfound";
 
     /**
@@ -130,12 +131,18 @@ public class GraphsPageController extends DefaultController{
     public Map<String,List<String>> getGraphDataForPlant(@PathVariable("plantBarCode") String barCode,
                                                          @PathVariable("attrib1") String attrib1,
                                                          @PathVariable("attrib2") String attrib2){
-
         Plant targetPlant  = plantManager.getPlantByBarcode(barCode);
-
         return graphingManager.getGraphDataForPlant(targetPlant,attrib1,attrib2);
     }
 
+
+    @RequestMapping(value = "graphClickQuery",method = RequestMethod.GET, params = {"keyX","keyY","valX","valY"})
+    public String plantsFromGraphQuery(String keyX, String keyY, String valX, String valY, Model model){
+        List<Plant> plants = plantManager.findByTwoAttrributeValues(keyX,valX,keyY,valY);
+        logger.info("Results : " + plants.size() +" using params x: " + keyX + " | " + valX + " ~~ y: " + keyY + " | " + valY);
+        model.addAttribute("results",plants);
+        return GRAPH_CLICK_RESULT_FRAGMENT;
+    }
 
     /**
      * Gets all available attribute keys for a given plant

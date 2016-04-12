@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+</head>
+
+<body>
+
+
+<div th:fragment="graphClickResult">
+<p>Test</p>
+
+    <th:block th:if="${results}">
+        <div class="home_experiment_link_div" th:each="res: ${results}">
+            <p th:text="${res.getBarCode()}">
+
+            </p>
+
+        </div>
+    </th:block>
+</div>
+
+
+
+</body>
+</html>

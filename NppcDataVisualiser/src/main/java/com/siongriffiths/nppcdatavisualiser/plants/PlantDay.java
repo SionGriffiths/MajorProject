@@ -50,7 +50,9 @@ public class PlantDay implements Comparable<PlantDay>{
         this.id = id;
     }
 
-    @OneToMany(mappedBy = "plantDay", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "plantDay", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "plantDay_id")
     public List<PlantImage> getPlantImages() {
         return plantImages;
     }

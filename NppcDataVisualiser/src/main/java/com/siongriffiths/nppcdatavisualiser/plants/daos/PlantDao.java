@@ -36,8 +36,23 @@ public interface PlantDao extends JpaRepository<Plant,Long> {
     @Query("select p from Plant p join p.experiment e where e.experimentCode = :experimentCode ")
     List<Plant> findByExperimentCode(@Param("experimentCode") String experimentCode);
 
+    @Query("select p from Plant p join p.metadata.dataAttributes md where " +
+            "(key(md) =:attrKey1 and :attrVal1 in (value(md)) )")
+    List<Plant> findByTwoAttrributeValues(@Param("attrKey1") String attrKey1,
+                                          @Param("attrVal1") String attrVal1);
+
+    @Query("select p from Plant p join p.metadata.dataAttributes md join p.metadata.dataAttributes md2 where " +
+            "(key(md) =:attrKey1 and :attrVal1 in (value(md)) ) and " +
+            "(key(md2) =:attrKey2 and :attrVal2 in (value(md2)) )")
+    List<Plant> findByTwoAttrributeValues(@Param("attrKey1") String attrKey1,
+                                          @Param("attrVal1") String attrVal1,
+                                          @Param("attrKey2") String attrKey2,
+                                          @Param("attrVal2") String attrVal2);
+
     Plant findByBarCode(String barCode);
 
     void deleteByExperiment(Experiment experiment);
+
+
 
 }

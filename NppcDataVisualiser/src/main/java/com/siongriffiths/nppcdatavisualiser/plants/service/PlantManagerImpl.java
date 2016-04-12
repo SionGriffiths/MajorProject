@@ -115,6 +115,12 @@ public class PlantManagerImpl implements PlantManager {
         return plantDao.findPlantsWithTagsByExperiment(experiment);
     }
 
+    @Override
+    public List<Plant> findByTwoAttrributeValues(String attrKey1, String attrVal1,String attrKey2, String attrVal2) {
+//        return plantDao.findByTwoAttrributeValues(attrKey2,attrVal2);
+        return plantDao.findByTwoAttrributeValues(attrKey1,attrVal1,attrKey2,attrVal2);
+    }
+
 
     private Plant createNewPlant(String barCode) {
         return new Plant(barCode);

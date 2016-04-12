@@ -1,13 +1,6 @@
 package com.siongriffiths.nppcdatavisualiser.plants;
 
-import com.siongriffiths.nppcdatavisualiser.data.Metadata;
-import com.siongriffiths.nppcdatavisualiser.data.TagData;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created on 26/02/2016.
@@ -22,7 +15,7 @@ public class PlantImage {
 
     private String filePath;
 
-    private PlantDay plantDay;
+//    private PlantDay plantDay;
 
     public PlantImage(){}
 
@@ -49,14 +42,14 @@ public class PlantImage {
         this.filePath = filePath;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "plant_day_id", nullable = false)
-    public PlantDay getPlantDay() {
-        return plantDay;
-    }
-
-    public void setPlantDay(PlantDay plantDay) {
-        this.plantDay = plantDay;
-    }
+//    @ManyToOne
+//    @JoinColumn(name = "plant_day_id", nullable = false)
+//    public PlantDay getPlantDay() {
+//        return plantDay;
+//    }
+//
+//    public void setPlantDay(PlantDay plantDay) {
+//        this.plantDay = plantDay;
+//    }
 
 }

@@ -46,4 +46,6 @@ public interface PlantManager {
     void resetTagsForExperiment(Experiment experiment);
 
     List<Plant> findPlantsWithTagsByExperiment(Experiment experiment);
+
+    List<Plant> findByTwoAttrributeValues(String attrKey1, String attrVal1,String attrKey2, String attrVal2);
 }
