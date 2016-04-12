@@ -9,14 +9,18 @@
 
 
 <div th:fragment="graphClickResult">
-<p>Test</p>
+
+    <h5>Click graph nodes to select matching plants</h5>
 
     <th:block th:if="${results}">
+        <p th:text="'Number of results : ' + ${results.size()}"></p>
         <div class="home_experiment_link_div" th:each="res: ${results}">
-            <p th:text="${res.getBarCode()}">
 
-            </p>
-
+            <a th:href="'/plants/'+${res.getBarCode()}">
+                <div class="home_experiment_row">
+                    <h3 th:text="${res.getBarCode()}"/>
+                </div>
+            </a>
         </div>
     </th:block>
 </div>

@@ -24,6 +24,7 @@
     <div class="col-xs-6">
         <span th:text="'Results per page: ' +${currentSize}" class="label label-default"></span>
         <ul class="pagination_sizes list-inline">
+            <li><a th:href="'?page=1&amp;size=5'">5</a></li>
             <li><a th:href="'?page=1&amp;size=10'">10</a></li>
             <li><a th:href="'?page=1&amp;size=25'">25</a></li>
             <li><a th:href="'?page=1&amp;size=50'">50</a></li>

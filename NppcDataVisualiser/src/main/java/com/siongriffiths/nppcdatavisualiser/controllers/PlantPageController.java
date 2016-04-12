@@ -12,7 +12,6 @@ import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantDayTagInf
 import com.siongriffiths.nppcdatavisualiser.plants.controlobjects.PlantTagInfo;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -51,7 +50,7 @@ public class PlantPageController extends DefaultController {
      * Plant Page Pagination constants
      */
     private static final int DEFAULT_PAGINATION_START_PAGE = 1;
-    private static final int DEFAULT_PAGINATION_RESULTS = 10;
+    private static final int DEFAULT_PAGINATION_RESULTS = 5;
 
     /**
      * PlantManager, a service class providing access to business logic and persistence for Plant objects
