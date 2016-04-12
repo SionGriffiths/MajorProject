@@ -10,9 +10,10 @@
 <div layout:fragment="content">
 
 
-    <p th:text="'There are ' + ${tags.size()} + ' tags in the system :'" ></p>
+    <p th:text="'There are ' + ${tags.size()} + ' tags in the system for the current experiment:'" ></p>
     <div th:each="tag,status : ${tags}" class="row plant_row">
         <a th:href="'/tags/'+${tag.getTagContent()}"  th:text="${tag.getTagContent()}" />
+
     </div>
 
 

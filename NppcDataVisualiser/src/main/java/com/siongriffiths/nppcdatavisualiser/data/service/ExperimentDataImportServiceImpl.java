@@ -44,13 +44,27 @@ public class ExperimentDataImportServiceImpl implements ExperimentDataImportServ
     private static final String PLANT_BARCODE_COLUMN_MAPPING_STRING_PATTERN = "{{bc}}";
     private static final String IN_HEADER_KEY_VALUE_PAIR_DELIMITER = "~~";
 
-
+    /**
+     * PlantManager, a service class providing access to business logic and persistence for Plant objects
+     */
     @Autowired
     private PlantManager plantManager;
+
+    /**
+     * PlantDayManager, a service class providing access to business logic and persistence for PlantDay objects
+     */
     @Autowired
     private  PlantDayManager plantDayManager;
+
+    /**
+     * TagManager, a service class providing access to business logic and persistence for TagData objects
+     */
     @Autowired
     private TagManager tagManager;
+
+    /**
+     * ExperimentCSVReader, a simple bean class which parses a csv file into a list of lines split into columns
+     */
     @Autowired
     private ExperimentCSVReader experimentCSVReader;
 

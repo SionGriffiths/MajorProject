@@ -110,8 +110,6 @@ public class GraphsPageController extends DefaultController{
     public Map<String,List<String>> getGraphData(Model model, GraphCreationInfo graphInfo, HttpSession session){
 
         String experimentCode = (String)session.getAttribute("experimentCode");
-
-
         String attribX = graphInfo.getxAxisAttribute();
         String attribY = graphInfo.getyAxisAttribute();
         model.addAttribute("graphCreationInfo", new GraphCreationInfo());

@@ -21,9 +21,9 @@
         <div class="container-fluid">
             <ul class="nav navbar-nav">
                 <li><a href="/">Home</a></li>
-                <li><a href="/plants" th:if=" ${session.experimentCode} != null ">plants</a></li>
-                <li><a href="/tags" th:if=" ${session.experimentCode} != null ">tags</a></li>
-                <li><a href="/graphs" th:if=" ${session.experimentCode} != null ">graphs</a></li>
+                <li><a href="/plants" th:if=" ${session.experimentCode} != null ">Plants</a></li>
+                <li><a href="/tags" th:if=" ${session.experimentCode} != null ">Tags</a></li>
+                <li><a href="/graphs" th:if=" ${session.experimentCode} != null ">Graphs</a></li>
             </ul>
             <a href="/" class="navbar-text pull-right"
                th:text="'Current experiment is ' +${session.experimentCode} + ' click here to change'"

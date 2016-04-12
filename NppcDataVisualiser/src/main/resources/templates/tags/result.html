@@ -10,8 +10,6 @@
 <div layout:fragment="content">
 
 
-    <p th:text="'There is tag ' + ${tag.getTagContent()}" ></p>
-
     <p th:text="'There\'s ' +${taggedPlants.size()} + ' tagged plants with tag ' +${tag.getTagContent()} "/>
     <div th:each="plant,status : ${taggedPlants}" class="row plant_row">
         <h3 th:text="${plant.getBarCode()}"/> <a th:href="'/plants/'+${plant.getBarCode()}" class="btn btn-default">View Plant Page</a>

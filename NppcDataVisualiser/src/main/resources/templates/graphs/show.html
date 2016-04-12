@@ -18,26 +18,20 @@
             <form th:action="@{graphs/create}" th:object="${graphCreationInfo}" class="graph_create_form">
 
                 <div class="form-group">
-                    <label for="simpleX">Select X axis attribute :</label>
-                    <select class="form-control" id="simpleX" th:field="*{xAxisAttribute}">
+
+                    <label for="graph_axis_X">Select X axis attribute :</label>
+                    <select class="form-control" id="graph_axis_X" th:field="*{xAxisAttribute}">
                         <option th:each="attrib : ${availableAttribs}"
                                 th:value="${attrib}"
                                 th:text="${attrib}">Test
                         </option>
                     </select>
-                    <!--<label>-->
-                        <!--<input type="radio" name="value_type" value="Value" checked="true"/>-->
-                        <!--Value-->
-                    <!--</label>-->
-                    <!--<label>-->
-                        <!--<input type="radio" name="value_type" value="Count"/>-->
-                        <!--Occurrences-->
-                    <!--</label>-->
+
                 </div>
 
                 <div class="form-group">
-                    <label for="simpleY">Select Y axis attribute :</label>
-                    <select class="form-control" id="simpleY" th:field="*{yAxisAttribute}">
+                    <label for="graph_axis_Y">Select Y axis attribute :</label>
+                    <select class="form-control" id="graph_axis_Y" th:field="*{yAxisAttribute}">
                         <option th:each="attrib : ${availableAttribs}"
                                 th:value="${attrib}"
                                 th:text="${attrib}">Test
@@ -45,6 +39,17 @@
                     </select>
 
                 </div>
+                <div>
+                    <label>
+                        <input type="radio" name="plotType" value="Scatter" checked="true"/>
+                        Scatter
+                    </label>
+                    <label>
+                        <input type="radio" name="plotType" value="Box"/>
+                        Box
+                    </label>
+                </div>
+                <a href="#" id="axis-swap" class="btn btn-default">Swap axis</a>
                 <input type="submit" class="btn btn-default" value="Create Graph"/>
             </form>
             <!--<th:block th:each="attrib,status : ${availableAttribs}">-->

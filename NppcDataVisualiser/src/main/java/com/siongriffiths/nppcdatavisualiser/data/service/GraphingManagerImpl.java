@@ -23,7 +23,6 @@ public class GraphingManagerImpl implements GraphingManager {
     private PlantManager plantManager;
 
 
-    //// TODO: 14/03/2016 If second attrib is "date" then just add all applicable day dates into the list
     @Override
     public Map<String, List<String>> getGraphDataForPlant(Plant plant, String attrib1, String attrib2) {
         Map <String, List<String>> graphDataMap = new HashMap<>();
@@ -71,4 +70,6 @@ public class GraphingManagerImpl implements GraphingManager {
 
         return graphDataMap;
     }
+
+
 }

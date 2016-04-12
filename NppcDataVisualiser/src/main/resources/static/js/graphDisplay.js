@@ -31,13 +31,18 @@ $( document ).ready(function() {
 
     $('.graph_create_form').on('submit', function(e) {
         e.preventDefault();
+        ajaxCreateMainGraph($(this));
 
-        var $form = $(this);
-        var type = 'scatter';
+    });
+
+
+    function ajaxCreateMainGraph(element){
+        var $form = element;
+        var type = $('input[name=plotType]:checked').val().toLowerCase();
         var mode = 'markers';
         var $targetElement = $("#mainGraph");
-        var yLabel = $("#simpleY").val();
-        var xLabel = $("#simpleX").val();
+        var yLabel = $("#graph_axis_Y").val();
+        var xLabel = $("#graph_axis_X").val();
         var xFormat = ":04,2f";
         var yFormat = ":04,2f";
         $.ajax({
@@ -45,7 +50,6 @@ $( document ).ready(function() {
             type: 'post',
             data: $form.serialize(),
             success: function(response) {
-                console.log(response);
                 $targetElement.addClass('graphDiv');
                 var div = $targetElement[0];
                 makePlotlyGraph(response,div,type, mode, xLabel, yLabel,xFormat,yFormat);
@@ -54,8 +58,12 @@ $( document ).ready(function() {
 
             }
         });
+    }
 
-
+    $('#axis-swap').click( function() {
+        var tempY = $("#graph_axis_Y").val();
+        $("#graph_axis_Y").val($("#graph_axis_X").val());
+        $("#graph_axis_X").val(tempY);
     });
 
     function makePlotlyGraph(responseData,div,graphType, modeOptions, xLabel, yLabel, xFormat, yFormat){
@@ -95,5 +103,15 @@ $( document ).ready(function() {
         };
 
         Plotly.newPlot(div,data,layout,{showLink: false});
+
+
+        // div.on('plotly_click', function(data){
+        //     var pts = '';
+        //     for(var i=0; i < data.points.length; i++){
+        //         pts = 'x = '+data.points[i].x +'\ny = '+
+        //             data.points[i].y + '\n\n';
+        //     }
+        //     alert('Closest point clicked:\n\n'+pts);
+        // });
     }
 });

@@ -46,28 +46,28 @@
                 <div th:replace="plants/plantFragments :: dayTagFragment"   ></div>
             </div>
 
-            <form th:action="@{addDayTag}" th:object="${plantDayTagInfo}" class="plant_day_tag_form">
-                <div class="form-group" >
+            <form th:action="@{addDayTag}" th:object="${plantDayTagInfo}" class="plant_day_tag_form form-horizontal">
+
                     <input type="hidden" name="plantDayID" th:value="${plantDay.getId()}" />
-                    <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" class="form-control"
+                    <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}"
                            name="tagContent" placeholder="Add tag " />
                     <input type="submit" value="Tag" />
-                </div>
+
             </form>
 
             <div  th:id="'plant_day_attribs'+${plantDay.getId()}" th:class="'plant_day_attribs attribs_div container'">
                 <div th:replace="plants/plantFragments :: dayAttribFragment"   ></div>
             </div>
 
-            <form th:action="@{addDayAttribute}" th:object="${plantDayAttributeInfo}" class="plant_day_attrib_form">
-                <div class="form-group">
+            <form th:action="@{addDayAttribute}" th:object="${plantDayAttributeInfo}" class="plant_day_attrib_form form-horizontal">
+
                     <input type="hidden" name="plantDayID" th:value="${plantDay.getId()}" />
-                    <input  type="text" required="required" pattern="[A-Za-z0-9\-\/ ]{1,20}" class="form-control attrib_key_edit"
+                    <input  type="text" required="required" pattern="[A-Za-z0-9\-\/ ]{1,20}" class="attrib_key_edit"
                             name="attribName" placeholder="Add attribute name" />
-                    <input  type="text" required="required" pattern="[A-Za-z0-9\-\/ ]{1,20}" class="form-control attrib_val_edit"
+                    <input  type="text" required="required" pattern="[A-Za-z0-9\-\/ ]{1,20}" class="attrib_val_edit"
                             name="attribVal" placeholder="Add attribute value" />
                     <input type="submit" value="Add Attribute" />
-                </div>
+
             </form>
         </div>
 
