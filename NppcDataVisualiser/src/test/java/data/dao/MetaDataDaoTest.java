@@ -3,7 +3,6 @@ package data.dao;
 import com.siongriffiths.nppcdatavisualiser.data.Metadata;
 import com.siongriffiths.nppcdatavisualiser.data.doas.MetaDataDao;
 import defaults.AbstractTest;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
-
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Created on 11/03/2016.
@@ -44,7 +40,7 @@ public class MetaDataDaoTest extends AbstractTest {
         Metadata data = new Metadata();
         metaDataDao.save(data);
         Integer orgId = data.getId();
-        logger.info("\n \n  " + orgId);
+        logger.info(orgId);
 
         String testGrowthStage = "2";
         data.addDataAttribute("testKey", "22");
@@ -57,4 +53,10 @@ public class MetaDataDaoTest extends AbstractTest {
 
     }
 
+
+    @Test
+    public void testImportSQL(){
+        List<Metadata> retrieved = metaDataDao.findAll();
+        logger.info(retrieved.size());
+    }
 }

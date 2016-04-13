@@ -81,7 +81,7 @@ public class PlantDay implements Comparable<PlantDay>{
     }
 
     /**
-     * Gets the PlantImages associated with this PlantDay. Defines a unidirectional ONe-to-Many relationship with no
+     * Gets the PlantImages associated with this PlantDay. Defines a unidirectional One-to-Many relationship with no
      * reference on the other end. Defines cascade and fetch behaviours
      * @return The PlantImages associated with this
      */
