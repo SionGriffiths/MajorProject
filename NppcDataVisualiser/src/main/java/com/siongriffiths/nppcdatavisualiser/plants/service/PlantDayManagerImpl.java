@@ -74,16 +74,6 @@ public class PlantDayManagerImpl implements PlantDayManager {
     }
 
     /**
-     * Retrieves a list of PlantDays from the persistence layer which have been associated with a specific TagData
-     * @param tagData the target TagData
-     * @return List of PlantDays associated with parameter TagData
-     */
-    @Override
-    public List<PlantDay> findPlantDaysByTag(TagData tagData) {
-        return plantDayDao.findByTagData(tagData.getId());
-    }
-
-    /**
      * Finds PlantDays associated with a particular TagData and a particular experiment, using a TagData instance
      * @param tagData the TagData
      * @param experiment the experiment
@@ -142,18 +132,6 @@ public class PlantDayManagerImpl implements PlantDayManager {
                 createPlantDay(date,plant,plantImage);
             }
         }
-    }
-
-    /**
-     * Method allows the addition of a String key-value attribute pair to be added to a PlantDay
-     * @param day The PlantDay to add the attribute pair against
-     * @param key Attribute key
-     * @param value Attribute value
-     */
-    @Override
-    public void addAttributeToDay(PlantDay day, String key, String value) {
-        day.getMetadata().addDataAttribute(key, value);
-        savePlantDay(day);
     }
 
     /**

@@ -48,12 +48,6 @@ public interface PlantDayManager {
      */
     PlantDay getPlantDayByID(String id);
 
-    /**
-     * Retrieves a list of PlantDays from the persistence layer which have been associated with a specific TagData
-     * @param tagData the target TagData
-     * @return List of PlantDays associated with parameter TagData
-     */
-    List<PlantDay> findPlantDaysByTag(TagData tagData);
 
     /**
      * Finds PlantDays associated with a particular TagData and a particular experiment, using a TagData instance
@@ -88,13 +82,6 @@ public interface PlantDayManager {
      */
     void addToOrCreatePlantDay(Date date, PlantImage plantImage, Plant plant);
 
-    /**
-     * Method allows the addition of a String key-value attribute pair to be added to a PlantDay
-     * @param day The PlantDay to add the attribute pair against
-     * @param key Attribute key
-     * @param value Attribute value
-     */
-    void addAttributeToDay(PlantDay day,String key, String value);
 
     /**
      * Returns a pagination page of plants for a given plant and page settings

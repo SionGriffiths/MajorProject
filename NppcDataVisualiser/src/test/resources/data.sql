@@ -36,3 +36,28 @@ insert into tag_data (id,tag_content) values (05,'content 5')
 insert into plant_tag (plant_id, tag_id) values (10, 01)
 insert into plant_tag (plant_id, tag_id) values (10, 03)
 insert into plant_tag (plant_id, tag_id) values (09, 02)
+
+INSERT INTO metadata (id) VALUES (101)
+INSERT INTO metadata (id) VALUES (202)
+INSERT INTO metadata (id) VALUES (303)
+INSERT INTO metadata (id) VALUES (404)
+INSERT INTO metadata (id) VALUES (505)
+INSERT INTO metadata (id) VALUES (606)
+INSERT INTO metadata (id) VALUES (707)
+INSERT INTO metadata (id) VALUES (808)
+INSERT INTO metadata (id) VALUES (909)
+INSERT INTO metadata (id) VALUES (110)
+
+insert into plant_day (id, date, plant_day_meta_data_id, plant_id) values (1,'2016-02-02', 101, 01)
+insert into plant_day (id, date, plant_day_meta_data_id, plant_id) values (2,'2016-04-05', 202, 01)
+insert into plant_day (id, date, plant_day_meta_data_id, plant_id) values (3,'2016-04-05', 303, 01)
+insert into plant_day (id, date, plant_day_meta_data_id, plant_id) values (4,'2016-04-05', 404, 01)
+insert into plant_day (id, date, plant_day_meta_data_id, plant_id) values (5,'2016-04-05', 505, 01)
+insert into plant_day (id, date, plant_day_meta_data_id, plant_id) values (6,'2016-04-05', 606, 01)
+
+insert into plant_day (id, date, plant_day_meta_data_id, plant_id) values (7,'2016-04-05', 707, 02)
+
+insert into plantday_tag (plantday_id, tag_id) values (1, 03)
+insert into plantday_tag (plantday_id, tag_id) values (1, 04)
+insert into plantday_tag (plantday_id, tag_id) values (5, 04)
+
