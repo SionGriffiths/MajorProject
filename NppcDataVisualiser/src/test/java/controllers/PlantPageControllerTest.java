@@ -57,7 +57,7 @@ public class PlantPageControllerTest  extends AbstractTest {
     @Test
     public void testPlant() throws Exception {
         String testBarCode = "55345";
-        Experiment experiment = new Experiment("TEST");
+        Experiment experiment = experimentManager.getExperimentByCode("codeExperiment");
         Plant plant = new Plant();
         plant.setBarCode(testBarCode);
         experimentManager.saveExperiment(experiment);
