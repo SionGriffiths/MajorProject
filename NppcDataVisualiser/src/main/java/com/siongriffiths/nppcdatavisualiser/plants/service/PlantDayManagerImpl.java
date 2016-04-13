@@ -123,7 +123,6 @@ public class PlantDayManagerImpl implements PlantDayManager {
 
     private void associateImageToDay(PlantImage image, PlantDay day){
         day.addPlantImage(image);
-//        image.setPlantDay(day);
     }
 
     private void createPlantDay(Date date, Plant plant, PlantImage image){

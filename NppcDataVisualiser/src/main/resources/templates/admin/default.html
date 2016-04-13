@@ -27,7 +27,7 @@
                    data-confirm-message="Are you sure you want to initialise this experiment?"></a>
 
                 <a th:href="@{'/admin/deletePlants/'+${entry.key}}" class="btn btn-default admin_action_button confirm-required"
-                   th:classappend="${entry.value.toString().equals('INITIALISED')}? '' : 'disabled'"
+                   th:classappend="${entry.value.toString().equals('INITIALISED') || entry.value.toString().equals('INITIALISING') }? '' : 'disabled'"
                    data-confirm-message="This will delete all plants in the experiment, continue?">Delete plants</a>
 
                 <a th:href="@{'/admin/dataImport/'+${entry.key}}" class="btn admin_action_button btn-default confirm-required"

@@ -7,7 +7,6 @@ import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
 import com.siongriffiths.nppcdatavisualiser.experiment.ExperimentStatus;
 import com.siongriffiths.nppcdatavisualiser.experiment.service.ExperimentManager;
 import com.siongriffiths.nppcdatavisualiser.imageutils.PlantLoader;
-import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantDayManager;
 import com.siongriffiths.nppcdatavisualiser.plants.service.PlantManager;
 import org.slf4j.Logger;
@@ -23,8 +22,6 @@ import org.springframework.stereotype.Service;
  */
 @Service("initialisationService")
 public class InitialisationServiceImpl implements InitialisationService {
-
-    private Boolean systemInitialisedFlag = Boolean.FALSE;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
@@ -52,7 +49,7 @@ public class InitialisationServiceImpl implements InitialisationService {
     public void initExperiment(String experimentCode){
         Experiment experiment = getExperimentForCode(experimentCode);
         experimentManager.updateStatus(experiment,ExperimentStatus.INITIALISING);
-        plantLoader.initPlantImages(experiment);
+        plantLoader.initExperiment(experiment);
     }
 
     public void initData(String experimentCode){

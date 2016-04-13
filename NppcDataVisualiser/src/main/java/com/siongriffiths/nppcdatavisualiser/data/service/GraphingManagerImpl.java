@@ -21,6 +21,9 @@ import java.util.Map;
 @Service("graphingManager")
 public class GraphingManagerImpl implements GraphingManager {
 
+    /**
+     * PlantManager, a service class providing access to business logic and persistence for Plant objects
+     */
     @Autowired
     private PlantManager plantManager;
 

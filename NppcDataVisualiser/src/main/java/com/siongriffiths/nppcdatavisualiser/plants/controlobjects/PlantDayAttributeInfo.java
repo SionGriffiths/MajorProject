@@ -4,6 +4,8 @@ package com.siongriffiths.nppcdatavisualiser.plants.controlobjects;
  * Created on 12/03/2016.
  *
  * @author Siôn Griffiths / sig2@aber.ac.uk
+ *
+ * Form backing object pojo class used to represent a front end form and act as a data transfer object for form submission
  */
 public class PlantDayAttributeInfo {
 
