@@ -89,7 +89,7 @@ public class AdminPageController extends DefaultController {
     @RequestMapping("/deletePlants/{experimentCode}")
     public String deletePlants(@PathVariable("experimentCode") String experimentCode, Model model){
         populateExperimentCodesIntoModel(model);
-        initialisationService.deleteExperiementData(experimentCode);
+        initialisationService.deleteExperiement(experimentCode);
         return INIT_PAGE_PATH;
     }
 
