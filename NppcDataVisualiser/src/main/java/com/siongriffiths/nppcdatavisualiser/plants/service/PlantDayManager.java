@@ -55,6 +55,12 @@ public interface PlantDayManager {
      */
     List<PlantDay> findPlantDaysByTag(TagData tagData);
 
+    /**
+     * Finds PlantDays associated with a particular TagData and a particular experiment, using a TagData instance
+     * @param tagData the TagData
+     * @param experiment the experiment
+     * @return a List of PlantDays associated with the TagData and the Experiement
+     */
     List<PlantDay> findByTagDataForExperiment(TagData tagData, Experiment experiment);
 
     /**
@@ -66,6 +72,11 @@ public interface PlantDayManager {
     PlantDay findByPlantAndDate(Plant plant, Date date);
 
 
+    /**
+     * Finds PlantDays associated with an Experiment
+     * @param experiment the Experiment
+     * @return a list of PlantDays associated with the Experiment
+     */
     List<PlantDay> findPlantDaysByExperiment(Experiment experiment);
 
     /**
@@ -85,9 +96,24 @@ public interface PlantDayManager {
      */
     void addAttributeToDay(PlantDay day,String key, String value);
 
+    /**
+     * Returns a pagination page of plants for a given plant and page settings
+     * @param targetPlant the plant
+     * @param pageable pagination page settings
+     * @return a pagination page of PlantDays using the current plant and page settings
+     */
     Page<PlantDay> getPlantDaysByPlant(Plant targetPlant, Pageable pageable);
 
+    /**
+     * Finds PlantDays for a given experiment which have been tagged with at least 1 TagData
+     * @param experiment the Experiment
+     * @return a List of tagged PlantDays
+     */
     List<PlantDay> findPlantDaysWithTagsByExperiment(Experiment experiment);
 
+    /**
+     * Resets all tags associated with PlantDays in the given Experiment
+     * @param experiment
+     */
     void resetTagsForExperiment(Experiment experiment);
 }
