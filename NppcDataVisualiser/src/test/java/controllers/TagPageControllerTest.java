@@ -12,8 +12,7 @@ import java.util.HashMap;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Created on 14/04/2016.
@@ -44,7 +43,9 @@ public class TagPageControllerTest extends AbstractControllerTest {
                 .andExpect((content().string(containsString("content 1"))))
                 .andExpect((content().string(containsString("content 2"))))
                 .andExpect((content().string(containsString("content 3"))))
-                .andExpect((content().string(containsString("content 4"))));
+                .andExpect((content().string(containsString("content 4"))))
+                .andExpect(view().name("tags/show"));
+
 
     }
 
@@ -54,7 +55,9 @@ public class TagPageControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("<title>Tag Page")))
-                .andExpect((content().string(containsString("There are 0 tags in the system for the current experiment"))));
+                .andExpect((content().string(containsString("There are 0 tags in the system for the current experiment"))))
+                .andExpect(view().name("tags/show"));
+
 
     }
 
@@ -67,7 +70,8 @@ public class TagPageControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("plants with tag "+availablecontent)))
-                .andExpect(content().string(containsString("days/images with tag "+availablecontent)));
+                .andExpect(content().string(containsString("days/images with tag "+availablecontent)))
+                .andExpect(view().name("tags/result"));
 
     }
 
@@ -79,7 +83,8 @@ public class TagPageControllerTest extends AbstractControllerTest {
         this.mockMvc.perform(get("/tags/"+unavailableContent).sessionAttrs(sessionattr))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Could not find tag with content "+unavailableContent)));
+                .andExpect(content().string(containsString("Could not find tag with content "+unavailableContent)))
+                .andExpect(view().name("tags/notfound"));
 
     }
 
