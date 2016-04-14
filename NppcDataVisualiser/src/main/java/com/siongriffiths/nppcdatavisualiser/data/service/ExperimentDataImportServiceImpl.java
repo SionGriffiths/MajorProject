@@ -101,7 +101,7 @@ public class ExperimentDataImportServiceImpl implements ExperimentDataImportServ
      * Processes the tokenised header columns of a CSV formatted file containing experiment data
      * @param header A String array of the tokenised header columns
      */
-    public void processHeaderColumns(String[] header){
+    private void processHeaderColumns(String[] header){
 
         for(int i = 0; i < header.length; i++){
             if (header[i].contains(PLANT_ATTRIBUTE_COLUMN_MAPPING_STRING_PATTERN)) {
