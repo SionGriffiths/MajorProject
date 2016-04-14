@@ -29,11 +29,6 @@ public interface MetaDataManager {
     List<Metadata> findByExperiment(Experiment experiment);
 
     /**
-     * Resets all Metadata instances in the system
-     */
-    void resetAll();
-
-    /**
      * Resets all Metadata instances for a given Experiment
      * @param experiment an Experiment instance
      */

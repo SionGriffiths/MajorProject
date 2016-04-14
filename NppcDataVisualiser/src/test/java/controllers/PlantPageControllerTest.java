@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.HashMap;
@@ -90,7 +91,7 @@ sessionattr.put("experimentCode",experiment.getExperimentCode());
         plantDayManager.savePlantDay(day);
 
         String id = Long.toString(day.getId());
-        String tag = "testTagContent";
+        String tag = "content 5";
 
         this.mockMvc.perform(post("/plants/addDayTag")
                 .param("tagContent",tag)
@@ -102,7 +103,7 @@ sessionattr.put("experimentCode",experiment.getExperimentCode());
 
     }
 
-    @Test
+    @Test @Transactional
     public void testAddAttribToPlantDay() throws Exception{
         PlantDay day = new PlantDay();
         Plant plant = new Plant();

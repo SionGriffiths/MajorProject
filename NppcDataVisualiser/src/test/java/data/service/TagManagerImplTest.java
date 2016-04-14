@@ -1,6 +1,7 @@
-package com.siongriffiths.nppcdatavisualiser.data.service;
+package data.service;
 
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
+import com.siongriffiths.nppcdatavisualiser.data.service.TagManager;
 import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
 import com.siongriffiths.nppcdatavisualiser.experiment.service.ExperimentManager;
 import defaults.AbstractTest;

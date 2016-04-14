@@ -49,19 +49,6 @@ public class MetaDataManagerImpl implements MetaDataManager {
     }
 
     /**
-     * Resets all Metadata instances in the system
-     */
-    @Override
-    public void resetAll() {
-
-        for(Metadata data : findAll()){
-            data.setDataAttributes(new HashMap<String, String>());
-            saveMetaData(data);
-        }
-
-    }
-
-    /**
      * Resets all Metadata instances for a given Experiment
      * @param experiment an Experiment instance
      */
