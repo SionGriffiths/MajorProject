@@ -75,7 +75,7 @@ public class ErrorPageController extends DefaultController implements ErrorContr
 
 
 
-
+//    http://stackoverflow.com/a/35565623/6044187
     private boolean getTraceParameter(HttpServletRequest request) {
         String parameter = request.getParameter("trace");
         if (parameter == null) {
@@ -83,7 +83,7 @@ public class ErrorPageController extends DefaultController implements ErrorContr
         }
         return !"false".equals(parameter.toLowerCase());
     }
-
+//    http://stackoverflow.com/a/35565623/6044187//
     private Map<String, Object> getErrorAttributes(HttpServletRequest aRequest, boolean includeStackTrace) {
         RequestAttributes requestAttributes = new ServletRequestAttributes(aRequest);
         return errorAttributes.getErrorAttributes(requestAttributes, includeStackTrace);
