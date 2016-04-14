@@ -38,23 +38,16 @@ public class TagManagerImpl implements TagManager {
         tagDataDao.save(tagData);
     }
 
-
     /**
-     * Resets all TagData in the system
+     * Finds a TagData instance corresponding to an ID
+     * @param id the ID
+     * @return the TagData instance corresponding to the ID
      */
     @Override
-    public void resetAll() {
-        tagDataDao.deleteAll();
+    public TagData findByID(long id) {
+        return tagDataDao.findOne(id);
     }
 
-    /**
-     * Resets all TagData in the system for a given experiment
-     * @param experiment the Experiment instance
-     */
-    @Override
-    public void resetForExperiment(Experiment experiment) {
-
-    }
 
     /**
      * Finds a specific TagData instance corresponding to a particular tag content
@@ -102,7 +95,6 @@ public class TagManagerImpl implements TagManager {
      */
     @Override
     public TagData createOrGetTag(String content) {
-
         TagData queryTag = tagDataDao.findByTagContent(content);
         return (queryTag != null) ? queryTag : new TagData(content);
     }

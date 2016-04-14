@@ -59,13 +59,9 @@ public interface TagManager {
     void saveTagData(TagData tagData);
 
     /**
-     * Resets all TagData in the system
+     * Finds a TagData instance corresponding to an ID
+     * @param id the ID
+     * @return the TagData instance corresponding to the ID
      */
-    void resetAll();
-
-    /**
-     * Resets all TagData in the system for a given experiment
-     * @param experiment the Experiment instance
-     */
-    void resetForExperiment(Experiment experiment);
+    TagData findByID(long id);
 }
