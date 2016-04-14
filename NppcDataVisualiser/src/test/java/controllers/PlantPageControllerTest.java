@@ -246,6 +246,15 @@ public class PlantPageControllerTest  extends AbstractTest {
 
     }
 
+    @Test
+    public void testBadPaginationParams() throws Exception {
+        this.mockMvc.perform(get("/plants/")
+                .param("page","bad param")
+                .sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(view().name("/error/404"));
+    }
 
     @Test @Transactional
     public void testTagPlant() throws Exception {
