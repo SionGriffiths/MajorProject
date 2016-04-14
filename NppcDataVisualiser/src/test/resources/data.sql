@@ -64,3 +64,13 @@ INSERT INTO plantday_tag (plantday_id, tag_id) VALUES (1, 03)
 INSERT INTO plantday_tag (plantday_id, tag_id) VALUES (1, 04)
 INSERT INTO plantday_tag (plantday_id, tag_id) VALUES (5, 04)
 
+insert into metadata_data_attributes (metadata, data_attributes_key, data_attributes) values (606, 'attr1' , 'val1')
+insert into metadata_data_attributes (metadata, data_attributes_key, data_attributes) values (505, 'attr1' , 'val2')
+
+
+insert into metadata_data_attributes (metadata, data_attributes_key, data_attributes) values (8, 'test' , '1')
+insert into metadata_data_attributes (metadata, data_attributes_key, data_attributes) values (9, 'test' , '2')
+insert into metadata_data_attributes (metadata, data_attributes_key, data_attributes) values (10, 'test' , '3')
+insert into metadata_data_attributes (metadata, data_attributes_key, data_attributes) values (8, 'test2' , 'a')
+insert into metadata_data_attributes (metadata, data_attributes_key, data_attributes) values (9, 'test2' , 'b')
+insert into metadata_data_attributes (metadata, data_attributes_key, data_attributes) values (10, 'test2' , 'c')
