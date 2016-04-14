@@ -31,7 +31,7 @@ public class TagPageControllerTest extends AbstractControllerTest {
     @Before
     public void setup() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
-        sessionattr = new HashMap<String, Object>();
+        sessionattr = new HashMap<>();
         sessionattr.put("experimentCode","testCode");
     }
 

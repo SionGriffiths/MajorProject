@@ -21,8 +21,9 @@ import java.util.Map;
  * ErrorPageController is an implementation of ErrorController that provides the means
  * to override the default error page provided by Spring
  *
- * Adapted from solutions posted to the following link :
+ * Adapted from solutions posted to the following links :
  * http://stackoverflow.com/questions/25356781/spring-boot-remove-whitelabel-error-page
+ * http://stackoverflow.com/a/35565623/6044187
  */
 @Controller
 public class ErrorPageController extends DefaultController implements ErrorController {

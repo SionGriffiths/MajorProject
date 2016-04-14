@@ -2,8 +2,6 @@ package com.siongriffiths.nppcdatavisualiser.data.doas;
 
 import com.siongriffiths.nppcdatavisualiser.data.TagData;
 import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
-import com.siongriffiths.nppcdatavisualiser.plants.Plant;
-import com.sun.tools.javac.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

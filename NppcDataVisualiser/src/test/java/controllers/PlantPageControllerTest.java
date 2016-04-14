@@ -68,7 +68,7 @@ public class PlantPageControllerTest  extends AbstractTest {
         plantManager.savePlant(plant);
 
         //http://stackoverflow.com/questions/26341400/mvc-controller-test-with-session-attribute/26341909#26341909
-        HashMap<String, Object> sessionattr = new HashMap<String, Object>();
+        HashMap<String, Object> sessionattr = new HashMap<>();
         sessionattr.put("experimentCode",experiment.getExperimentCode());
 
         this.mockMvc.perform(get("/plants").sessionAttrs(sessionattr))

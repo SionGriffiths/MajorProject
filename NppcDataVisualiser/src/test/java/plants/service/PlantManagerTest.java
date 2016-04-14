@@ -107,7 +107,7 @@ public class PlantManagerTest extends AbstractTest {
 
     @Test
     public void testTagPlant(){
-        Long id = 1l;
+        Long id = 1L;
         Plant plant = plantManager.getPlantByID(id);
         assertNotNull("Plant should not be null", plant);
 
@@ -164,7 +164,7 @@ public class PlantManagerTest extends AbstractTest {
 
     @Test
     public void getPlantByID()  {
-        Long id = 01L;
+        Long id = 1L;
         Plant plant = plantManager.getPlantByID(id);
         assertNotNull("Plant should not be null", plant);
 
@@ -192,7 +192,7 @@ public class PlantManagerTest extends AbstractTest {
 
     @Test
     public void findPlantsWithTagsByExperiment()  {
-        Long id = 01L;
+        Long id = 1L;
         Plant plant = plantManager.getPlantByID(id);
         Experiment experiment = plant.getExperiment();
 
