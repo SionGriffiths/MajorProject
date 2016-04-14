@@ -1,7 +1,5 @@
 package controllers;
 
-import com.siongriffiths.nppcdatavisualiser.data.Metadata;
-import com.siongriffiths.nppcdatavisualiser.experiment.Experiment;
 import com.siongriffiths.nppcdatavisualiser.experiment.service.ExperimentManager;
 import com.siongriffiths.nppcdatavisualiser.plants.Plant;
 import com.siongriffiths.nppcdatavisualiser.plants.PlantDay;
@@ -22,8 +20,8 @@ import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 /**
  * Created on 01/03/2016.
  *
@@ -42,62 +40,257 @@ public class PlantPageControllerTest  extends AbstractTest {
 
 
     private MockMvc mockMvc;
+    //http://stackoverflow.com/questions/26341400/mvc-controller-test-with-session-attribute/26341909#26341909
+    private HashMap<String, Object> sessionattr;
+
 
     @Before
     public void setup() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+        sessionattr = new HashMap<>();
+        sessionattr.put("experimentCode","testCode");
     }
 
     @Test
-    public void testShowPlants() throws Exception {
+    public void testShowPlantsNoExperiment() throws Exception {
         this.mockMvc.perform(get("/plants"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("<title>Plants Page")));
+                .andExpect(content().string(containsString("There are 0 plants in this experiment ")))
+                .andExpect(view().name("plants/show"));
     }
 
 
     @Test
-    public void testPlant() throws Exception {
-        String testBarCode = "55345";
-        Experiment experiment = experimentManager.getExperimentByCode("codeExperiment");
-        Plant plant = new Plant();
-        plant.setBarCode(testBarCode);
-        experimentManager.saveExperiment(experiment);
-        plant.setExperiment(experiment);
-        plantManager.savePlant(plant);
+    public void testShowPlants() throws Exception {
 
-        //http://stackoverflow.com/questions/26341400/mvc-controller-test-with-session-attribute/26341909#26341909
-        HashMap<String, Object> sessionattr = new HashMap<>();
-        sessionattr.put("experimentCode",experiment.getExperimentCode());
+        String testBarCode = "bc1";
 
         this.mockMvc.perform(get("/plants").sessionAttrs(sessionattr))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString(testBarCode)));
+                .andExpect(content().string(containsString(testBarCode)))
+                .andExpect(view().name("plants/show"));
+    }
+
+    @Test
+    public void testShowPlantDetail() throws Exception {
+
+        String testBarCode = "bc2";
 
         String plantUrl = "/plants/"+testBarCode;
         this.mockMvc.perform(get(plantUrl).sessionAttrs(sessionattr))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("This is the detail page for "+testBarCode)));
-
-        String notPlantUrl = "/plants/123456";
-        this.mockMvc.perform(get(notPlantUrl).sessionAttrs(sessionattr))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Plant not Found")));
-
+                .andExpect(content().string(containsString("This is the detail page for "+testBarCode)))
+                .andExpect(view().name("plants/plantdetail"));
     }
 
     @Test
-    public void testTagPlantDay() throws Exception{
-        PlantDay day = new PlantDay();
-        Plant plant = new Plant();
-        day.setPlant(plant);
-        plantManager.savePlant(plant);
-        plantDayManager.savePlantDay(day);
+    public void testPlantNotFound() throws Exception {
+        String notInSystemBarcode = "barcode does not in system";
+        String notPlantUrl = "/plants/"+notInSystemBarcode;
+        this.mockMvc.perform(get(notPlantUrl).sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Plant not Found")))
+                .andExpect(content().string(containsString("Could not find plant with barcode "+notInSystemBarcode)))
+                .andExpect(view().name("plants/notfound"));
+    }
 
+
+    @Test
+    public void testPlantPagePaginationPage() throws Exception {
+
+        this.mockMvc.perform(get("/plants")
+                .param("page","1")
+                .sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("nextPage",2))
+                .andExpect(model().attribute("currentPage",1))
+                .andExpect(view().name("plants/show"));
+
+        this.mockMvc.perform(get("/plants")
+                .param("page","2")
+                .sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("nextPage",3))
+                .andExpect(model().attribute("currentPage",2))
+                .andExpect(model().attribute("prevPage",1))
+                .andExpect(view().name("plants/show"));
+
+        this.mockMvc.perform(get("/plants")
+                .param("page","-1")
+                .sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("nextPage",2))
+                .andExpect(model().attribute("currentPage",1))
+                .andExpect(view().name("plants/show"));
+    }
+
+
+    @Test
+    public void testPlantPagePaginationPageSize() throws Exception {
+
+        this.mockMvc.perform(get("/plants")
+                .param("page","1")
+                .param("size","1")
+                .sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("nextPage",2))
+                .andExpect(model().attribute("currentPage",1))
+                .andExpect(model().attribute("currentSize",1))
+                .andExpect(view().name("plants/show"));
+
+        this.mockMvc.perform(get("/plants")
+                .param("page","1")
+                .param("size","3")
+                .sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("nextPage",2))
+                .andExpect(model().attribute("currentPage",1))
+                .andExpect(model().attribute("currentSize",3))
+                .andExpect(view().name("plants/show"));
+
+        this.mockMvc.perform(get("/plants")
+                .param("page","1")
+                .param("size","-1")
+                .sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("currentPage",1))
+                .andExpect(model().attribute("currentSize",1))
+                .andExpect(view().name("plants/show"));
+
+
+    }
+
+
+    @Test
+    public void testPlantDetailsPagePaginationPage() throws Exception {
+
+        String plantCode = "bc1";
+
+        this.mockMvc.perform(get("/plants/"+plantCode)
+                .param("page","1")
+                .sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("nextPage",2))
+                .andExpect(model().attribute("currentPage",1))
+                .andExpect(view().name("plants/plantdetail"));
+
+        this.mockMvc.perform(get("/plants/"+plantCode)
+                .param("page","2")
+                .sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("nextPage",3))
+                .andExpect(model().attribute("currentPage",2))
+                .andExpect(model().attribute("prevPage",1))
+                .andExpect(view().name("plants/plantdetail"));
+
+        this.mockMvc.perform(get("/plants/"+plantCode)
+                .param("page","-1")
+                .sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("nextPage",2))
+                .andExpect(model().attribute("currentPage",1))
+                .andExpect(view().name("plants/plantdetail"));
+    }
+
+
+    @Test
+    public void testPlantDetailsPagePaginationPageSize() throws Exception {
+
+        String plantCode = "bc1";
+
+        this.mockMvc.perform(get("/plants/"+plantCode)
+                .param("page","1")
+                .param("size","1")
+                .sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("nextPage",2))
+                .andExpect(model().attribute("currentPage",1))
+                .andExpect(model().attribute("currentSize",1))
+                .andExpect(view().name("plants/plantdetail"));
+
+        this.mockMvc.perform(get("/plants/"+plantCode)
+                .param("page","1")
+                .param("size","3")
+                .sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("nextPage",2))
+                .andExpect(model().attribute("currentPage",1))
+                .andExpect(model().attribute("currentSize",3))
+                .andExpect(view().name("plants/plantdetail"));
+
+        this.mockMvc.perform(get("/plants/"+plantCode)
+                .param("page","1")
+                .param("size","-1")
+                .sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("currentPage",1))
+                .andExpect(model().attribute("currentSize",1))
+                .andExpect(view().name("plants/plantdetail"));
+
+
+    }
+
+
+    @Test @Transactional
+    public void testTagPlant() throws Exception {
+
+        Plant plant = plantManager.getPlantByID(2);
+        String id = Long.toString(plant.getId());
+        String tag = "content 1";
+
+        this.mockMvc.perform(post("/plants/addPlantTag")
+                .param("tagContent",tag)
+                .param("plantID",id))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("plant"))
+                .andExpect(content().string(containsString(tag)))
+                .andExpect(view().name("plants/plantFragments :: plantTagFragment"));
+
+
+    }
+
+    @Test @Transactional
+    public void testAddPlantAttribute() throws Exception {
+        Plant plant = plantManager.getPlantByID(2);
+        String id = Long.toString(plant.getId());
+        String aName = "testAttributeName";
+        String aValue = "testAttributeValue";
+
+
+        this.mockMvc.perform(post("/plants/addPlantAttribute")
+                .param("attribName",aName)
+                .param("attribVal",aValue)
+                .param("plantID",id))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("plant"))
+                .andExpect(content().string(containsString(aValue)))
+                .andExpect(content().string(containsString(aName)))
+                .andExpect(view().name("plants/plantFragments :: plantAttribFragment"));
+    }
+
+
+    @Test @Transactional
+    public void testTagPlantDay() throws Exception {
+
+        PlantDay day = plantDayManager.getPlantDayByID(1);
         String id = Long.toString(day.getId());
         String tag = "content 5";
 
@@ -106,20 +299,17 @@ public class PlantPageControllerTest  extends AbstractTest {
                 .param("plantDayID",id))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString(tag)));
+                .andExpect(model().attributeExists("plantDay"))
+                .andExpect(content().string(containsString(tag)))
+                .andExpect(view().name("plants/plantFragments :: dayTagFragment"));
 
 
     }
 
     @Test @Transactional
     public void testAddAttribToPlantDay() throws Exception{
-        PlantDay day = new PlantDay();
-        Plant plant = new Plant();
-        day.setPlant(plant);
-        day.setMetadata(new Metadata());
-        plantManager.savePlant(plant);
-        plantDayManager.savePlantDay(day);
 
+        PlantDay day = plantDayManager.getPlantDayByID(2);
         String id = Long.toString(day.getId());
         String aName = "testAttributeName";
         String aValue = "testAttributeValue";
@@ -131,9 +321,12 @@ public class PlantPageControllerTest  extends AbstractTest {
                 .param("plantDayID",id))
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(model().attributeExists("plantDay"))
                 .andExpect(content().string(containsString(aValue)))
-                .andExpect(content().string(containsString(aName)));
-
+                .andExpect(content().string(containsString(aName)))
+                .andExpect(view().name("plants/plantFragments :: dayAttribFragment"));
     }
+
+
 
 }
