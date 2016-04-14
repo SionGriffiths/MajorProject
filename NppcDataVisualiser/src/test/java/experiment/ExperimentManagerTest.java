@@ -50,7 +50,7 @@ public class ExperimentManagerTest extends AbstractTest {
     public void getInitialisedExperiments() throws Exception {
         List<Experiment> initExperiemnts = experimentManager.getInitialisedExperiments();
         assertNotNull("Expect experiments not null" , initExperiemnts);
-        assertTrue("Expect experiments to be empty" , initExperiemnts.isEmpty());
+        assertEquals("Expect one initialised experiment" , initExperiemnts.size(), 1);
 
         Experiment experiment = experimentDao.findOne(1);
         experiment.setStatus(ExperimentStatus.INITIALISED);
@@ -120,7 +120,8 @@ public class ExperimentManagerTest extends AbstractTest {
         Integer id = 1;
         Experiment experiment = experimentDao.findOne(id);
         ExperimentStatus status = experiment.getStatus();
-        assertNull("Expect null status",status);
+        assertNotNull("Expect not null status",status);
+        assertEquals("Expect statuses are equal", ExperimentStatus.INITIALISED, status);
 
         experimentManager.updateStatus(experiment,ExperimentStatus.NOT_INITIALISED);
         assertNotNull("Expect not null status",experiment.getStatus());

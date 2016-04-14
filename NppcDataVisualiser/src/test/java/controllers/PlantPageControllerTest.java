@@ -50,7 +50,9 @@ public class PlantPageControllerTest  extends AbstractTest {
 
     @Test
     public void testShowPlants() throws Exception {
-        this.mockMvc.perform(get("/plants")).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get("/plants"))
+                .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(content().string(containsString("<title>Plants Page")));
     }
 
@@ -67,17 +69,23 @@ public class PlantPageControllerTest  extends AbstractTest {
 
         //http://stackoverflow.com/questions/26341400/mvc-controller-test-with-session-attribute/26341909#26341909
         HashMap<String, Object> sessionattr = new HashMap<String, Object>();
-sessionattr.put("experimentCode",experiment.getExperimentCode());
+        sessionattr.put("experimentCode",experiment.getExperimentCode());
 
-        this.mockMvc.perform(get("/plants").sessionAttrs(sessionattr)).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get("/plants").sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(content().string(containsString(testBarCode)));
 
         String plantUrl = "/plants/"+testBarCode;
-        this.mockMvc.perform(get(plantUrl).sessionAttrs(sessionattr)).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get(plantUrl).sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(content().string(containsString("This is the detail page for "+testBarCode)));
 
         String notPlantUrl = "/plants/123456";
-        this.mockMvc.perform(get(notPlantUrl).sessionAttrs(sessionattr)).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get(notPlantUrl).sessionAttrs(sessionattr))
+                .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Plant not Found")));
 
     }

@@ -1,5 +1,5 @@
 
-INSERT INTO experiment (id, experiment_code) VALUES (1, 'testCode')
+INSERT INTO experiment (id, experiment_code, status) VALUES (1, 'testCode', 'INITIALISED')
 INSERT INTO experiment (id, experiment_code) VALUES (2, 'anotherCode')
 INSERT INTO experiment (id, experiment_code) VALUES (3, 'experimentCode')
 INSERT INTO experiment (id, experiment_code) VALUES (4, 'codeExperiment')

@@ -10,8 +10,7 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Created on 24/02/2016.
@@ -26,6 +25,8 @@ public class HomePageControllerWebTest extends AbstractControllerTest {
     private WebApplicationContext wac;
 
     private MockMvc mockMvc;
+    private String experimentCode = "testCode";
+
 
     @Before
     public void setup() {
@@ -34,8 +35,23 @@ public class HomePageControllerWebTest extends AbstractControllerTest {
 
     @Test
     public void testShowHome() throws Exception {
-        this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("<title>Home")));
+        this.mockMvc.perform(get("/"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("<title>Home")))
+                .andExpect(content().string(containsString(experimentCode)));
     }
+
+    @Test
+    public void testRedirectToPlantsPage() throws Exception {
+        this.mockMvc.perform(get("/setSessionExperiment/"+experimentCode))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/plants"));
+    }
+
+
+
+
 
 }
