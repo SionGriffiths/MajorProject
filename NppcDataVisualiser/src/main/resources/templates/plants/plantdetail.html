@@ -50,7 +50,8 @@
 
                     <input type="hidden" name="plantDayID" th:value="${plantDay.getId()}" />
                     <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}"
-                           name="tagContent" placeholder="Add tag " />
+                           name="tagContent" placeholder="Add tag "
+                           title="Alphanumeric"/>
                     <input type="submit" value="Tag" />
 
             </form>
@@ -63,11 +64,12 @@
 
                     <input type="hidden" name="plantDayID" th:value="${plantDay.getId()}" />
                     <input  type="text" required="required" pattern="[A-Za-z0-9\-\/ ]{1,20}" class="attrib_key_edit"
-                            name="attribName" placeholder="Add attribute name" />
+                            name="attribName" placeholder="Add attribute name"
+                            title="Alphanumeric with - and /"/>
                     <input  type="text" required="required" pattern="[A-Za-z0-9\-\/ ]{1,20}" class="attrib_val_edit"
                             name="attribVal" placeholder="Add attribute value" />
-                    <input type="submit" value="Add Attribute" />
-
+                    <input type="submit" value="Add Attribute"
+                           title="Alphanumeric with - and /"/>
             </form>
         </div>
 

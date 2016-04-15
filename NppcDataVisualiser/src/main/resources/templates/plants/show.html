@@ -30,7 +30,8 @@
             <form th:action="@{plants/addPlantTag}" th:object="${plantTagInfo}" class="plant_tag_form form-horizontal">
                 <!--<div class="form-group" >-->
                     <input type="hidden" name="plantID" th:value="${plant.getId()}" />
-                    <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}" name="tagContent" placeholder="Add tag " />
+                    <input type="text" required="required" pattern="[A-Za-z0-9 ]{1,20}"
+                           name="tagContent" placeholder="Add tag " title="Alphanumeric"/>
                     <input type="submit" value="Tag" />
                 <!--</div>-->
             </form>
@@ -44,10 +45,12 @@
             <form th:action="@{plants/addPlantAttribute}" th:object="${plantAttributeInfo}" class="plant_attrib_form form-horizontal">
                 <!--<div class="form-group">-->
                     <input type="hidden" name="plantID" th:value="${plant.getId()}" />
-                    <input  type="text" required="required" pattern="[A-Za-z0-9\-\/ ]{1,20}" class=" attrib_key_edit"
-                            name="attribName" placeholder="Add attribute name" />
+                    <input  type="text" required="required"  pattern="[A-Za-z0-9\-\/ ]{1,20}" class=" attrib_key_edit"
+                            name="attribName" placeholder="Add attribute name"
+                            title="Alphanumeric with - and /"/>
                     <input  type="text" required="required" pattern="[A-Za-z0-9\-\/ ]{1,20}" class=" attrib_val_edit"
-                            name="attribVal" placeholder="Add attribute value" />
+                            name="attribVal" placeholder="Add attribute value"
+                            title="Alphanumeric with - and /"/>
                     <input type="submit" value="Add Attribute" />
                 <!--</div>-->
             </form>
