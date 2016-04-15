@@ -205,8 +205,6 @@ public class PlantPageController extends DefaultController {
      * @return default view path for plants
      */
     private String showPlantDetail(Model model,  String barCode, int pageNum, int numPerPage){
-        logger.info(barCode);
-
         String viewPath;
         Plant targetPlant  = plantManager.getPlantByBarcode(barCode);
 

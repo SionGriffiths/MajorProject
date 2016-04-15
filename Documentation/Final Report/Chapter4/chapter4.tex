@@ -1,8 +1,13 @@
 \chapter{Testing}
 
-Detailed descriptions of every test case are definitely not what is required here. What is important is to show that you adopted a sensible strategy that was, in principle, capable of testing the system adequately even if you did not have the time to test the system fully.Have you tested your system on ’real users’? For example, if your system is supposed to solve a problem for a business, then it would be appropriate to present your approach to involve the users in the testing process and to record the results that you obtained. Depending on the level of detail, it is likely that you would put any detailed results in an appendix.The following sections indicate some areas you might include. Other sections may be more appropriate to your project. 
+%Detailed descriptions of every test case are definitely not what is required here. What is important is to show that you adopted a sensible strategy that was, in principle, capable of testing the system adequately even if you did not have the time to test the system fully.
+
+%Have you tested your system on ’real users’? For example, if your system is supposed to solve a problem for a business, then it would be appropriate to present your approach to involve the users in the testing process and to record the results that you obtained. Depending on the level of detail, it is likely that you would put any detailed results in an appendix.
+
 
 \section{Overall Approach to Testing}
+
+
 
 \section{Automated Testing}
 
@@ -10,9 +15,56 @@ Detailed descriptions of every test case are definitely not what is required her
 
 \subsection{User Interface Testing}
 
-\subsection{Stress Testing}
+\subsection{Stress and Performance Testing}
 
-\subsection{Other types of testing}
+Performance and stress testing was carried out through the use of Apache Jmeter\cite{_jmeter}, an open source Java application built to measure site and application performance under controlled loads. Jmeter enables the simulation of a number of concurrent users accessing a given site, these simulated agents follow a defined sequence of actions as specified in the test script. 
+
+For the purposes of this project Jmeter was used to assess whether pages in the site would load within defined time limits and whether implementation decisions have an effect performance. In general the goal was to have pages served 300ms with a hard limit of 1000ms or one second, although this does not include image load times. A target of 300ms is well under the 1 second limit for keeping a users flow of though as defined by Nielsen \cite{responseTimes}.
+Running the tests regularly could also help highlight issues that may not be uncovered under other forms of testing such as intermittent problems that could result in request errors that would be difficult to reproduce otherwise. Unless otherwise stated the tests run with ten concurrent simulated users and the tests are repeated thirty times in order to smooth out any outliers in the data and try to pick up intermittent issues if present.
+
+General results as output by Jmeter are included in figure~\ref{fig:jmeter_with_data} for an experiment which has been initialised with data. The initialisation is an important distinction because the amount of experiment data significantly affects the initial page response time for the Graphs page, other pages are affected somewhat but to a much lesser degree. Figure~\ref{fig:jmeter_no_data} displays the results of running the same test without the data having been added to the experiment and it's clear to see the effect on the load time for the Graphs page.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/testing/jmeter_final}
+    \caption{Visulisation of Jmeter test result of a fully initialised experiment}
+    \label{fig:jmeter_with_data}
+\end{figure} 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/testing/jmeter_no_data}
+    \caption{Visulisation of Jmeter test result of a partially initialised experiment}
+    \label{fig:jmeter_no_data}
+\end{figure} 
+
+One particular area of the system which benefited from this form of testing was the choice of default pagination options on the plants and plant details pages.
+
+
+
+\section{Manual Testing}
+For areas of the system where automated testing was impractical or insufficient to verify results, a manual approach was taken and test tables used to verify functionality is as expected. Much of the functionality on the Admin page relies on an active network connection to the NPPC data repository 
+
+\subsection{Admin Page Test Table}
+\begin{table}[H]
+\centering
+\begin{tabular}{ | p{4cm} | p{4cm} |p{4cm} | p{1cm} | }
+\hline
+	\textbf{Test} & \textbf{Input} & \textbf{Expected Output} & \textbf{Pass} \\ \hline
+	Attempt to access admin area without login & Go to /admin without login & Redirected to administrator login page & \checkmark \\ \hline
+	Attempt to access admin area with correct login & Go to /admin with login & Admin is page is displayed & \checkmark \\ \hline
+	Attempt admin login with incorrect credentials & Submit admin login form with incorrect credentials & Error displayed to user. & \checkmark \\ \hline
+	Admin log out & Click logout button from admin page & Redirect to home page and authorisation cleared from session & \checkmark \\ \hline
+	Initialise Experiment & Click initialise button for uninitialised experiment & Experiment begins initialising - plants are created & \checkmark \\ \hline
+	Update experiment & Click Update button on initialised experiment & Experiment begins update, plants are updated or created & \checkmark \\ \hline
+	Import data with valid csv & Click Init Data button on initialised experiment & Data is imported from csv & \checkmark \\ \hline
+	Import data with invalid csv & Click Init Data button on initialised experiment & Invalid csv data is ignored & \checkmark \\ \hline
+	Delete data & Click delete data on experiment & Data is deleted from the experiment & \checkmark \\ \hline
+	Delete plants & Click delete plants button on experiment & Plant data and images are deleted & \checkmark \\ \hline
+\end{tabular}
+\caption{Test Table for Admin page functionality}
+\label{test_table_admin}
+\end{table}
+\subsection{Graph Page Test Table}
 
 \section{Integration Testing}
 
