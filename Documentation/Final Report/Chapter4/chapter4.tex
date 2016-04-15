@@ -1,17 +1,22 @@
 \chapter{Testing}
 
-%Detailed descriptions of every test case are definitely not what is required here. What is important is to show that you adopted a sensible strategy that was, in principle, capable of testing the system adequately even if you did not have the time to test the system fully.
-
-%Have you tested your system on ’real users’? For example, if your system is supposed to solve a problem for a business, then it would be appropriate to present your approach to involve the users in the testing process and to record the results that you obtained. Depending on the level of detail, it is likely that you would put any detailed results in an appendix.
-
-
 \section{Overall Approach to Testing}
 
-
+High coverage on service layer, but more concerned with feature coverage rather than line coverage in general. Automate as much of the testing as is feasible so it can run as part of the CI build 
 
 \section{Automated Testing}
 
 \subsection{Unit Tests}
+\subsection{Integration Testing}
+
+Integration testing for this project was achieved through testing of the MVC controller classes. The goal behind these tests was to make requests to the various available routes within the system and verify that the correct results are returned. 
+
+% !TODO discuss the loading of 'realish' test data via data.sql :
+%  Like the unit testing, integration testing makes use of the test data defined in the data.sql file which is pre-loaded by hibernate into the test database prior to test execution.
+
+\lstjava
+\lstinputlisting[label=simpleIntegration,caption=Simple integration test example]{sourceCode/mySnippets/testing/testShowPlants.java}
+
 
 \subsection{User Interface Testing}
 
@@ -20,9 +25,9 @@
 Performance and stress testing was carried out through the use of Apache Jmeter\cite{_jmeter}, an open source Java application built to measure site and application performance under controlled loads. Jmeter enables the simulation of a number of concurrent users accessing a given site, these simulated agents follow a defined sequence of actions as specified in the test script. 
 
 For the purposes of this project Jmeter was used to assess whether pages in the site would load within defined time limits and whether implementation decisions have an effect performance. In general the goal was to have pages served 300ms with a hard limit of 1000ms or one second, although this does not include image load times. A target of 300ms is well under the 1 second limit for keeping a users flow of though as defined by Nielsen \cite{responseTimes}.
-Running the tests regularly could also help highlight issues that may not be uncovered under other forms of testing such as intermittent problems that could result in request errors that would be difficult to reproduce otherwise. Unless otherwise stated the tests run with ten concurrent simulated users and the tests are repeated thirty times in order to smooth out any outliers in the data and try to pick up intermittent issues if present.
+Running the tests regularly could also help highlight issues that may not be uncovered under other forms of testing such as intermittent problems that could result in request errors that would be difficult to reproduce otherwise. Unless otherwise stated the tests run with ten concurrent, simulated users and the tests are repeated thirty times in order to smooth out any outliers in the data and try to pick up intermittent issues if any are present.
 
-General results as output by Jmeter are included in figure~\ref{fig:jmeter_with_data} for an experiment which has been initialised with data. The initialisation is an important distinction because the amount of experiment data significantly affects the initial page response time for the Graphs page, other pages are affected somewhat but to a much lesser degree. Figure~\ref{fig:jmeter_no_data} displays the results of running the same test without the data having been added to the experiment and it's clear to see the effect on the load time for the Graphs page.
+General results as output by Jmeter are included in figure~\ref{fig:jmeter_with_data} for an experiment which has been initialised with data. The initialisation is an important distinction because the amount of experiment data significantly affects the initial page response time for the Graphs page, other pages are affected somewhat but to a much lesser degree. Figure~\ref{fig:jmeter_no_data} displays the results of running the same test without the data having been added to the experiment and it's clear to see the effect on the load time for the Graphs page. Having these results available during development informed some of the design choices within the Graph page such as having the graphs themselves and any plant objects loaded via Ajax following user interaction as opposed to being populated into the page on load.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/testing/jmeter_final}
@@ -37,7 +42,7 @@ General results as output by Jmeter are included in figure~\ref{fig:jmeter_with_
     \label{fig:jmeter_no_data}
 \end{figure} 
 
-One particular area of the system which benefited from this form of testing was the choice of default pagination options on the plants and plant details pages.
+% !TODO Talk about pagination and how jmeter helps test ?
 
 
 
@@ -65,7 +70,24 @@ For areas of the system where automated testing was impractical or insufficient 
 \label{test_table_admin}
 \end{table}
 \subsection{Graph Page Test Table}
+\begin{table}[H]
+\centering
+\begin{tabular}{ | p{4cm} | p{4cm} |p{4cm} | p{1cm} | }
+\hline
+	Test & Input & Expected Output & Pass \\ \hline
+	Test view graphs with no experiment & Go to /graphs with no selected experiment & No data' page is show with back button & \checkmark \\ \hline
+	Test view graphs with experiment that has no  data & Go to /graphs with experiment in session that has no data & No data' page is show with back button & \checkmark \\ \hline
+	Test view graphs with experiment that has data & Go to /graphs with experiment in session that has data & Graph page is shown with graph creation options & \checkmark \\ \hline
+	Test create graph & Click create graph button on /graphs page & A graph is displayed in the page with selected axis attributes & \checkmark \\ \hline
+	Test box plot & Select 'Box' and create graph & Nodes in the graph are represented as box plots & \checkmark \\ \hline
+	Test scatter plot & Select 'Scatter' and create graph & Nodes in the graph are represented as scatter plot & \checkmark \\ \hline
+	Test swap axis & Click swap axis button & Selected axis attributes are swapped, x value becomes y value and vice versa & \checkmark \\ \hline
+	Test plant results on graph node click & Click on or near a node in the graph & A  clickable list of plants corresponding to the values of the clicked node appear in the page & \checkmark \\ \hline
+	Test click result plant & Click on a plant link generated as result of clicking on a graph node & User is redirected to the detail page for the clicked plant link & \checkmark \\ \hline
+\end{tabular}
+\caption{Test Table for Graph page functionality}
+\label{test_table_graph}
+\end{table}
 
-\section{Integration Testing}
 
 \section{User Testing}
