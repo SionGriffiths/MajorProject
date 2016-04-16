@@ -13,16 +13,29 @@
 <h1 layout:fragment="header">Graphs</h1>
 <div layout:fragment="content">
 
-    <p th:text="'Graphs for plant '+${plant.getBarCode()}+' can be constucted from the following attributes :'" />
-    <div th:each="attrib,status : ${attribs}" class="row plant_row">
-        <div class="col-xs-6">
-        <p th:text="${attrib}"/> <span class="make_graph btn btn-default" th:attr="data-attrib=${attrib},data-barcode=${plant.getBarCode()}" >Create Graph</span>
-            <!--<img th:attr="lazy-src='/images/' + ${image.getFilePath()} ,data-original='/images/' + ${image.getFilePath()}" class="lazy_loading" />
-                   -->
+    <div th:unless="${attribs.isEmpty()}">
+
+        <p th:text="'Graphs for plant '+${plant.getBarCode()}+' can be constucted from the following attributes :'" />
+        <div th:each="attrib,status : ${attribs}" class="row plant_row">
+            <div class="col-xs-6">
+                <h4 th:text="${attrib}"/> <span class="make_graph btn btn-default" th:attr="data-attrib=${attrib},data-barcode=${plant.getBarCode()}" >Create Graph</span>
+
+            </div>
+            <div th:id="${attrib}" class="col-xs-6"></div>
         </div>
-        <!--<p th:text="${attrib}"/> <a th:href="@{${plant.getBarCode()} + '/fromData/' + ${attrib} + '/date'}" class="make_graph btn btn-default">Create Graph</a>-->
-        <div th:id="${attrib}" class="col-xs-6"></div>
+
     </div>
+
+
+    <div th:if="${attribs.isEmpty()}">
+
+        <h4 th:text="'No graphable data is available for plant '+${plant.getBarCode()}" ></h4>
+        <p>Add data via the plant detail page or contact an administrator regarding experiment data</p>
+        <a href="#" class="back_button btn btn-default">Go back</a>
+
+    </div>
+
+
 
 </div>
 </body>
