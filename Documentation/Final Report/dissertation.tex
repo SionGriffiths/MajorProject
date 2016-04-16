@@ -32,13 +32,18 @@
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage{listings}
 
+
 \usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
 
 
 \definecolor{myBlue}{RGB}{70,130,180} % color values Red, Green, Blue
 \definecolor{mylilas}{RGB}{170,55,241}
 \definecolor{mygreen}{RGB}{173,255,47}
-
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+\definecolor{annYellow}{RGB}{153,153,0}
 %\usepackage{hyperref}
 \usepackage[colorlinks, urlcolor=myBlue, linkcolor=Black, citecolor=myBlue]{hyperref}
 %\usepackage{hypcap}
@@ -54,19 +59,17 @@
 \lstset{language=Java,%
 frame=tb,
     %basicstyle=\color{red}, 
-    breaklines=true,%
-    morekeywords={matlab2tikz},
-    keywordstyle=\color{blue},%
-    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
-    identifierstyle=\color{black},%
-    stringstyle=\color{mylilas},
-    commentstyle=\color{mygreen},%
-    showstringspaces=false,%without this there will be a symbol in the places where there is a space
-    numbers=left,%
-    numberstyle={\scriptsize\ttfamily},% size of the numbers
-    numbersep=10pt, % this defines how far the numbers are from the text
-    emph=[1]{for,end,break},emphstyle=[1]\color{Red}, %some words to emphasise
-    %emph=[2]{word1,word2}, emphstyle=[2]{style},    
+   showspaces=false,
+     showtabs=false,
+     breaklines=true,
+     showstringspaces=false,
+     breakatwhitespace=true,
+     commentstyle=\color{pgreen},
+     keywordstyle=\color{myBlue},
+     stringstyle=\color{pgreen},
+     basicstyle=\ttfamily,
+     moredelim=[il][\textcolor{annYellow}]{$$},
+     moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
 }
 }
 

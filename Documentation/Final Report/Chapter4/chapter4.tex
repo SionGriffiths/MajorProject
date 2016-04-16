@@ -2,31 +2,35 @@
 
 \section{Overall Approach to Testing}
 
-
+The overall approach to testing was to have high test coverage of system features and functionality and to automate these tests wherever it was feasible to do so. Automated tests would run often as part of the normal development workflow and provide continuous assurance of functionality and system environments. Where automation was impractical, alternative approaches were taken to ensure that the system was fully tested in a robust manner.
 
 \section{Automated Testing}
 
 For the purposes of automated testing, a separate database was used. The database would be completely recreated for the start of each run of the test suite and dropped at the end. Prior to the tests running, the database would be seeded with test data that is similar to the real world data expected in the production database. By using this method the tests would more closely mirror the real world behaviours of the system and each run could be insulated from the data changes made in previous runs.
 
-A Continuous Integration(CI) system was used in order to facilitate the convenient and regular running of all automated tests in the project. The CI system would build the project from source each time a commit was made into the version control repository. As part of this build process the full test suite would be run. Any issues encountered during this process, from compilation errors to test failures, would result in the build being rejected by the CI system. In the event of a rejected build, the CI system would notify via email of the build failure. This feature turned out to be invaluable since it highlighted a configuration issue that did not affect my local development environment but would have affected the server the project is hosted on. Because the tests were automated and I was notified of a failure, I saved what would have likely been a significant amount of debugging time at the next release of the project to the server. Time was also saved since the full test suite didn't need to be run locally at development time, single tests could be run and the full test and integration suite would be invoked on commit. 
+A Continuous Integration(CI) system was used in order to facilitate the convenient and regular running of all automated tests in the project. The CI system would build the project from source each time a commit was made into the version control repository. As part of this build process the full test suite would be run. Any issues encountered during this process, from compilation errors to test failures, would result in the build being rejected by the CI system. In the event of a rejected build, the CI system would notify via email of the build failure. This feature turned out to be invaluable since it highlighted a configuration issue that did not affect my local development environment but would have affected the server the project is hosted on. Because the tests were automated and I was notified of a failure, I saved what likely would have been a significant amount of debugging time at the next release of the project to the server. Time was also saved since the full test suite didn't need to be run locally at development time, single tests could be run and the full test and integration suite would be invoked on commit to the version control repository. 
 
 \subsection{Unit Tests}
 
-
+ When implementing most of the service layer classes for the system a TDD approach was employed in order to ensure high test coverage of the parts of the system which incorporate the business logic. Using TTD helped evolve the design of these service classes by ensuring that nothing was built in a way that was difficult or convoluted to test. Tests are implemented on a method by method basis for the most part, that is, each method in a service will have its own unit test to ensure functionality.
+ 
+  A simple example is shown in listing~\ref{lst:jUnit} detailing a test for the tags reset functionality in the PlantManager service class that is invoked as part of deleting the data associated with an experiment.
+\lstjava
+\lstinputlisting[label={lst:jUnit},caption=Unit test for the PlantManager service]{sourceCode/mySnippets/testing/testResetTags.java}
+Most of the classes not covered by unit testing are tested via integration testing. The overall coverage for automated tests in the system is 79 \% of all lines written in Java.
 
 \subsection{Integration Testing}
 
-Integration testing for this project was achieved through testing of the MVC controller classes. The goal behind these tests was to make requests to the various available routes within the system and verify that the correct results are returned. 
+Integration testing for this project was achieved primarily through testing of the MVC controller classes. The goal behind these tests was to make requests to the various available routes within the system and verify that the correct results are returned. Being a web based system, all functionality is in some way linked to a request mapping or route in a controller class. Testing these routes provides a convenient method to ensure the distinct layers and components that make up the system are working as intended and the interactions between them are as expected. 
 
-% !TODO discuss the loading of 'realish' test data via data.sql :
-%  Add data.sql to appendix
-%  Like the unit testing, integration testing makes use of the test data defined in the data.sql file which is pre-loaded by hibernate into the test database prior to test execution.
+Integration tests for this project take advantage of features provided by the Spring framework in order to simplify the configuration of the tests and the mocking certain aspects of the system such as the application context in which the tests are running. These mocked dependencies and use of the same static data and database each run ensure that results can be verified consistently.
 
-\lstjava
-\lstinputlisting[float,label=simpleIntegration,caption=Simple integration test example]{sourceCode/mySnippets/testing/testShowPlants.java}
+ The example test in listing~\ref{lst:integrationTest} shows how a mockMvc object is used to simulate the web application context and perform requests against the application, in this case a HTTP GET to the path `/plants' which should return the plants page. The HTTP session object can be managed as part of the tests and injected into individual requests to ensure compatibility with real world usage. Following the HTTP request the results can be verified, in the case of the example test the HTTP status is checked to ensure that the server returned status code 200 (Ok). The content of the response is verified then finally, a check against the view() method is made to ensure that the correct page has been returned as a result of the request. 
 
+\lstinputlisting[label={lst:integrationTest},caption=Simple integration test example]{sourceCode/mySnippets/testing/testShowPlants.java}
 
-\subsection{User Interface Testing}
+A similar approach is adopted for all integration tests throughout the system. For each tested route, the request is simulated and results verified in much the same way as in the example test. In more complex tests or those testing functionality which require more robust verification there are extra steps taken such as asserting the existence of certain page model attributes or objects being passed to the front end views.
+
 
 \subsection{Stress and Performance Testing}
 
@@ -52,7 +56,7 @@ General results as output by Jmeter are included in figure~\ref{fig:jmeter_with_
     \label{fig:jmeter_no_data}
 \end{figure} 
 
-The effect of choosing pagination defaults for the plants and plant detail pages could also be measured although in the case of pagination the real limiting factor is the bandwidth and render time required. However, the effect on request time and loading on the server could be seen and monitored for any potential issues.
+The effect of choosing pagination defaults for the plants and plant detail pages could also be measured although in the case of pagination the real limiting factor is the bandwidth and render time required. However, the effect on request time and loading on the server could be seen and monitored for any potential issues. In an experiment with many plants or a large amount of data the response time would increase significantly with page sizes of over 50 or so plants but no other adverse affects were noticed on the system even with a significant number of requests.
 
 
 
@@ -103,3 +107,9 @@ Although most of the functionality within the Graph page is verified via automat
 
 
 \section{User Testing}
+
+When development was near complete a small sample of volunteer test users were recruited to use the system and give feedback on usability and the system in general. An online form was provided with a number of questions and a section for general feedback the responses to which can be found in Appendix %!TODO sort appendix linking
+
+Following the user testing, a number of changes were implemented according to the feedback given. Namely, adding pagination controls to the bottom of the plants and plant detail pages for more convenient page navigation and fixing an overlooked issue on the plant detail graph page. If a plant has no attributes recorded against individual plant days then the page should make the user aware that graph generation is not possible and provide a means to return to the previous page. Prior to user testing the page was confusing and mostly blank in the event that no graphable data was available.
+
+

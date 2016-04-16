@@ -1,4 +1,4 @@
-@Test
+$$@Test
 public void testShowPlants() throws Exception {
     String testBarCode = "bc1";
     this.mockMvc.perform(get("/plants").sessionAttrs(sessionattr))
