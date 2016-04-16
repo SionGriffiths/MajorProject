@@ -1,10 +1,7 @@
-
 INSERT INTO experiment (id, experiment_code, status) VALUES (1, 'testCode', 'INITIALISED')
 INSERT INTO experiment (id, experiment_code) VALUES (2, 'anotherCode')
 INSERT INTO experiment (id, experiment_code) VALUES (3, 'experimentCode')
 INSERT INTO experiment (id, experiment_code) VALUES (4, 'codeExperiment')
-
-
 
 INSERT INTO metadata (id) VALUES (1)
 INSERT INTO metadata (id) VALUES (2)
@@ -16,7 +13,6 @@ INSERT INTO metadata (id) VALUES (7)
 INSERT INTO metadata (id) VALUES (8)
 INSERT INTO metadata (id) VALUES (9)
 INSERT INTO metadata (id) VALUES (10)
-
 
 INSERT INTO plant (bar_code, experiment_id, plant_meta_data_id) VALUES ('bc1', 1, 01)
 INSERT INTO plant (bar_code, experiment_id, plant_meta_data_id) VALUES ('bc2', 1, 02)
@@ -34,7 +30,6 @@ INSERT INTO tag_data (id,tag_content) VALUES (02,'content 2')
 INSERT INTO tag_data (id,tag_content) VALUES (03,'content 3')
 INSERT INTO tag_data (id,tag_content) VALUES (04,'content 4')
 INSERT INTO tag_data (id,tag_content) VALUES (05,'content 5')
-
 
 INSERT INTO plant_tag (plant_id, tag_id) VALUES (10, 01)
 INSERT INTO plant_tag (plant_id, tag_id) VALUES (10, 03)
@@ -64,13 +59,12 @@ INSERT INTO plantday_tag (plantday_id, tag_id) VALUES (1, 03)
 INSERT INTO plantday_tag (plantday_id, tag_id) VALUES (1, 04)
 INSERT INTO plantday_tag (plantday_id, tag_id) VALUES (5, 04)
 
-insert into metadata_data_attributes (metadata, data_attributes_key, data_attributes) values (606, 'attr1' , 'val1')
-insert into metadata_data_attributes (metadata, data_attributes_key, data_attributes) values (505, 'attr1' , 'val2')
+INSERT INTO metadata_data_attributes (metadata, data_attributes_key, data_attributes) VALUES (606, 'attr1' , 'val1')
+INSERT INTO metadata_data_attributes (metadata, data_attributes_key, data_attributes) VALUES (505, 'attr1' , 'val2')
 
-
-insert into metadata_data_attributes (metadata, data_attributes_key, data_attributes) values (8, 'test' , '1')
-insert into metadata_data_attributes (metadata, data_attributes_key, data_attributes) values (9, 'test' , '2')
-insert into metadata_data_attributes (metadata, data_attributes_key, data_attributes) values (10, 'test' , '3')
-insert into metadata_data_attributes (metadata, data_attributes_key, data_attributes) values (8, 'test2' , 'a')
-insert into metadata_data_attributes (metadata, data_attributes_key, data_attributes) values (9, 'test2' , 'b')
-insert into metadata_data_attributes (metadata, data_attributes_key, data_attributes) values (10, 'test2' , 'c')
+INSERT INTO metadata_data_attributes (metadata, data_attributes_key, data_attributes) VALUES (8, 'test' , '1')
+INSERT INTO metadata_data_attributes (metadata, data_attributes_key, data_attributes) VALUES (9, 'test' , '2')
+INSERT INTO metadata_data_attributes (metadata, data_attributes_key, data_attributes) VALUES (10, 'test' , '3')
+INSERT INTO metadata_data_attributes (metadata, data_attributes_key, data_attributes) VALUES (8, 'test2' , 'a')
+INSERT INTO metadata_data_attributes (metadata, data_attributes_key, data_attributes) VALUES (9, 'test2' , 'b')
+INSERT INTO metadata_data_attributes (metadata, data_attributes_key, data_attributes) VALUES (10, 'test2' , 'c')
