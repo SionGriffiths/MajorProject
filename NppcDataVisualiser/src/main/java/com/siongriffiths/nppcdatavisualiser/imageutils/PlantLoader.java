@@ -150,9 +150,9 @@ public class PlantLoader {
 
 
     /**
-     *
-     * @param directories
-     * @param experiment
+     * Create domain models from directory structure and image files for the current experiment
+     * @param directories the subdirectories
+     * @param experiment the Experiment
      */
     private void processDirectory(File[] directories, Experiment experiment){
 

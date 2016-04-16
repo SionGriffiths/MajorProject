@@ -2,13 +2,13 @@
 
 \section{Overall Approach to Testing}
 
-High coverage on service layer, but more concerned with feature coverage rather than line coverage in general. Automate as much of the testing as is feasible so it can run as part of the CI build 
+
 
 \section{Automated Testing}
 
 For the purposes of automated testing, a separate database was used. The database would be completely recreated for the start of each run of the test suite and dropped at the end. Prior to the tests running, the database would be seeded with test data that is similar to the real world data expected in the production database. By using this method the tests would more closely mirror the real world behaviours of the system and each run could be insulated from the data changes made in previous runs.
 
-A Continuous Integration(CI) system was used in order to facilitate the convenient and regular running of all automated tests in the project. The CI system would build the project from source each time a commit was made into the version control repository. As part of this build process the full test suite would be run. Any issues encountered during this process, from compilation errors to test failures, would result in the build being rejected by the CI system. 
+A Continuous Integration(CI) system was used in order to facilitate the convenient and regular running of all automated tests in the project. The CI system would build the project from source each time a commit was made into the version control repository. As part of this build process the full test suite would be run. Any issues encountered during this process, from compilation errors to test failures, would result in the build being rejected by the CI system. In the event of a rejected build, the CI system would notify via email of the build failure. This feature turned out to be invaluable since it highlighted a configuration issue that did not affect my local development environment but would have affected the server the project is hosted on. Because the tests were automated and I was notified of a failure, I saved what would have likely been a significant amount of debugging time at the next release of the project to the server. Time was also saved since the full test suite didn't need to be run locally at development time, single tests could be run and the full test and integration suite would be invoked on commit. 
 
 \subsection{Unit Tests}
 
@@ -19,10 +19,11 @@ A Continuous Integration(CI) system was used in order to facilitate the convenie
 Integration testing for this project was achieved through testing of the MVC controller classes. The goal behind these tests was to make requests to the various available routes within the system and verify that the correct results are returned. 
 
 % !TODO discuss the loading of 'realish' test data via data.sql :
+%  Add data.sql to appendix
 %  Like the unit testing, integration testing makes use of the test data defined in the data.sql file which is pre-loaded by hibernate into the test database prior to test execution.
 
 \lstjava
-\lstinputlisting[label=simpleIntegration,caption=Simple integration test example]{sourceCode/mySnippets/testing/testShowPlants.java}
+\lstinputlisting[float,label=simpleIntegration,caption=Simple integration test example]{sourceCode/mySnippets/testing/testShowPlants.java}
 
 
 \subsection{User Interface Testing}

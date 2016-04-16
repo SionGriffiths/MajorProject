@@ -147,7 +147,7 @@ public class PlantDayManagerImpl implements PlantDayManager {
 
     /**
      * Resets all tags associated with PlantDays in the given Experiment
-     * @param experiment
+     * @param experiment the Experiment
      */
     @Override
     public void resetTagsForExperiment(Experiment experiment) {

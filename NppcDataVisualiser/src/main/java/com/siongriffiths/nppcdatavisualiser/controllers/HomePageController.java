@@ -55,7 +55,7 @@ public class HomePageController extends DefaultController {
      * Sets the currently selected experiment in the session
      * @param session the HttpSession
      * @param experimentCode The code identifying the experiment
-     * @return
+     * @return plant page view
      */
     @RequestMapping("/setSessionExperiment/{experimentCode}")
     public String setExperiment(HttpSession session, @PathVariable("experimentCode") String experimentCode){

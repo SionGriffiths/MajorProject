@@ -100,7 +100,7 @@ public interface PlantDayManager {
 
     /**
      * Resets all tags associated with PlantDays in the given Experiment
-     * @param experiment
+     * @param experiment the experiment
      */
     void resetTagsForExperiment(Experiment experiment);
 }

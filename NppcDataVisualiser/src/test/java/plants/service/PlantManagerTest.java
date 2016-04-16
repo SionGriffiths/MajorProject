@@ -138,7 +138,6 @@ public class PlantManagerTest extends AbstractTest {
 
     @Test
     public void testFindByExperimentCode(){
-
         List<Plant> plantsByExperimentCode = plantManager.findPlantsByExperimentCode("testCode");
         assertNotNull("Expected list not to be null", plantsByExperimentCode);
         assertEquals("Expected list size to be 10", 10 ,plantsByExperimentCode.size());
@@ -149,7 +148,6 @@ public class PlantManagerTest extends AbstractTest {
     public void findPlantsByExperimentCodePageable() {
 
         PageRequest pageRequest = new PageRequest(1, 2);
-
         Page<Plant> plantsPage = plantManager.findPlantsByExperimentCode("testCode", pageRequest);
         assertNotNull("Expected list not to be null", plantsPage);
         assertEquals("Expected list size to be 2", 2 ,plantsPage.getContent().size());
@@ -167,8 +165,6 @@ public class PlantManagerTest extends AbstractTest {
         Long id = 1L;
         Plant plant = plantManager.getPlantByID(id);
         assertNotNull("Plant should not be null", plant);
-
-
     }
 
     @Test

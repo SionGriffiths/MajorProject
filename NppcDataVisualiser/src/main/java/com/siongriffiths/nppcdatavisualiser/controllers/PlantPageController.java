@@ -166,7 +166,7 @@ public class PlantPageController extends DefaultController {
      * Shows a page detailing an individual plant and associated time serried data and images with
      * requested page number for pagination
      * @param model the page model object
-     * @page requested pagination page number
+     * @param page requested pagination page number
      * @param barCode the barcode identifying a plant
      * @return view path for the plants detail page
      */
@@ -182,8 +182,8 @@ public class PlantPageController extends DefaultController {
      * Shows a page detailing an individual plant and associated time serried data and images with
      * requested page number and page size for pagination
      * @param model the page model object
-     * @page requested pagination page number
-     * @size requested pagination page size
+     * @param page requested pagination page number
+     * @param size requested pagination page size
      * @param barCode the barcode identifying a plant
      * @return view path for the plants detail page
      */
