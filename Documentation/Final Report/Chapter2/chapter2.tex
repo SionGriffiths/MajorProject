@@ -23,18 +23,74 @@ MVC - for ease of testing, scalability, separation of concerns, maintainability 
 
 The sheer range of MVC frameworks available to developers is incredible and the decision of which to use is potentially difficult. It was not within scope to review all the available choices 
 
+\section{Domain modelling}
+
+
+
+\section{Database}
+
+For this project the database structure is entirely derived by the Hibernate\cite{_hibernate} object relational mapping (ORM) which is included in the Spring framework as part of the Spring Data project. The ORM system allows a developer to annotate Java code with keywords that inform the ORM system of how to represent a given class and persist it in the database. Figure~\ref{fig:orm} shows an example of these annotations within the Plant class. The class is annotated with \texttt{@Entity} to inform the ORM that it is a managed class to be persisted and table constraints are declared. The getter methods for the instance variables in the class are annotated with relationship definitions if applicable, including foreign key mappings and what manner of database instructions should cascade through the relationship to the related entity. The annotations can also define a fetch type which can take the value \texttt{LAZY} or \texttt{EAGER}, this defines whether the related entity objects should be fully initialised when the parent is called or whether, in the case of a \texttt{LAZY} fetch, a proxy object with no instance variables initialised should be returned. For this project, the use of \texttt{LAZY} fetch is preferred in all situations since it allows greater control over the performance of the system. If for example, the Plant class made an eager fetch for it's associated list of PlantDay objects, each PlantDay would be fully initialised at the time when the Plant object is retrieved from the database via a query, resulting in extra queries to the database in order to fully populate each PlantDay. Using this fetch technique allowed the PlantDays to be initialised when a method like \texttt{.size()} was invoked on their containing list or a getter method was invoked on the PlantDay itself. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/design/orm}
+    \caption{Detail of ORM annotations in a Java class}
+    \label{fig:orm}
+\end{figure}
+
+
+Figure~\ref{fig:dbSchema} details the database schema resulting from the ORM annotated relationships within the system. As discussed previously in this section, the relationships are a direct result of the structure of the Java code and the choices made with certain annotations, such as which side of a relation should hold a reference to the other.
+
+ The main deliberate change made to the default ORM mapping onto the database was to pull the dataAttributes map (a \texttt{Map<String,String>}) out from the Metadata object into its own table, `metadata\_dataattributes'. The default would have been to map this as a blob column within the metadata table, however, in order to ensure that all data within the database can be queried via native queries on the database itself, this extra table approach was taken.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/design/dbSchema}
+    \caption{An entity relationship diagram for the database schema}
+    \label{fig:dbSchema}
+\end{figure}
+
+
+\section{UI}
 
 \section{Tools and third-party services}
 \subsection{Intellij}
-\subsection{Git and Github}
+
+Intellij \cite{_intellij} is the core development tool used during the completion of this project. It is a fully featured Java integrated development environment (IDE) that has support for a wide range of features including Spring and Github (see section \ref{gitsection}) integration right out of the box. Its code completion and debugging tools are significantly more refined in comparison to the most popular alternative Eclipse, allowing for faster writing of code and easier debugging. As with any reasonably modern IDE, IntelliJ comes with the facility to run sophisticated test suites, providing code coverage metrics and providing auto-generated method stubs in implementation or test classes further speeding up development time, especially in boiler-plate heavy languages such as Java.
+
+IntelliJ also provides in-built static analysis tools that run automatically has part of committing changes to version control via the IDE. This is useful as it is configured to highlight warning level issues which include code style along with potential logical mistakes within sections of code and even spelling errors. Having these checks at commit time enables the developer to review any potential problems before the code gets checked into the repository, although the results are often a little too pessimistic they are still useful. Figure \ref{fig:intellij} shows the IntelliJ IDE with static analysis results displayed.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/tools/intellij}
+    \caption{The IntelliJ IDE showing result of static analysis}
+    \label{fig:intellij}
+\end{figure}
+
+\subsection{Git and Github} \label{gitsection}
+
+The use of version control is invaluable in modern software development. It has become a necessity in even the smallest of hobby projects since it allows the developer to be confident in making changes without having to worry about rescuing previous version if things go wrong and provides development teams with the means to work concurrently and collaboratively on the same code base. 
+
+The version control system selected for this project was Git \cite{_git}, having previously used alternatives such as Subversion I chose Git for its integration with more numerous, modern services and the fact that it allows local copies of a repository which is synced with a remote repository as opposed to the remote-only approach taken by Subversion.
+
+The Git repository for this project is hosted on Github \cite{_gitHub}, a web based service dedicated to providing git repository hosting and related facilities, such as commit history tracking, release visioning and integration with third party services. There are alternatives to Github available but due to familiarity brought on by hosting all previous projects and the fact that Github is now an industry leading solution, it was decided to use Github for this project without any real evaluation of alternatives since it was well known that Github could provide all facilities required for the purpose of this project. Figure \ref{fig:gitrel} details one of the tagged release versions of the system within Github. Having releases tagged in this way allows easy rollbacks to previous release versions in the event of any major issues in a new release. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/tools/gitrel}
+    \caption{A tagged release of the project within Github}
+    \label{fig:gitrel}
+\end{figure}
+
 \subsection{Jira}
 
-Jira \cite{jira} in an issue tracking and project management tool provided by Atlassian, an Australian software company. It is an industry leading product used by many companies for tracking their projects and the issues within them. Its use on this project was in support of the agile approach to project development, allowing the specification of user stories, development tasks and their inclusions within configurable sprints or development iterations. Figure \ref{fig:jira_sprint} shows the current sprint view in Jira, user stories are grouped into 'lanes' corresponding to their status, allowing a simple way to track the work completed and left to do involved in the current development iteration.
+Jira \cite{jira} in an issue tracking and project management tool provided by Atlassian, an Australian software company. It is an industry leading product used by many companies for tracking their projects and the issues within them. Its use on this project was in support of the agile approach to project development, allowing the specification of user stories, development tasks and their inclusions within configurable sprints or development iterations. Figure \ref{fig:jira_sprint} shows the current sprint view in Jira, user stories are grouped into `lanes' corresponding to their status, allowing a simple way to track the work completed and left to do within in the current development iteration.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/tools/sprint1}
-    \caption{A screenshot showing part the current sprint screen in Jira}
+    \caption{Current sprint screen in Jira}
     \label{fig:jira_sprint}
 \end{figure} 
 
@@ -43,7 +99,7 @@ Jira \cite{jira} in an issue tracking and project management tool provided by At
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/tools/jira_bugs}
-    \caption{A screenshot showing version control commit tracking within Jira}
+    \caption{A sample of bugs raised in Jira}
     \label{fig:jira_bugs}
 \end{figure} 
 
@@ -52,7 +108,7 @@ Another helpful feature was the integration with the version control repository 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/tools/jira_commit}
-    \caption{A screenshot showing version control commit tracking within Jira}
+    \caption{The version control commit tracking within Jira}
     \label{fig:jira_commit}
 \end{figure} 
 
@@ -63,9 +119,7 @@ Codeship\cite{_codeship} is a web based Continuous Integration(CI) service. Work
 
  The build script for the project can be seen in figure~\ref{fig:build_script} showing how the project databases are setup and the environment is configured prior to executing the project build and test commands.
 
- The scripts are invoked within small Docker \cite{docker} based environments which allow build dependencies to be modularised and configured quickly. The initial integration of the CI system into the project environment was extremely simple, linking the Github repository for the project was a couple of mouse clicks and the script below is the entirety of the extra configuration required to get the CI system fully up and running. 
-
-It was because of this speed and simplicity of configuration that Codeship was chosen over rival offerings such as TravisCI \cite{travis} which appeared to have a much more complex initial setup during evaluation.
+ The scripts are invoked within small Docker \cite{docker} based environments which allow build dependencies to be modularised and configured quickly. The initial integration of the CI system into the project environment was extremely simple, linking the Github repository for the project was a couple of mouse clicks and the script below is the entirety of the extra configuration required to get the CI system fully up and running. It was because of this speed and simplicity of configuration that Codeship was chosen over rival offerings such as TravisCI \cite{travis} which appeared to have a much more complex initial setup during evaluation.
 
 \begin{figure}[H]
     \centering
@@ -83,7 +137,19 @@ It was because of this speed and simplicity of configuration that Codeship was c
 
 
 
-\subsection{Maven}
+\subsection{Plotly}
+
+Plotly is an open 
+
+\cite{_plotly}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/design/plotly}
+    \caption{Project graph page featuring a Plotly.js generated graph}
+    \label{fig:plotly}
+\end{figure} 
+
 
 \section{Some detailed design}
 
