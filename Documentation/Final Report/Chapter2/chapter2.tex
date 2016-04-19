@@ -15,13 +15,44 @@
 
 \section{Overall Architecture}
 
-MVC - for ease of testing, scalability, separation of concerns, maintainability through familiarity(people know mvc and what to expect), maturity of supporting technologies
+The overall architecture of the system can be described as a mixture of two well known architectural patterns, Model View Controller(MVC) and 3-tier architecture. 
 
-3-tier based approach to data layer / service / presentation stuff that may not entirely fit with the mvc pattern
+\subsection{MVC}\label{sec_mvc}
 
-\section{Framework and Programming Language}
+The Model View Controller paradigm is synonymous with web application development these days and is often employed without much consideration for alternatives. The fact is that the MVC pattern is so ubiquitous and well supported and understood that it is difficult to make a case against its use for a project of this nature, where MVC fulfils all expectations for a data driven front end to a web application. Many of the alternative approaches share the same primary goal as MVC, seperation of concerns, keeping the display and data components separate. However these alternatives lack the penetration that MVC currently has and as such their comparative obscurity makes them less desirable from a general maintenance point of view since it can be expected that a greater number of developers will already be familiar with MVC. Many mature and well maintained frameworks offer MVC as default out of the box in a well supported and easy to understand manner, for these reasons not much consideration was given to other possible solutions although some were briefly looked at.
 
-The sheer range of MVC frameworks available to developers is incredible and the decision of which to use is potentially difficult. It was not within scope to review a large amount of potential choices and to research which were mature, well supported solutions rather than a `flavour of the month' framework. 
+Figure~\ref{fig:mvc} provides a high level overview of the way in which the MVC pattern is structured. For this project, each web page will be represented as its own view with its own dedicated controller, providing a high degree of modularity and helping to keep the individual controller classes thin in order to aid code navigation, maintainability and scalability of the solution. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/design/mvc}
+    \caption{Model View Controller pattern overview}
+    \label{fig:mvc}
+\end{figure}
+
+
+\subsection{3-tier Architecture}
+The second architecture pattern making up the system design is 3-tier architecture. The goal of the 3-tier pattern is to separate the system into 3 distinct, modular tiers. These layers are the presentation layer, the business logic or service layer and the persistence layer.  
+
+In this project the presentation tier encapsulates the entirety of MVC pattern described in section~\ref{sec_mvc} above, the MVC controller for a particular view will make a request to a service layer class and use the resulting data to populate a model for returning to the view.
+
+ The service layer is where the business processes are carried out. Logical processes, data transformations and calculations are all carried out within this tier. The service layer also acts as a go-between for the presentation and persistence layer, translating requests and results into compatible forms for the other tiers.
+ 
+ The persistence layer, or data layer, is concerned with data storage and retrieval, usually, and for this project entirely, from a database system. All crud operations and queries on database entities are performed within this layer allowing the service layer and its containing logic to be abstracted away from the database.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/design/3t}
+    \caption{3-tier architecture overview}
+    \label{fig:3t}
+\end{figure}
+
+The 3-tier pattern is a useful design within this project because it allows modularised and compartmentalised code to be written and maintained. Using the 3-tier pattern allows a developer to modify one of the distinct layers without having to rewrite the entire system. For example, all the queries and database calling methods could be changed to use totally different technologies and provided the same hooks are available for the service layer to gain access then the system would function as expected with no modificaiton to service or presentation layers.
+
+\section{Framework and Programming Language}\label{framework}
+
+The sheer range of MVC frameworks available to developers is incredible and the decision of which to use is potentially difficult. It was not within scope to review a large amount of potential choices and to research which were mature, well supported solutions rather than a `flavour of the month' framework. The two main contenders considered for this project were Ruby-on-Rails and the Java based Spring. Both are mature, well supported technologies with a large range of compatible libraries. Both have large and active communities surrounding and supporting them and both have well maintained official documentation. 
+
+For the purposes of this project Spring was eventually selected, specifically Spring Boot\cite{_boot}
 
 The requirements for the framework were as follows:
 \begin{enumerate}
@@ -31,6 +62,8 @@ The requirements for the framework were as follows:
 \item Minimal initial system dependencies and configuration.
 \item Large community of active developers.
 \end{enumerate}
+
+
 
 \section{Domain modelling}
 
@@ -51,7 +84,17 @@ Having modelled the entities in the system, consideration was given to the best 
 
 Since it was clear that experiment data is possibly very different from one experiment to the next, the system had to be permissive in how the data is associated with domain objects. Arbitrary attributes and values had to be supported and this is why the approach with the Metadata class is to have a map structure holding string values for attribute key/value pairs. Using strings meant that both numerical and text data could be represented within the same structure, leaving conversion and/or checking requirements to other parts of the system if required. This was deemed acceptable since for the most part the system is only storing and displaying these data rather than using the values directly for calculations for example. Both the Plant class and PlantDay could have held the metadata map as instance variables, and indeed they did initially, but it became apparent that porting it out into a single class would enable the data to be queried natively on the database (discussed further in section~\ref{db}) and cut down on the number of unique queries required in the Java code in order to find metadata instances.
 
-Whilst the Metadata class represents general experiment data for each Plant and PlantDay, the TagData class was designed to hold sparsely associated data. The majority of Plants would be untagged, tags are used as supplementary comments against the occasional Plant to note some interesting information (common examples seen were `dead' or 'small'). The approach with the TagData class was to have a unique instance for each unique tag, for example, all Plants with the tag `dead' shared a reference to the same tag instance with content `dead'. This provided a simple way to enable returning all Plants sharing a tag within an experiment via queries against the content of the associated TagData.
+Whilst the Metadata class represents general experiment data for each Plant and PlantDay, the TagData class was designed to hold sparsely associated data. The majority of Plants would be untagged, tags are used as supplementary comments against the occasional Plant to note some interesting information (common examples seen were `dead' or 'small'). The approach with the TagData class was to have a unique instance for each unique tag, for example, all Plants with the tag `dead' shared a reference to the same tag instance with content `dead'. This provided a simple way to enable returning all Plants sharing a tag within an experiment via queries against the content of the associated TagData. Figure~\ref{fig:domain2} shows the complete relationship between the domain model classes. Essentially these classes are all Plain Old Java Objects (POJO) which is why such a simple diagram suffices, the methods they contain are all getter/setter type methods and can be omitted from the relationship diagrams.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/design/domain2}
+    \caption{A simplified class diagram showing the domain model}
+    \label{fig:domain2}
+\end{figure} 
+
+\section{Service overview}
 
 \section{Database} \label{db}
 
@@ -78,7 +121,13 @@ From a developer based standpoint, when using an ORM such as the Hibernate syste
 
 It was clear from very early in the project that the data to be persisted within the system had structured relationships between entities which favours the more traditional SQL type databases over NoSQL solutions. It is forecast that the increased scalability offered by a NoSQL solution would not be required for this system, traditional SQL management systems are capable of scaling up to many millions of entries which should be more than sufficient for this system. With this in mind a MySQL solution was chosen, it is widely supported and well understood in terms of potential maintainers along with being a default technology on many operating systems including the hosted environment provided for the system.
 
-
+\section{Data Import}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/design/data1}
+    \caption{A sample of provided experiment data}
+    \label{fig:data1}
+\end{figure}
 \section{UI}
 \begin{figure}[H]
     \centering
