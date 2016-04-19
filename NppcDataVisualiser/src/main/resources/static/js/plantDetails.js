@@ -21,6 +21,7 @@ $( document ).ready(function() {
     $('.plant_day_attrib_form').on('submit', function(e) {
         e.preventDefault();
         var $form = $(this);
+        console.log($form);
         var $plantDayId = $form.find('input[name="plantDayID"]').val();
         $.ajax({
             url: $form.attr('action'),
@@ -28,7 +29,7 @@ $( document ).ready(function() {
             data: $form.serialize(),
             success: function(response) {
                 $("#plant_day_attribs"+$plantDayId).html(response);
-                $.getScript("/js/plantDetails.js");
+                // $.getScript("/js/plantDetails.js");
             },
             error: function(response) {
                 console.log(response);
@@ -37,7 +38,8 @@ $( document ).ready(function() {
         });
     });
 
-    $('.attrib_edit_button').click(function(){
+    $('.plant_day_input_column').on('click', '.attrib_edit_button',  function(){
+        console.log("click");
         var $item = $(this).closest("tr");
         var $keyText = $item.find(".attrib_key").text();
         var $valText = $item.find(".attrib_val").text();
@@ -47,5 +49,4 @@ $( document ).ready(function() {
         $valInput.val($valText);
         $valInput.focus();
     });
-
 });

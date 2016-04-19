@@ -29,7 +29,6 @@ $( document ).ready(function() {
             async: true,
             success: function(response) {
                 $("#plant_attribs"+$plantId).html(response);
-                $.getScript("/js/plantsPage.js");
             },
             error: function(response) {
                 $("#plant_attribs"+$plantId).html(response);
@@ -37,7 +36,7 @@ $( document ).ready(function() {
         });
     });
 
-    $('.attrib_edit_button').click(function(){
+    $('.plant_input_column').on('click', '.attrib_edit_button',function(){
         var $item = $(this).closest("tr");
         var $keyText = $item.find(".attrib_key").text();
         var $valText = $item.find(".attrib_val").text();

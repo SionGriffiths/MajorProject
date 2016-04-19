@@ -25,23 +25,31 @@ The sheer range of MVC frameworks available to developers is incredible and the 
 
 \section{Domain modelling}
 
+Designing a domain model representation for the project was fairly straight forward. It was clear from initial investigations that a simple relationship existed between the primary domain entities that were going to be represented by the system. Essentially, there are Experiments, Experiments have a number of Plants associated with them and these Plants never belong to more than one Experiment at a time. Each Plant then has a number of images associated with it. There is a clear one to many relationship between these entities that is intuitive and can be modelled easily.
+
+It quickly became clear that an extra level of representation was required in order to provide utility when grouping images and querying plant results,
 
 
-\section{Database}
-
-For this project the database structure is entirely derived by the Hibernate\cite{_hibernate} object relational mapping (ORM) which is included in the Spring framework as part of the Spring Data project. The ORM system allows a developer to annotate Java code with keywords that inform the ORM system of how to represent a given class and persist it in the database. Figure~\ref{fig:orm} shows an example of these annotations within the Plant class. The class is annotated with \texttt{@Entity} to inform the ORM that it is a managed class to be persisted and table constraints are declared. The getter methods for the instance variables in the class are annotated with relationship definitions if applicable, including foreign key mappings and what manner of database instructions should cascade through the relationship to the related entity. The annotations can also define a fetch type which can take the value \texttt{LAZY} or \texttt{EAGER}, this defines whether the related entity objects should be fully initialised when the parent is called or whether, in the case of a \texttt{LAZY} fetch, a proxy object with no instance variables initialised should be returned. For this project, the use of \texttt{LAZY} fetch is preferred in all situations since it allows greater control over the performance of the system. If for example, the Plant class made an eager fetch for it's associated list of PlantDay objects, each PlantDay would be fully initialised at the time when the Plant object is retrieved from the database via a query, resulting in extra queries to the database in order to fully populate each PlantDay. Using this fetch technique allowed the PlantDays to be initialised when a method like \texttt{.size()} was invoked on their containing list or a getter method was invoked on the PlantDay itself. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{images/design/orm}
-    \caption{Detail of ORM annotations in a Java class}
-    \label{fig:orm}
+    \includegraphics[width=\textwidth]{images/design/domain1}
+    \caption{A simplified class diagram showing the relationship between primary domain entities}
+    \label{fig:domain1}
 \end{figure}
 
+\section{Database}
+
+For this project the database structure is entirely derived by the Hibernate\cite{_hibernate} object relational mapping (ORM) which is included in the Spring framework as part of the Spring Data project as part of its Java Persistence API (JPA) support. The ORM system allows a developer to annotate Java code with keywords that inform the ORM system of how to represent a given class and persist it in the database.
+
+ Listing~\ref{lst:orm} shows an example of these annotations within the Plant class. The class is annotated with \texttt{@Entity} to inform the ORM that it is a managed class to be persisted and table constraints are declared. The getter methods for the instance variables in the class are annotated with relationship definitions if applicable, including foreign key mappings and what manner of database instructions should cascade through the relationship to the related entity. The annotations can also define a fetch type which can take the value \texttt{LAZY} or \texttt{EAGER}, this defines whether the related entity objects should be fully initialised when the parent is called or whether, in the case of a \texttt{LAZY} fetch, a proxy object with no instance variables initialised should be returned. For this project, the use of \texttt{LAZY} fetch is preferred in all situations since it allows greater control over the performance of the system. If for example, the Plant class made an eager fetch for it's associated list of PlantDay objects, each PlantDay would be fully initialised at the time when the Plant object is retrieved from the database via a query, resulting in extra queries to the database in order to fully populate each PlantDay. Using this fetch technique allowed the PlantDays to be initialised when a method like \texttt{.size()} was invoked on their containing list or a getter method was invoked on the PlantDay itself. 
+
+\lstjava
+\lstinputlisting[label={lst:orm},caption=Detail of ORM annotation in Java class]{sourceCode/mySnippets/design/plantorm.java}
 
 Figure~\ref{fig:dbSchema} details the database schema resulting from the ORM annotated relationships within the system. As discussed previously in this section, the relationships are a direct result of the structure of the Java code and the choices made with certain annotations, such as which side of a relation should hold a reference to the other.
 
- The main deliberate change made to the default ORM mapping onto the database was to pull the dataAttributes map (a \texttt{Map<String,String>}) out from the Metadata object into its own table, `metadata\_dataattributes'. The default would have been to map this as a blob column within the metadata table, however, in order to ensure that all data within the database can be queried via native queries on the database itself, this extra table approach was taken.
+ The main deliberate change made to the default ORM mapping onto the database was to pull the dataAttributes map (a \texttt{Map<String,String>} representation in Java) out from the Metadata object into its own table, `metadata\_dataattributes'. The default would have been to map this as a blob type column within the metadata table, however, in order to ensure that all data within the database can be queried via native queries on the database itself, this extra table approach was taken.
 
 
 \begin{figure}[H]
@@ -51,9 +59,25 @@ Figure~\ref{fig:dbSchema} details the database schema resulting from the ORM ann
     \label{fig:dbSchema}
 \end{figure}
 
+From a developer based standpoint, when using an ORM such as the Hibernate system provided in Spring, the underlying database technology is mostly transparent. Provided the database is of a type supported by the ORM, the developer need not make any changes to the code in the system in order for the underlying database technology to change. Custom queries implemented within the system are defined using JPA syntax and are abstracted away from the underlying database. However, consideration was given to the database system to ensure that the best choice was made both to support efficient representation and to ensure compatibility with a wide range of possible hosting environments and potential future maintenance needs.
+
+It was clear from very early in the project that the data to be persisted within the system had structured relationships between entities which favours the more traditional SQL type databases over NoSQL solutions. It is forecast that the increased scalability offered by a NoSQL solution would not be required for this system, traditional SQL management systems are capable of scaling up to many millions of entries which should be more than sufficient for this system. With this in mind a MySQL solution was chosen, it is widely supported and well understood in terms of potential maintainers along with being a default technology on many operating systems including the hosted environment provided for the system.
+
 
 \section{UI}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/design/ui1}
+    \caption{An early wireframe design for the Plant Details page}
+    \label{fig:ui1}
+\end{figure}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/design/ui2}
+    \caption{A screen shot showing final design of Plant Details page}
+    \label{fig:ui2}
+\end{figure}
 \section{Tools and third-party services}
 \subsection{Intellij}
 
@@ -137,11 +161,10 @@ Codeship\cite{_codeship} is a web based Continuous Integration(CI) service. Work
 
 
 
-\subsection{Plotly}
+\subsection{Plotly.js}
 
-Plotly is an open 
+Plotly.js\cite{_plotly} is an open source graphing library built on top of technologies such as d3.js, a Javascript data manipulation and visualisation library, and stack.gl, a wrapper around WebGL and other associated technologies. There are numerous alternatives libraries that could have been chosen, including d3.js itself and Google Charts amongst others, but the ease of integration with the system and the look and feel of the output from Plotly.js made it the superior choice for this project. Figure~\ref{fig:plotly} shows a Plotly.js generated graph embedded within the Graphs page in the system.
 
-\cite{_plotly}
 
 \begin{figure}[H]
     \centering
@@ -149,12 +172,3 @@ Plotly is an open
     \caption{Project graph page featuring a Plotly.js generated graph}
     \label{fig:plotly}
 \end{figure} 
-
-
-\section{Some detailed design}
-
-\subsection{Even more detail}
-
-\section{User Interface}
-
-\section{Other relevant sections}

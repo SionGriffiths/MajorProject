@@ -15,7 +15,7 @@
 <h1 layout:fragment="header">Plant Detail</h1>
 <div layout:fragment="content" th:unless="${plant == null}">
     <p th:text="'This is the detail page for ' + ${plant.getBarCode()}" />
-
+    <a th:href="'/graphs/byPlant/'+${plant.getBarCode()}" class="btn pull-right btn-default">View Graphs</a>
     <div th:replace="plants/plantFragments :: paginationFragment"></div>
 
     <div th:each="plantDay,status : ${dayList}" th:class="'plant_day_container container'">
