@@ -69,7 +69,9 @@ frame=tb,
      stringstyle=\color{pgreen},
      basicstyle=\ttfamily,
      moredelim=[il][\textcolor{annYellow}]{$$},
-     moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+     moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%},
+     aboveskip=20pt,
+     belowskip=20pt
 }
 }
 
@@ -100,8 +102,8 @@ frame=tb,
 \fancyhead{}
 \fancyfoot[C]{\thepage}
 \renewcommand{\headrulewidth}{0 pt}
-\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
-
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}} 
+\renewcommand{\lstlistlistingname}{List of Listings}
 \tableofcontents   
 \newpage
 \listoffigures
@@ -109,6 +111,7 @@ frame=tb,
 \listoftables
 \newpage
 \lstlistoflistings
+
 \newpage
 % Set up page numbering
 \pagenumbering{arabic}

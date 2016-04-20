@@ -120,10 +120,25 @@ When designing the data import system the primary objective was to try and prese
     \label{fig:data1}
 \end{figure}
 
-For representing these data, the CSV format is the obvious choice and is available as one of the default export options for spreadsheet applications. The design challenge was routing the data from the CSV file into the system whilst allowing arbitrary values for identifiers to allow for the vast potential range of different data to be captured by the system. However, the format of the files needed to change as little as possible to make use of the system as easy as possible and minimising the amount of work required on the data to get it ready for import into the system. 
+For representing these data, the CSV format is the obvious choice and is available as one of the default export options for spreadsheet applications. The design challenge was routing the data from the CSV file into the system whilst enabling arbitrary values for identifiers to allow for the vast potential range of different data to be captured by the system. However, the format of the files needed to change as little as possible to simplify the use of the system and to minimise the amount of work required on the data to get it ready for import.
 
-The solution was to use a simple annotation based method to identify how each column of the CSV should be routed. 
+The solution was to use a simple annotation based method to identify how each column of the CSV should be routed. Listing~\ref{lst:annot} shows how these annotations are represented and used within the header of the csv file. 
+\begin{lstlisting}[label={lst:annot},caption=Excerpt showing annotated CSV header for data import]
+{{plant-a}}genotype,{{bc}}barcode, {{plant-t}}comment,{{day-a}}Growth Stage~~51,
+\end{lstlisting}
+There are four supported annotations:
+\begin{enumerate}
+\item \textbf{\{\{bc\}\}} - Identifies the column as the barcode for a Plant. This serves to uniquely identify the Plant to which the data in the row should be assigned.
+\item \textbf{\{\{plant-a\}\}} - Identifies the column as a Plant attribute. The content of the header column is used as the identifier and the content within the row is used as value. 
+\item \textbf{\{\{plant-t\}\}} - Identifies the column as a Plant tag. The content of the header column is ignored and the content of the row is added as TagData to a Plant.
+\item \textbf{\{\{day-a\}\}} - Identifies the column as a PlantDay attribute. Uses a specific delimiter token \verb|~~| in order to split the header column into a key value pair. The column in the row in this instance needs to be a date such that a specific day can be allocated the data.
+\end{enumerate}
+
+Other methods investigated included using XML and JSON within the CSV to identify certain fields in the header and columns. However, even though both XML and JSON are convenient ways to represent and parse semi-structured data, they are not particularly quick to use in terms of the characters needed to be typed and neither are they especially readable when crammed into the header of a CSV file. In keeping with the goal of simplicity these alternatives were quickly discounted in favour of the simple annotation method. 
+
 \section{UI}
+The UI design process used within the project is fairly straight forward and relatively basic. Essentially the process used would first involve a wire frame mock up of the page, an example for the Plant Detail page is shown in figure~\ref{fig:ui1}. This would then be prototyped and the design would evolve as implementation proceeded. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/design/ui1}
@@ -131,12 +146,17 @@ The solution was to use a simple annotation based method to identify how each co
     \label{fig:ui1}
 \end{figure}
 
+Figure~\ref{fig:ui2} shows the final look of the Plant Detail page, it's clear to see how it relates to the initial wire frame and also where implementation decisions have resulted in some minor tweaks to the design. This same process was followed for all the pages within the system, where the focus has been on a simple yet usable design with minimal clutter.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/design/ui2}
     \caption{A screen shot showing final design of Plant Details page}
     \label{fig:ui2}
 \end{figure}
+
+
+
 \section{Tools and third-party services}
 \subsection{Intellij}
 

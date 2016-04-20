@@ -34,6 +34,9 @@
 % package for tidy url formatting
 \usepackage{url}
 
+
+
+
 % Various parameters
 \setlength{\textheight}{229mm}
 \setlength{\topmargin}{-5.4mm}
@@ -230,8 +233,19 @@
  {\parskip=0pt \@starttoc{lot}}}
 \let\l@table\l@figure
 
+\def\listoflistingses{\section*{LIST OF LISTINGS}
+ {\parskip=0pt \@starttoc{lot}}}
+\let\l@listing\l@figure
+
+
 \def\maketitle{\par
  \begingroup
+
+
+
+
+
+
  \def\thefootnote{\fnsymbol{footnote}}
  \def\@makefnmark{\hbox 
  to 0pt{$^{\@thefnmark}$\hss}} 
