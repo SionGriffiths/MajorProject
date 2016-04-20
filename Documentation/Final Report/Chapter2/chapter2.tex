@@ -1,19 +1,7 @@
 %\addcontentsline{toc}{chapter}{Development Process}
 \chapter{Design}
 
-%You should concentrate on the more important aspects of the design. It is essential that an overview is presented before going into detail. As well as describing the design adopted it must also explain what other designs were considered and why they were rejected.
-
-%The design should describe what you expected to do, and might also explain areas that you had to revise after some investigation.
-
-%Typically, for an object-oriented design, the discussion will focus on the choice of objects and classes and the allocation of methods to classes. The use made of reusable components should be described and their source referenced. Particularly important decisions concerning data structures usually affect the architecture of a system and so should be described here.
-
-%How much material you include on detailed design and implementation will depend very much on the nature of the project. It should not be padded out. Think about the significant aspects of your system. For example, describe the design of the user interface if it is a critical aspect of your system, or provide detail about methods and data structures that are not trivial. Do not spend time on long lists of trivial items and repetitive descriptions. If in doubt about what is appropriate, speak to your supervisor.
- 
-%You should also identify any support tools that you used. You should discuss your choice of implementation tools - programming language, compilers, database management system, program development environment, etc.
-
-%Some example sub-sections may be as follows, but the specific sections are for you to define. 
-
-\section{Overall Architecture}
+\section{Overall Architecture}\label{arch}
 
 The overall architecture of the system can be described as a mixture of two well known architectural patterns, Model View Controller(MVC) and 3-tier architecture. 
 
@@ -46,22 +34,24 @@ In this project the presentation tier encapsulates the entirety of MVC pattern d
     \label{fig:3t}
 \end{figure}
 
-The 3-tier pattern is a useful design within this project because it allows modularised and compartmentalised code to be written and maintained. Using the 3-tier pattern allows a developer to modify one of the distinct layers without having to rewrite the entire system. For example, all the queries and database calling methods could be changed to use totally different technologies and provided the same hooks are available for the service layer to gain access then the system would function as expected with no modificaiton to service or presentation layers.
+The 3-tier pattern is a useful design within this project because it allows modularised and compartmentalised code to be written and maintained. Using the 3-tier pattern allows a developer to modify one of the distinct layers without having to rewrite the entire system. For example, all the queries and database calling methods could be changed to use totally different technologies and provided the same hooks are available for the service layer to gain access then the system would function as expected with no modification to service or presentation layers. Figure~\ref{fig:arch1} shows the relationship between layers using a subset of the system components. Service layer dependencies are wired into each controller that require access to the processes in that service or the data in the database access object (Dao) coupled to a given service. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/design/arch1}
+    \caption{Architecture and dependency wiring}
+    \label{fig:arch1}
+\end{figure}
 
 \section{Framework and Programming Language}\label{framework}
 
-The sheer range of MVC frameworks available to developers is incredible and the decision of which to use is potentially difficult. It was not within scope to review a large amount of potential choices and to research which were mature, well supported solutions rather than a `flavour of the month' framework. The two main contenders considered for this project were Ruby-on-Rails and the Java based Spring. Both are mature, well supported technologies with a large range of compatible libraries. Both have large and active communities surrounding and supporting them and both have well maintained official documentation. 
+The sheer range of MVC frameworks available to developers is incredible and the decision of which to use is potentially difficult. It was not within scope to review a large amount of potential choices and to research which were mature, well supported solutions rather than a `flavour of the month' framework. The two main contenders considered for this project were Ruby-on-Rails and the Java based Spring. Both are mature, well supported technologies with a large range of compatible libraries. Both have large and active communities surrounding and supporting them and both have well maintained official documentation. Both share a  `convention over configuration' approach and importantly both are capable of supporting the designs discussed in section~\ref{arch}.
 
-For the purposes of this project Spring was eventually selected, specifically Spring Boot\cite{_boot}
+For the purposes of this project, Spring was eventually selected. Specifically the Spring Boot\cite{_boot} bundle which greatly reduces initial configuration time at the start of a project and allows simple integration of complex packages (such as the Spring-Data package discussed in section~\ref{db}) via so called `starter' packages. Even though both frameworks offer inversion of control and dependency injection, the annotation based Spring approach is preferable, especially when coupled with a fully featured IDE capable of understanding the wired dependencies and annotations. 
 
-The requirements for the framework were as follows:
-\begin{enumerate}
-\item Mature, well supported technology.
-\item Large range of compatible libraries.
-\item Accessible and navigable official documentation.
-\item Minimal initial system dependencies and configuration.
-\item Large community of active developers.
-\end{enumerate}
+Using a framework based on Java has some arguable advantages, the fact that Java is compiled provides an extra level of checking during development and provides a quick notification of overlooked errors that may take time to uncover in an interpreted environment such as that provided by Rails. Java has built in security and type-safety providing peace of mind both in guaranteed resolution of variable types and built in access control at the virtual machine level. 
+
+
 
 
 
@@ -94,11 +84,9 @@ Whilst the Metadata class represents general experiment data for each Plant and 
     \label{fig:domain2}
 \end{figure} 
 
-\section{Service overview}
-
 \section{Database} \label{db}
 
-For this project the database structure is entirely derived by the Hibernate\cite{_hibernate} object relational mapping (ORM) which is included in the Spring framework as part of the Spring Data project as part of its Java Persistence API (JPA) support. The ORM system allows a developer to annotate Java code with keywords that inform the ORM system of how to represent a given class and persist it in the database. This technique allows the developer to manage the persistence element of a system from within the same object-oriented paradigm that the rest of the system is written in. It provides a level of abstraction away from the managing of the database itself leaving the developer to define only the structure of the data rather than its precise representation within a specific database system.
+For this project the database structure is entirely derived by the Hibernate\cite{_hibernate} object relational mapping (ORM) which is included in the Spring framework as part of the Spring-Data project as part of its Java Persistence API (JPA) support. The ORM system allows a developer to annotate Java code with keywords that inform the ORM system of how to represent a given class and persist it in the database. This technique allows the developer to manage the persistence element of a system from within the same object-oriented paradigm that the rest of the system is written in. It provides a level of abstraction away from the managing of the database itself leaving the developer to define only the structure of the data rather than its precise representation within a specific database system.
 
  Listing~\ref{lst:orm} shows an example of these annotations within the Plant class. The class is annotated with \texttt{@Entity} to inform the ORM that it is a managed class to be persisted and table constraints are declared. The getter methods for the instance variables in the class are annotated with relationship definitions if applicable, including foreign key mappings and what manner of database instructions should cascade through the relationship to the related entity. The annotations can also define a fetch type which can take the value \texttt{LAZY} or \texttt{EAGER}, this defines whether the related entity objects should be fully initialised when the parent is called or whether, in the case of a \texttt{LAZY} fetch, a proxy object with no instance variables initialised should be returned. For this project, the use of \texttt{LAZY} fetch is preferred in all situations since it allows greater control over the performance of the system. If for example, the Plant class made an eager fetch for it's associated list of PlantDay objects, each PlantDay would be fully initialised at the time when the Plant object is retrieved from the database via a query, resulting in extra queries to the database in order to fully populate each PlantDay. Using this fetch technique allowed the PlantDays to be initialised when a method like \texttt{.size()} was invoked on their containing list or a getter method was invoked on the PlantDay itself. 
 
@@ -122,12 +110,19 @@ From a developer based standpoint, when using an ORM such as the Hibernate syste
 It was clear from very early in the project that the data to be persisted within the system had structured relationships between entities which favours the more traditional SQL type databases over NoSQL solutions. It is forecast that the increased scalability offered by a NoSQL solution would not be required for this system, traditional SQL management systems are capable of scaling up to many millions of entries which should be more than sufficient for this system. With this in mind a MySQL solution was chosen, it is widely supported and well understood in terms of potential maintainers along with being a default technology on many operating systems including the hosted environment provided for the system.
 
 \section{Data Import}
+
+When designing the data import system the primary objective was to try and preserve, as much as possible, the format and structure of the original data files produced as part of an experiment. Figure~\ref{fig:data1} shows an excerpt from a spreadsheet provided as an example of real experiment data. 
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/design/data1}
-    \caption{A sample of provided experiment data}
+    \caption{A sample of provided experiment data in its original form}
     \label{fig:data1}
 \end{figure}
+
+For representing these data, the CSV format is the obvious choice and is available as one of the default export options for spreadsheet applications. The design challenge was routing the data from the CSV file into the system whilst allowing arbitrary values for identifiers to allow for the vast potential range of different data to be captured by the system. However, the format of the files needed to change as little as possible to make use of the system as easy as possible and minimising the amount of work required on the data to get it ready for import into the system. 
+
+The solution was to use a simple annotation based method to identify how each column of the CSV should be routed. 
 \section{UI}
 \begin{figure}[H]
     \centering
