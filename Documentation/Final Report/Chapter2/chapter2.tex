@@ -86,7 +86,7 @@ Whilst the Metadata class represents general experiment data for each Plant and 
 
 \section{Database} \label{db}
 
-For this project the database structure is entirely derived by the Hibernate\cite{_hibernate} object relational mapping (ORM) which is included in the Spring framework as part of the Spring-Data project as part of its Java Persistence API (JPA) support. The ORM system allows a developer to annotate Java code with keywords that inform the ORM system of how to represent a given class and persist it in the database. This technique allows the developer to manage the persistence element of a system from within the same object-oriented paradigm that the rest of the system is written in. It provides a level of abstraction away from the managing of the database itself leaving the developer to define only the structure of the data rather than its precise representation within a specific database system.
+For this project the database structure is entirely derived by the Hibernate\cite{_hibernate} object relational mapping (ORM) which is included in the Spring framework within the Spring-Data project as part of its Java Persistence API (JPA) support. The ORM system allows a developer to annotate Java code with keywords that inform the ORM system of how to represent a given class and persist it in the database. This technique allows the developer to manage the persistence element of a system from within the same object-oriented paradigm that the rest of the system is written in. It provides a level of abstraction away from the managing of the database itself leaving the developer to define only the structure of the data rather than its precise representation within a specific database system.
 
  Listing~\ref{lst:orm} shows an example of these annotations within the Plant class. The class is annotated with \texttt{@Entity} to inform the ORM that it is a managed class to be persisted and table constraints are declared. The getter methods for the instance variables in the class are annotated with relationship definitions if applicable, including foreign key mappings and what manner of database instructions should cascade through the relationship to the related entity. The annotations can also define a fetch type which can take the value \texttt{LAZY} or \texttt{EAGER}, this defines whether the related entity objects should be fully initialised when the parent is called or whether, in the case of a \texttt{LAZY} fetch, a proxy object with no instance variables initialised should be returned. For this project, the use of \texttt{LAZY} fetch is preferred in all situations since it allows greater control over the performance of the system. If for example, the Plant class made an eager fetch for it's associated list of PlantDay objects, each PlantDay would be fully initialised at the time when the Plant object is retrieved from the database via a query, resulting in extra queries to the database in order to fully populate each PlantDay. Using this fetch technique allowed the PlantDays to be initialised when a method like \texttt{.size()} was invoked on their containing list or a getter method was invoked on the PlantDay itself. 
 
@@ -95,7 +95,7 @@ For this project the database structure is entirely derived by the Hibernate\cit
 
 Figure~\ref{fig:dbSchema} details the database schema resulting from the ORM annotated relationships within the system. As discussed previously in this section, the relationships are a direct result of the structure of the Java code and the choices made with certain annotations, such as which side of a relation should hold a reference to the other.
 
- The main deliberate change made to the default ORM mapping onto the database was to pull the dataAttributes map (a \texttt{Map<String,String>} representation in Java) out from the Metadata object into its own table, `metadata\_dataattributes'. The default would have been to map this as a blob type column within the metadata table, however, in order to ensure that all data within the database can be queried via native queries on the database itself, this extra table approach was taken.
+ The main deliberate change made to the default ORM mapping onto the database was to pull the dataAttributes map (a \texttt{Map<String,String>} representation in Java) out from the Metadata object into its own table, `metadata\_data\_attributes'. The default would have been to map this as a blob type column within the metadata table, however, in order to ensure that all data within the database can be queried via native queries on the database itself, this extra table approach was taken.
 
 
 \begin{figure}[H]
@@ -137,7 +137,7 @@ There are four supported annotations:
 Other methods investigated included using XML and JSON within the CSV to identify certain fields in the header and columns. However, even though both XML and JSON are convenient ways to represent and parse semi-structured data, they are not particularly quick to use in terms of the characters needed to be typed and neither are they especially readable when crammed into the header of a CSV file. In keeping with the goal of simplicity these alternatives were quickly discounted in favour of the simple annotation method. 
 
 \section{UI}
-The UI design process used within the project is fairly straight forward and relatively basic. Essentially the process used would first involve a wire frame mock up of the page, an example for the Plant Detail page is shown in figure~\ref{fig:ui1}. This would then be prototyped and the design would evolve as implementation proceeded. 
+The UI design process used within the project is fairly straight forward and relatively basic. Essentially the process used would first involve a wire frame mock up of the page, an example for the Plant Detail page is shown in figure~\ref{fig:ui1}. This would then be prototyped and the design would evolve iteratively as implementation proceeded and user feedback testing was conducted.
 
 \begin{figure}[H]
     \centering
@@ -146,7 +146,7 @@ The UI design process used within the project is fairly straight forward and rel
     \label{fig:ui1}
 \end{figure}
 
-Figure~\ref{fig:ui2} shows the final look of the Plant Detail page, it's clear to see how it relates to the initial wire frame and also where implementation decisions have resulted in some minor tweaks to the design. This same process was followed for all the pages within the system, where the focus has been on a simple yet usable design with minimal clutter.
+Figure~\ref{fig:ui2} shows the final look of the Plant Detail page, it's clear to see how it relates to the initial wire frame and also where implementation decisions have resulted in some minor tweaks to the design. This same process was followed for all the pages within the system, where the focus has been on a simple yet usable design with minimal clutter. 
 
 \begin{figure}[H]
     \centering
@@ -186,7 +186,7 @@ The Git repository for this project is hosted on Github \cite{_gitHub}, a web ba
     \label{fig:gitrel}
 \end{figure}
 
-\subsection{Jira}
+\subsection{Jira} \label{jira_sec}
 
 Jira \cite{jira} in an issue tracking and project management tool provided by Atlassian, an Australian software company. It is an industry leading product used by many companies for tracking their projects and the issues within them. Its use on this project was in support of the agile approach to project development, allowing the specification of user stories, development tasks and their inclusions within configurable sprints or development iterations. Figure \ref{fig:jira_sprint} shows the current sprint view in Jira, user stories are grouped into `lanes' corresponding to their status, allowing a simple way to track the work completed and left to do within in the current development iteration.
 
