@@ -45,11 +45,14 @@ The 3-tier pattern is a useful design within this project because it allows modu
 
 \section{Framework and Programming Language}\label{framework}
 
-The sheer range of MVC frameworks available to developers is incredible and the decision of which to use is potentially difficult. It was not within scope to review a large amount of potential choices and to research which were mature, well supported solutions rather than a `flavour of the month' framework. The two main contenders considered for this project were Ruby-on-Rails and the Java based Spring. Both are mature, well supported technologies with a large range of compatible libraries. Both have large and active communities surrounding and supporting them and both have well maintained official documentation. Both share a  `convention over configuration' approach and importantly both are capable of supporting the designs discussed in section~\ref{arch}.
+The sheer range of MVC frameworks available to developers is incredible and the decision of which to use is potentially difficult. It was not within scope to review a large amount of potential choices and to research which were mature, well supported solutions rather than a `flavour of the month' framework. The two main contenders considered for this project were Ruby-on-Rails and the Java based Spring. Both are mature, well supported technologies with a large range of compatible libraries. Both have large and active communities surrounding and supporting them and both have well maintained official documentation. Both have convenient front-end templating technologies. Both share a  `convention over configuration' approach and importantly both are capable of supporting the designs discussed in section~\ref{arch}.
 
-For the purposes of this project, Spring was eventually selected. Specifically the Spring Boot\cite{_boot} bundle which greatly reduces initial configuration time at the start of a project and allows simple integration of complex packages (such as the Spring-Data package discussed in section~\ref{db}) via so called `starter' packages. Even though both frameworks offer inversion of control and dependency injection, the annotation based Spring approach is preferable, especially when coupled with a fully featured IDE capable of understanding the wired dependencies and annotations. 
+For the purposes of this project, Spring was eventually selected. Specifically the Spring Boot\cite{_boot} bundle which greatly reduces initial configuration time at the start of a project and allows simple integration of complex packages (such as the Spring-Data package discussed in section~\ref{db}) via so called `starter' packages. External dependencies are minimal and the system can be run on a wide variety of hardware configurations without the need to rebuild. 
+ Even though both frameworks offer inversion of control and dependency injection, the annotation based Spring approach is preferable, especially when coupled with a fully featured IDE capable of understanding the wired dependencies and annotations. 
 
 Using a framework based on Java has some arguable advantages, the fact that Java is compiled provides an extra level of checking during development and provides a quick notification of overlooked errors that may take time to uncover in an interpreted environment such as that provided by Rails. Java has built in security and type-safety providing peace of mind both in guaranteed resolution of variable types and built in access control at the virtual machine level. 
+
+Initially the project was developed using the latest version of Java (version 8), however, in order to take advantage of the available hosting environment at the NPPC it was necessary to use version 7 as this is what was installed on the systems. Fortunately the change was relatively straight forward since  much of the work carried out prior to this 
 
 
 
@@ -155,7 +158,7 @@ Figure~\ref{fig:ui2} shows the final look of the Plant Detail page, it's clear t
     \label{fig:ui2}
 \end{figure}
 
-
+A design consideration for UI interaction was that user interactions within a page should always use an asynchronous method to update the page with results of the interaction, such as crating a graph, tagging Plants or editing attributes. This asynchronous approach was achieved via the use of ajax based javascript functions invoked when users would click buttons or links. The view controller class within the framework would process these ajax requests and return the HTML for a partial page fragment which would then be injected back into the page in order to provide updated content without the need of a page refresh.
 
 \section{Tools and third-party services}
 \subsection{Intellij}
