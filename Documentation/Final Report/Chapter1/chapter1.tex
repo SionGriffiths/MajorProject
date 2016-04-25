@@ -14,11 +14,14 @@
 \section{Background}
 \subsection{Introduction}
 
-Nppc
-plants.
-fuck.
+This project uses data and images collected during the course of experiments conducted at the National Plant Phenomics Centre (NPPC)\cite{_nppc}. The NPPC, based near Aberystwyth, houses a state-of-the-art, automated greenhouse and imaging system. During experiments, plants are housed on moving conveyors and are carried one by one through measurement chambers where images of various modalities (such as infra red and visible light) are captured from multiple angles. Physical and environmental measurements, such as plant weight, water usage or greenhouse temperatures, can also be captured automatically. More specific or specialist data (such as targeted phenotype or genotype traits) are captured following observation by staff at the facility.
+
+The experiments at the NPPC are capable of investigating large sets of plants including whole breeding populations in order to inform how physical characteristics are affected by genes. Phenotyping experiments will often conduct a quantitative trait locus (QTL) analysis where sections of DNA corresponding to certain desirable phenotypes are identified, mapped and recorded for consideration in future breeding. The NPPC is capable of supporting a wide range of plants, from food-security critical cereal crops such as wheat and oats to plants that are promising sources of bio-fuel or biomass such as Miscanthus. The results of these experiments can directly affect the yield and robustness of future generations of important crops.
+
+There is a wealth of data collected at the NPPC that is often never considered again following the conclusion of an experiment. This project seeks to provide an ongoing use for some of these data and images.
+
 \subsection{Initial project topic}
-The initial title for this project was `Building a plant Atlas from real images'. In this context an Atlas is a term used to describe a visual reference for developmental stages within a subject of interest. Such an approach is commonly attributed to Tanner et al \cite{tanner_assessment_1975} for their work at numerically scoring the stages of bone development within the hands of infants and providing a visual reference for each stage. 
+The initial title for this project was `Building a plant Atlas from real images'.  In this context an Atlas is a term used to describe a visual reference for developmental stages within a subject of interest. Such an approach is commonly attributed to Tanner et al \cite{tanner_assessment_1975} for their work at numerically scoring the stages of bone development within the hands of infants and providing a visual reference for each stage. 
 
 Biologists use numerical growth stage indices to chart the developmental milestones in the life cycle of a given plant. In cereals a popular scale for these growth stages is the 0 to 100 scale defined by Zadoks \cite{zadoks_decimal_1974} in 1974. These scales are often presented in an Atlas style with hand drawn, stylised images used to display detail of the characteristics of a particular growth stage. Figure~\ref{fig:bbch} shows an example taken from the BBCH scale which is based on the Zadoks cereal scale.
 
@@ -29,20 +32,24 @@ Biologists use numerical growth stage indices to chart the developmental milesto
     \label{fig:bbch}
 \end{figure}
 
- The aim of the original project was to utilise the images and data collected during a particular experiment at the NPPC in order to provide an atlas style visualisation using real plant images and providing a web based interface onto this visualisation with the intention of it being used as a reference for the biologists or a teaching aid.
 
-%Biologists use something called an "Atlas" to determine the growth stage of a plant. These are usually 100 point scales with associated landmarks, where (approximately) 0 is a seed, and 100 is "dead". These atlases tend to be illustrated with sketches of the plants, and the determination of the growth stage of a particular plant is made with reference to the drawings and associated textual descriptions. This project would work with the National Plant Phenomics Centre to build a web-based visualisation of atlas-style information using real images of plants, gathered from their extensive database. A good project here would involve analysis of images, alignment, and representation of images, as well as web-based databases.
 
-%explain the intial project
-%talk about research done - atlas scale, plant terminology 
-%talk about initial reason for doing the project
+ The aim of the original project was to utilise the images and data collected during a particular experiment at the NPPC in order to provide an atlas style visualisation using real plant images and providing a web based interface onto this visualisation with the intention of it being used as a reference for the biologists or a teaching aid and to sort or align the experiment population on growth stage and compare their physical characteristics. Further suggested work on this topic was to leverage some machine learning capability to attempt to draw conclusions or infer useful correlations from the datasets collected over the course of running experiments.
+
+This topic was selected for the subject of this dissertation since it provided a chance at building a system that may have some practical use and application after the dissertation was complete. The topic also provided the opportunity to learn about certain plants, their life cycles and their importance as a research subject, this seemed like a more interesting problem domain when compared to other available choices.
 
 \subsection{Change of project topic}
-Challenges of interdisciplinary collaboration, managing expectations on both sides data data data
+
+In the initial weeks of the project, meetings were arranged with Dr Roger Boyle, a researcher specialising in computer vision based applications at the NPPC. The purpose of these meetings was to discuss the direction and background of the originally proposed project and arrange visits to the NPPC itself in order to gain an understanding of the facility and its functions. Spike work, prototyping and research into plants, growth stages, atlases and investigations into agreement between expert opinions \cite{williams_comparing_1976} were the focus of these early weeks as opposed to investigations into the data being collected at the NPPC.
+
+ In order for the original topic to be successful, the recording of key growth stage information during the course of an experiment was necessary, without these data points it would not be possible to build the proposed atlas visualisations. Unfortunately, where it was assumed that such data was being recorded as a matter of course during NPPC experiments, it became apparent that the recording of plant characteristics data during experiments was extremely sparse. When experiment data was provided for analysis it became clear that the approach to data collection was very different from what was expected. The interdisciplinary differences in attitude to data between the computer scientists and biologists involved was a key factor in the erroneous assumptions regarding the quantity and quality of collected data. The biologists who collect experiment data are often concerned only with growth stages which are directly associated with 
+ 
+  
 
 \subsection{Existing solutions}
 %we looked mostly at zegami and the access-phenomics site, these were the similar systems that we researched primarily
 
+Zegami, the site @ access.plant-phenoimics
 
 
 \section{Analysis}
@@ -85,12 +92,11 @@ For this system there were two identified user roles
     \label{fig:user_case}
 \end{figure}
 
-Zegami, the site @ access.plant-phenoimics
 \section{Process}
 
 Plan driven approaches traditionally associated with software development projects usually expect that all system requirements are understood and collected prior to any further work on design or implementation. A number of factors made such an approach unsuitable for this project, chiefly a lack of domain knowledge made up-front requirement gathering difficult and the requirements themselves were likely to be poorly defined and subject to change. 
 
-The methodology used for the delivery of the project was an agile approach based on the popular SCRUM methodology. For the duration of the project, work would be carried out in time-boxed iterations or `sprints', each a week long. Sprints would begin with a planning session and end with a release of the system software. At the conclusion of each sprint a short retrospective analysis of the sprint would take place, looking at what went well and what could improve for the next iteration. The focus on incremental delivery of working software allowed to project to evolve in an emergent fashion whilst remaining continuously functional as features were prototyped, designed and implemented.  
+The methodology used for the delivery of the project was an agile approach based on the popular SCRUM methodology. For the duration of the project, work would be carried out in time-boxed iterations or `sprints', each a week long. Sprints would begin with a planning session and end with a release of the system software. At the conclusion of each sprint a short retrospective analysis of the sprint would take place, looking at what went well and what could improve for the next iteration. The focus on incremental delivery of working software allowed the project to evolve in an emergent fashion whilst remaining continuously functional as features were prototyped, designed and implemented.  
 
 System requirements were broken down into user stories which in turn were broken down into individual tasks if necessary. As in SCRUM, these stories were held in a backlog until being added into a current or future sprint depending on priority and the goal for a particular sprint. Emergent issues such as priority bugs could easily be incorporated into the wider context of the current sprint if necessary which allowed work to be focused on the most pressing issues. The Jira \cite{jira} issue tracking application was used in support of this process providing an environemnt in which to specify and track user stories,task and sprints, see section~\ref{jira_sec} for further details. 
 
