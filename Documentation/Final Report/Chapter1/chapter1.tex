@@ -83,22 +83,34 @@ Zegami is a feature-rich and robust solution for exploring large collections of 
 
 %There should be a clear statement of the objectives of the work, which you will evaluate at the end of the work. 
 
+The core problem that this project aims to solve is the need for a web-based system that enables the exploration of images and associated data that are collected during experiments at the NPPC. 
 
-The core problem that this project aims to solve is the need for a web-based system that enables the exploration of images and associated data that are collected during experiments at the NPPC. Following the domain research and familiarisation with the NPPC gained during the discovery period for the initial project specification it was felt that the new direction of the project was well understood and that certain requirements could be identified fairly quickly. The following list will detail these and further additional requirements identified during the course of the project to provide a complete view of targeted functional specifications.
-%The problem as identified in section~\ref{changeproj} is fairly open ended and certainly permissive in terms of technology, design and implementation decisions. The key requirements of the system 
 
-\subsection{Requirements}
+ Following the domain research and familiarisation with the NPPC gained during the discovery period for the initial project specification it was felt that the new direction of the project was well understood and that certain requirements could be identified fairly quickly. The following list will detail these and further additional requirements identified during the course of the project to provide a complete view of targeted functional specifications.
+
+
+\subsection{Requirements decomposition}
 
 %In most cases, the agreed objectives or requirements will be the result of a compromise between what would ideally have been produced and what was felt to be possible in the time available. A discussion of the process of arriving at the final list is usually appropriate.
-\begin{itemize}
-\item \textbf{Web based system} - The delivered project should be easy to access from a multitude of locations. A web based solution is the most practical approach.
-\item \textbf{Integrate with NPPC data repository} - Experiment images are stored in a data repository accessible only via the Aberystwyth University network. The system must integrate with this repository in order to provide access to these images and associated data.
-\item \textbf{Browse plants and plant images} - Users will be able to view plants, associated data and plant images. In order to provide a means of exploring the data and images captured at the NPPC, the system needs to provide some interface onto these data that allows easy navigation between plant, images and associated data.
-\item \textbf{Import experiment data} - Experiment data will be imported into the system from file and associated with the plants in an experiment. The biologists conducting experiments will invariably use spreadsheets in order to capture observations and data on plants in the experiments. The system needs to be able to incorporate these data with minimal manual processing so that the system can be used to link these data to the plant images. 
-\item \textbf{Add meta data to plants and plant images} - Users will be able to add supplementary data to individual plants and images. 
-\item \textbf{Display graphs of data in system} - Data in the system will be displayed in a graphical format. Users will be able to choose what data to display in the graphs.
-\item \textbf{Administrator panel or page to manage the system} - A means of managing the experiments in the system will be provided via a web page with restricted access.
-\end{itemize}
+
+\subsubsection{Web based system} In order to provide a practical solution to the problem, access to the system should be available from a wide array of devices and systems. The system should also be accessible from a variety of different locations. The most practical solution to these considerations is a web based approach. Most devices and systems natively support some kind of web access and a centrally hosted solution is far more accessible than any alternative approach.
+
+
+\subsubsection{Integrate with NPPC data repository} The system needs to display plants, plant images and associated data. Data and images captured at the NPPC during experiments are stored in a central data repository hosted on the Aberystwyth University network. In order to provide access to these images and data via a web based approach, it is necessary to integrate the system with the data repository such that the images or data can be pulled directly from the repository as opposed to re-hosting the same content within the delivered system itself. The sheer quantity of image data in the repository itself makes a re-hosting solution highly impractical. 
+
+ 
+\subsubsection{Browse plants and plant images}  Users will be able to view plants, associated data and plant images. In order to provide a means of exploring the data and images captured at the NPPC, the system needs to provide some interface onto these data that allows easy navigation between plants, images and associated data. Currently there is no consolidated interface onto both experiment images and the data observations captured during the course of experiments. Providing such an interface makes the exploration of past and current experiments convenient and simple.
+
+\subsubsection{Import experiment data}  Experiment data will be imported into the system from file and associated with the plants in an experiment. The biologists conducting experiments will invariably use spreadsheets in order to capture observations and data on plants in the experiments. The system needs to be able to incorporate these data with minimal manual processing such that the system can be used to link these data to the plant images. 
+
+\subsubsection{Add meta data to plants and plant images}  Users will be able to add supplementary data to individual plants and images. In order to provide the opportunity to supplement experiment data with further information, a facility to add data to the system is required. The addition of data in this manner allows the creation of richer, more complete datasets for a given experiment with potential for future use in other applications and analyses. 
+
+\subsubsection{Persist data in local database} Image data is sourced directly from the NPPC data repository. Data imported or input into the system needs to be stored in a persistent way. Access granted to the NPPC data repository is read only for security and data integrity purposes. A database local to the delivered system provides a solution that allows fast queries of contained data, avoiding any network over heads, and provides the means to store experiment and supplementary data. Exports can potentially be taken from the database in order to migrate the data to a separate system or facilitate its use as a dataset for future work. 
+
+\subsubsection{Display graphs of data in system}  Visualising the data within the system is key to facilitating the quick understanding and digestion of captured data. Using graphical visualisations provides the means of quickly comparing certain data attributes or deducing whether there are interesting correlations or outliers in the data. Graphical visualisations can be used in order to quickly determine whether further statistical analysis of subsets of captured data is worthwhile or likely to produce interesting results. Providing the means to quickly create arbitrary visualisations from the experiment data allows the experimenters to see the data in ways that would previously require a much larger degree of manual effort.
+
+\subsubsection{Administrator panel or page to manage the system}  A means of managing the experiments in the system will be provided via a web page with restricted access.
+
 
 
 
