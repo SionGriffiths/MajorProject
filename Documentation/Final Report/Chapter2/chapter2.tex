@@ -7,7 +7,7 @@ The overall architecture of the system can be described as a mixture of two well
 
 \subsection{MVC}\label{sec_mvc}
 
-The Model View Controller paradigm is synonymous with web application development these days and is often employed without much consideration for alternatives. The fact is that the MVC pattern is so ubiquitous and well supported and understood that it is difficult to make a case against its use for a project of this nature, where MVC fulfils all expectations for a data driven front end to a web application. Many of the alternative approaches share the same primary goal as MVC, seperation of concerns, keeping the display and data components separate. However these alternatives lack the penetration that MVC currently has and as such their comparative obscurity makes them less desirable from a general maintenance point of view since it can be expected that a greater number of developers will already be familiar with MVC. Many mature and well maintained frameworks offer MVC as default out of the box in a well supported and easy to understand manner, for these reasons not much consideration was given to other possible solutions although some were briefly looked at.
+The Model View Controller paradigm is synonymous with web application development these days and is often employed without much consideration for alternatives. The fact is that the MVC pattern is so ubiquitous and well supported and understood that it is difficult to make a case against its use for a project of this nature, where MVC fulfils all expectations for a data driven front end to a web application. Many of the alternative approaches share the same primary goal as MVC, separation of concerns, keeping the display and data components separate. However these alternatives lack the penetration that MVC currently has and as such their comparative obscurity makes them less desirable from a general maintenance point of view since it can be expected that a greater number of developers will already be familiar with MVC. Many mature and well maintained frameworks offer MVC as default out of the box in a well supported and easy to understand manner, for these reasons not much consideration was given to other possible solutions although some were briefly looked at.
 
 Figure~\ref{fig:mvc} provides a high level overview of the way in which the MVC pattern is structured. For this project, each web page will be represented as its own view with its own dedicated controller, providing a high degree of modularity and helping to keep the individual controller classes thin in order to aid code navigation, maintainability and scalability of the solution. 
 
@@ -125,7 +125,7 @@ When designing the data import system the primary objective was to try and prese
 
 For representing these data, the CSV format is the obvious choice and is available as one of the default export options for spreadsheet applications. The design challenge was routing the data from the CSV file into the system whilst enabling arbitrary values for identifiers to allow for the vast potential range of different data to be captured by the system. However, the format of the files needed to change as little as possible to simplify the use of the system and to minimise the amount of work required on the data to get it ready for import.
 
-The solution was to use a simple annotation based method to identify how each column of the CSV should be routed. Listing~\ref{lst:annot} shows how these annotations are represented and used within the header of the csv file. 
+The solution was to use a simple annotation based method to identify how each column of the CSV should be routed. Listing~\ref{lst:annot} shows how these annotations are represented and used within the header of the CSV file. 
 \begin{lstlisting}[label={lst:annot},caption=Excerpt showing annotated CSV header for data import]
 {{plant-a}}genotype,{{bc}}barcode, {{plant-t}}comment,{{day-a}}Growth Stage~~51,
 \end{lstlisting}
@@ -145,7 +145,7 @@ The UI design process used within the project is fairly straight forward and rel
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/design/ui1}
-    \caption{An early wireframe design for the Plant Details page}
+    \caption{An early wire-frame design for the Plant Details page}
     \label{fig:ui1}
 \end{figure}
 
@@ -158,12 +158,12 @@ Figure~\ref{fig:ui2} shows the final look of the Plant Detail page, it's clear t
     \label{fig:ui2}
 \end{figure}
 
-A design consideration for UI interaction was that user interactions within a page should always use an asynchronous method to update the page with results of the interaction, such as crating a graph, tagging Plants or editing attributes. This asynchronous approach was achieved via the use of ajax based javascript functions invoked when users would click buttons or links. The view controller class within the framework would process these ajax requests and return the HTML for a partial page fragment which would then be injected back into the page in order to provide updated content without the need of a page refresh.
+A design consideration for UI interaction was that user interactions within a page should always use an asynchronous method to update the page with results of the interaction, such as crating a graph, tagging Plants or editing attributes. This asynchronous approach was achieved via the use of ajax based Javascript functions invoked when users would click buttons or links. The view controller class within the framework would process these ajax requests and return the HTML for a partial page fragment which would then be injected back into the page in order to provide updated content without the need of a page refresh.
 
 \section{Tools and third-party services}
 \subsection{Intellij}
 
-Intellij \cite{_intellij} is the core development tool used during the completion of this project. It is a fully featured Java integrated development environment (IDE) that has support for a wide range of features including Spring and Github (see section \ref{gitsection}) integration right out of the box. Its code completion and debugging tools are significantly more refined in comparison to the most popular alternative Eclipse, allowing for faster writing of code and easier debugging. As with any reasonably modern IDE, IntelliJ comes with the facility to run sophisticated test suites, providing code coverage metrics and providing auto-generated method stubs in implementation or test classes further speeding up development time, especially in boiler-plate heavy languages such as Java.
+IntelliJ \cite{_intellij} is the core development tool used during the completion of this project. It is a fully featured Java integrated development environment (IDE) that has support for a wide range of features including Spring and Github (see section \ref{gitsection}) integration right out of the box. Its code completion and debugging tools are significantly more refined in comparison to the most popular alternative Eclipse, allowing for faster writing of code and easier debugging. As with any reasonably modern IDE, IntelliJ comes with the facility to run sophisticated test suites, providing code coverage metrics and providing auto-generated method stubs in implementation or test classes further speeding up development time, especially in boiler-plate heavy languages such as Java.
 
 IntelliJ also provides in-built static analysis tools that run automatically has part of committing changes to version control via the IDE. This is useful as it is configured to highlight warning level issues which include code style along with potential logical mistakes within sections of code and even spelling errors. Having these checks at commit time enables the developer to review any potential problems before the code gets checked into the repository, although the results are often a little too pessimistic they are still useful. Figure \ref{fig:intellij} shows the IntelliJ IDE with static analysis results displayed.
 
@@ -200,7 +200,7 @@ Jira \cite{jira} in an issue tracking and project management tool provided by At
     \label{fig:jira_sprint}
 \end{figure} 
 
- Bugs could also be tracked as issues within Jira and added to the current sprint if necessary, I found this to be a valuable way to deal with emergent issues during development as it allowed a simple way to assign priority to urgent issues and keep track of less usgent bugs in the project backlog to be worked on in a future sprint. Figure \ref{fig:jira_bugs} shows a selection of bugs raised as part of development, Jira provides simple methods for filtering all issues against a project by type or status allowing quick access to screens such as this.
+ Bugs could also be tracked as issues within Jira and added to the current sprint if necessary, I found this to be a valuable way to deal with emergent issues during development as it allowed a simple way to assign priority to urgent issues and keep track of less urgent bugs in the project backlog to be worked on in a future sprint. Figure \ref{fig:jira_bugs} shows a selection of bugs raised as part of development, Jira provides simple methods for filtering all issues against a project by type or status allowing quick access to screens such as this.
 
 \begin{figure}[H]
     \centering
