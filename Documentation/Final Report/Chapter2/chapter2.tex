@@ -112,7 +112,7 @@ From a developer based standpoint, when using an ORM such as the Hibernate syste
 
 It was clear from very early in the project that the data to be persisted within the system had structured relationships between entities which favours the more traditional SQL type databases over NoSQL solutions. It is forecast that the increased scalability offered by a NoSQL solution would not be required for this system, traditional SQL management systems are capable of scaling up to many millions of entries which should be more than sufficient for this system. With this in mind a MySQL solution was chosen, it is widely supported and well understood in terms of potential maintainers along with being a default technology on many operating systems including the hosted environment provided for the system.
 
-\section{Data Import}
+\section{Data Import}\label{dataimp}
 
 When designing the data import system the primary objective was to try and preserve, as much as possible, the format and structure of the original data files produced as part of an experiment. Figure~\ref{fig:data1} shows an excerpt from a spreadsheet provided as an example of real experiment data. 
 
