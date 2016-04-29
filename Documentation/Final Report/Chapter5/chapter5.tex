@@ -20,11 +20,61 @@ Examiners expect to find in your dissertation a section addressing such question
 
 \section{Requirements}
 
+
+
+
 \section{Implemented System}
 \subsection{Strengths}
 \subsection{Weaknesses}
 \subsection{Future Work and Improvements}
 
+The project brief was fairly open ended and the delivered system fairly narrow in scope, this leaves many avenues for potential improvement and expansion of the system, potential examples of which are discussed  below :
+
+\subsubsection{Search and filtering}
+Further utility could be provided by the system if some extensive search and filtering functionality was implemented. Filtering the time series of images or plants in an experiment by attribute values, ranges etc would enhance the ability of the user to find specific information of interest or aid in inputting such specific data to particular entities within the system. Similarly, searching for plants or attribute values would be a helpful utility in both exploration of the experiment data and input of data to specific entities of interest within the system.
+
+One approach which was partially investigated during the implementation was to use the Elasticsearch\cite{elastic} integration provided by Spring. This implementation provides a means to index certain attributes and classes within the system to provide a convenient and fast solution to searching and filtering. The approach follows a similar principle to that implemented for the persistence layer, that is, the entity classes are annotated and a `data repository' interface is used to query these entities, further details can be found in the Spring documentation\cite{_spelastic}  
+
+
+\subsubsection{Comparisons and statistical analysis}
+As the interesting results of experiments carried out at the NPPC are often statistical in nature it would be convenient to the scientists using the system to be able to conduct or view the results of simple statistical analysis alongside the visualisation of data provided by the delivered system. As discussed in previous sections, the scientists conducting experiments often analyse only very narrow ranges of data correlations that could be present in an experiment. Providing a correlation measure for graphed attributes could indicate to users of the system that interesting correlations exist in previously overlooked data. 
+
+When generating a graph visualisation from two attributes, a correlation measurement could be taken between the two attributes using the entire set of examples within the experiment. One such method would be to use Spearmans rank correlation coefficient\cite{spearman} to display the correlations between attributes. There are various libraries available within the Java ecosystem that provide implementations of such statistical analysis algorithms and methods. 
+
+\subsubsection{Machine learning}
+With the potential for large datasets of meaningful, well understood data that is often statistical in nature it is an ideal scenario to leverage some machine learning capability in order to produce potentially interesting correlations and conclusions from system data. The main obstacle to providing such a facility is the current lack of collected data within the context of experiments. If the system was used mroe extensively then the provision of machine learning would become more and more feasible. Data for ongoing experiments recorded within the system could be used to provide the basis of predictions of certain traits and attributes which could, if sufficiently accurate, provide the scientists with the means to focus effort on the most interesting, promising or relevant subset of plants within an experiment.
+
+
+
+\subsubsection{Image processing and computer vision}
+The NPPC captures vast quantities of image data for each experiment. Different modalities and angles add to the richness of the images as a potential data source in themselves. There is a wide array of potential improvements to the system that could be made to take advantage of such data. The NPPC themselves are concerned with the leverage of computer vision approaches to image analysis with ongoing research into useful automated procedures such as the detection of specific growth stages in oats as developed by Boyle et al\cite{boyle_image-based_2015}. As a result there are automated processes that provide support to the deployment of image based processes such as segmentation of images to provide masks of plant pixel location within images.
+
+The system could be extended to use popular image processing libraries such as ImageJ (integration of which was tested briefly during spikework and verified as viable) which can provide many useful functions such as pixel colour maps, counts and so forth which could be used to infer the health or age of a given plant, detect fungus and so on. 
+
+It is possible to invoke external programs using system calls from within the delivered system, it is not infeasible to run compatible experiments through detectors such as that developed by Boyle et al\cite{boyle_image-based_2015} in order to automate the detection of certain growth stages and record these results within the persistence layer of the system
+
+
+\subsubsection{Comprehensive user management}
+Within the delivered system there is only the concept of an admin user and generic users. Providing the means for users to register and create account opens up many interesting options for further development of the system. In providing individual user accounts it is possible to then extend the attribute system to allow a concept of ownership, for example if a user adds attributes to a plant then that user has ownership of that attribute and gains the ability to delete or edit the attribute. Other users could raise disputes against the attribute or provide a competing value for the same attribute, this would allow the system to score agreement on particular assessments of certain traits or characteristics as identified by the different stakeholders within an experiment. Providing an agreement score for attributes in such a manner would provide a more robust dataset for use in other applications such as machine learning or vision systems.
+
+A popular approach to encouraging user participation within such systems is gamification (bringing elements of game-design into non-game contexts), a system where users can gain points or extended privileges based on participation could be used to encourage scientists to add data and utilise the system more fully. 
+
+
+
+
 \section{Process}
 
-\section{Student Performance}
+It is believed that an agile approach as chosen for this project was the correct choice and that the process followed during the course of this project was successful for a number of reasons. It provided an environment in which work could be effectively prioritised based on emergent or short term needs and goals without having to reorganise more than the current day or iterations work. Being able to react to change and bugs in this way made development more comfortable especially when requirements were not concrete and the domain was not fully understood at the beginning of iterations. Other approaches may not offer such a degree of flexibility.
+
+The use of user stories and the ability to move them into and out of the scope of iterations along with progressing their status made the project work flow more easily and allowed the focus to be on the goal of an iteration and the next release rather than a generic list of un-organised tasks.  As discussed in Section~\ref{proc}, the estimation of tasks in terms of time could have been improved to provide a more complete understanding of developer throughput which would have led to more efficient allocation of pomodoros to the correct tasks. However, estimation is notoriously difficult to do with a high degree of accuracy especially when working with technologies that developers aren't fully experienced in using.
+
+A key part of the process followed is the incremental and frequent release of the product. Providing a deployment at the end of each iteration offered a source of reassurance to stakeholders that work was progressing and also provided, via the use of version control facilities, the opportunity to rollback if a release was broken or problematic.
+
+\section{Student Evaluation}
+%\subsection{General}
+There are a number of areas which could have been improved when considering personal performance during the course of this project. Most notably a more proactive approach to engaging with the plant scientists at the NPPC would have brought benefits to the project in terms of delivering a more useful system and focusing on providing functionality that would improve their interactions with the system. A tenuous offer of co-location was made such that a hot desk could have been available at the NPPC for the duration of project work which would have allowed a closer working relationship with the staff at the NPPC. In taking these more proactive approaches, more time could have been freed to implement some of the more interesting improvements discussed in the previous section, this is the source of a little regret and results in a changed attitude towards how work is approached in general.
+
+The approach to time management was greatly improved as a result of this project, when it seemed that much time was being wasted in unfocused effort, this was rectified by implementation of, and dedication to, the pomodoro technique resulting in more productive output in fewer hours then before the adoption of the technique.
+
+The project provided the opportunity to learn about an interesting domain that otherwise would not have been available and to meet with inspiring people who enjoy their field of work.
+%\subsection{Take homes}
